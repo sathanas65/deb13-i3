@@ -123,7 +123,7 @@ set -e
 sudo apt-get update && sudo apt-get upgrade -y
 
 # create ~/.local/share/applications/ to support executables and snaps in Rofi
-mkdir ~/.local/share/applications/
+mkdir -p "$HOME/.local/share/applications"
 
 # printer support
 #sudo apt-get install -y cups
