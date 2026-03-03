@@ -130,12 +130,12 @@ sudo apt-get update && sudo apt-get upgrade -y
 mkdir ~/.local/share/applications/
 
 # printer support
-sudo apt-get install -y cups
-sudo systemctl enable cups
+#sudo apt-get install -y cups
+#sudo systemctl enable cups
 
 # bluetooth support
-sudo apt-get install -y bluez blueman
-sudo systemctl enable bluetooth
+#sudo apt-get install -y bluez blueman
+#sudo systemctl enable bluetooth
 
 # document viewer
 sudo apt-get install -y evince
@@ -185,19 +185,19 @@ sudo apt-get install -y brave-browser
 # dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
 # Dangerzone destroys malware by rendering your document into pixels in a secure sandbox and reconstructing it locally as a PDF.
 # Documents are sanitized in a sandbox with no network access, so if a malicious document can compromise one, it can't let anyone know.
-sudo apt-get update && sudo apt-get install -y gpg ca-certificates
-sudo mkdir -p /etc/apt/keyrings
-sudo gpg --keyserver hkps://keys.openpgp.org \
-    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
-    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
-    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
-sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
-. /etc/os-release
-echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
-    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
-    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
-sudo apt update
-sudo apt-get install -y dangerzone    
+#sudo apt-get update && sudo apt-get install -y gpg ca-certificates
+#sudo mkdir -p /etc/apt/keyrings
+#sudo gpg --keyserver hkps://keys.openpgp.org \
+#    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
+#    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
+#    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
+#sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
+#. /etc/os-release
+#echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
+#    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
+#    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
+#sudo apt update
+#sudo apt-get install -y dangerzone    
 
 # background / image manager
 sudo apt-get install -y feh
@@ -399,9 +399,9 @@ xdg-user-dirs-update
 
 # nordvpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are included so no setup required. Will likely switch to mullvad soon)
-curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
-sh nordvpn_install.sh
-sudo usermod -aG nordvpn $USER
+#curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
+#sh nordvpn_install.sh
+#sudo usermod -aG nordvpn $USER
 
 # mullvad vpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are not included so requires manual setup)
@@ -423,7 +423,7 @@ sudo usermod -aG nordvpn $USER
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
 # bleachbit file shredder
-sudo apt-get -y install bleachbit
+#sudo apt-get -y install bleachbit
 
 # Flatpak containerized apps platform
 #sudo apt-get install -y flatpak
@@ -435,7 +435,7 @@ sudo apt-get install -y fonts-noto-color-emoji
 git clone https://github.com/EliverLara/candy-icons
 
 # kvm/qemu guest agent  YOU WANT THIS IF installing as kvm-qemu guest vm
-#sudo apt-get install -y spice-vdagent 
+sudo apt-get install -y spice-vdagent 
 
 ### hypervisor tools
 
@@ -473,18 +473,18 @@ sh ~/deb12-i3/copyconf.sh
 # Keep these commented if installing on hardware. After first boot, you can modify display.sh value "Virtual-1" to your display output
 # Get display outputs with $  xarandr -q
 # Physical display outputs are HDMI-0, VGA-0, DP-0, DVI-D-0, HDMI-1, etc.
-#sudo cp ~/deb12-i3/display.sh /usr/share/display.sh
-#sudo chown root:root /usr/share/display.sh
-#sudo chmod 775 /usr/share/display.sh
-#sudo cp ~/deb12-i3/background.png /usr/share/background.png
-#sudo chown root:root /usr/share/background.png
-#sudo chmod 644 /usr/share/background.png
-#sudo cp ~/deb12-i3/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
-#sudo chown root:root /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
-#sudo chmod 644 /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
-#sudo cp ~/deb12-i3/lightdm.conf /etc/lightdm/lightdm.conf
-#sudo chown root:root /etc/lightdm/lightdm.conf
-#sudo chmod 644 /etc/lightdm/lightdm.conf
+sudo cp ~/deb12-i3/display.sh /usr/share/display.sh
+sudo chown root:root /usr/share/display.sh
+sudo chmod 775 /usr/share/display.sh
+sudo cp ~/deb12-i3/background.png /usr/share/background.png
+sudo chown root:root /usr/share/background.png
+sudo chmod 644 /usr/share/background.png
+sudo cp ~/deb12-i3/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
+sudo chown root:root /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
+sudo chmod 644 /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
+sudo cp ~/deb12-i3/lightdm.conf /etc/lightdm/lightdm.conf
+sudo chown root:root /etc/lightdm/lightdm.conf
+sudo chmod 644 /etc/lightdm/lightdm.conf
 
 sudo systemctl enable lightdm
 
