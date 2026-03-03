@@ -95,27 +95,17 @@ sudo apt-get install -y apt-transport-https curl ca-certificates -y
 sudo bash <<'BASH'
 #set -e
 
-F=/etc/apt/sources.list.d/debian.sources
-if [ -f "$F" ]; then
-  awk '
-    /^Components:/{
-      line=$0
-      if (line !~ / contrib/) line=line " contrib"
-      if (line !~ / non-free/) line=line " non-free"
-      if (line !~ / non-free-firmware/) line=line " non-free-firmware"
-      print line
-      next
-    }
-    {print}
-  ' "$F" > "$F.tmp"
-  mv "$F.tmp" "$F"
-  apt-get update
-else
-  echo "No deb822 file found at $F"
-  exit 1
-fi
-BASH
-set -e
+sudo sed -i -E '
+/^deb(\s+\[[^]]+\])?\s+/{
+  / main /{
+    / contrib /! s/ main / main contrib /
+    / non-free /! s/ main contrib / main contrib non-free /
+    / non-free-firmware /! s/ non-free / non-free non-free-firmware /
+  }
+}
+' /etc/apt/sources.list
+
+sudo apt update
 
 
 ###REPLACE software-properties-common
