@@ -453,22 +453,24 @@ sudo apt-get install -y lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
 
 # import scripts and configs
-sh ~/deb12-i3/copyconf.sh
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TARGET_USER="${SUDO_USER:-$USER}"
+sudo -u "$TARGET_USER" sh "$SCRIPT_DIR/copyconf.sh"
 
 # This makes lightdm greeter login screen set display to 1080p on kvm-qemu guest vm and sets the background for the login screen - 
 # Keep these commented if installing on hardware. After first boot, you can modify display.sh value "Virtual-1" to your display output
 # Get display outputs with $  xarandr -q
 # Physical display outputs are HDMI-0, VGA-0, DP-0, DVI-D-0, HDMI-1, etc.
-sudo cp ~/deb12-i3/display.sh /usr/share/display.sh
+sudo cp "$SCRIPT_DIR/deb12-i3/display.sh" /usr/share/display.sh
 sudo chown root:root /usr/share/display.sh
 sudo chmod 775 /usr/share/display.sh
-sudo cp ~/deb12-i3/background.png /usr/share/background.png
+sudo cp "$SCRIPT_DIR/background.png" /usr/share/background.png
 sudo chown root:root /usr/share/background.png
 sudo chmod 644 /usr/share/background.png
-sudo cp ~/deb12-i3/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
+sudo cp "$SCRIPT_DIR/01_debian.conf" /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
 sudo chown root:root /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
 sudo chmod 644 /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
-sudo cp ~/deb12-i3/lightdm.conf /etc/lightdm/lightdm.conf
+sudo cp "$SCRIPT_DIR/lightdm.conf" /etc/lightdm/lightdm.conf
 sudo chown root:root /etc/lightdm/lightdm.conf
 sudo chmod 644 /etc/lightdm/lightdm.conf
 
