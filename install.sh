@@ -44,7 +44,7 @@ sudo apt-get install -y nemo
 sudo apt-get install -y fzf
 
 # terminal list directory (on steroids)
-sudo apt-get install -y exa
+sudo apt-get install -y eza
 
 # settings interface
 sudo apt-get install -y xfce4-settings xfce4-power-manager
@@ -92,6 +92,36 @@ sudo apt-get install -y gnome-system-monitor
 
 # enable non-free repos
 sudo apt-get install -y apt-transport-https curl ca-certificates -y
+sudo bash -c '
+set -e
+
+F=/etc/apt/sources.list.d/debian.sources
+if [ -f "$F" ]; then
+  # Add contrib/non-free/non-free-firmware to any "Components:" line that only has "main"
+  # and also to any Components line that’s missing those components.
+  awk '
+    BEGIN{added=0}
+    /^Components:/{
+      line=$0
+      if (line !~ / contrib/) line=line " contrib"
+      if (line !~ / non-free/) line=line " non-free"
+      if (line !~ / non-free-firmware/) line=line " non-free-firmware"
+      print line
+      added=1
+      next
+    }
+    {print}
+    END{
+      if (!added) {
+        # If there was no Components line (rare), do nothing; manual fix needed.
+      }
+    }
+  ' "$F" > "$F.tmp" && mv "$F.tmp" "$F"
+else
+  echo "No deb822 file found at $F"
+  exit 1
+fi
+'
 ###REPLACE software-properties-common
 #echo | sudo apt-add-repository contrib non-free-firmware
 sudo apt-get update && sudo apt-get upgrade -y
