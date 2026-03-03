@@ -355,7 +355,7 @@ sudo apt-get install -y keepassxc
 #sudo apt-get install -y handbrake
 
 # simplified man pages
-sudo apt-get install -y tldr
+sudo apt-get install -y tealdeer
 
 # dev tools
 # vscode ide (NOT FOSS)
