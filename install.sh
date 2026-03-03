@@ -79,7 +79,8 @@ sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulsee
 
 # terminal apps  
 # leave these or the dashboard won't work, can disable dashboard in i3 workspace config
-sudo apt-get install -y neofetch bpytop cmatrix
+sudo apt-get install -y bpytop cmatrix
+###REPLACE neofetch
 # these can be removed if you don't want them
 sudo apt-get install -y htop glances figlet calc
 
@@ -90,8 +91,9 @@ sudo apt-get install -y gnome-system-monitor
 #sudo apt-get install -y synaptic
 
 # enable non-free repos
-sudo apt-get install -y software-properties-common apt-transport-https curl ca-certificates -y
-echo | sudo apt-add-repository contrib non-free-firmware
+sudo apt-get install -y apt-transport-https curl ca-certificates -y
+###REPLACE software-properties-common
+#echo | sudo apt-add-repository contrib non-free-firmware
 sudo apt-get update && sudo apt-get upgrade -y
 
 # create ~/.local/share/applications/ to support executables and snaps in Rofi
