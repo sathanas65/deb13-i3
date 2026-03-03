@@ -79,7 +79,7 @@ sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulsee
 
 # terminal apps  
 # leave these or the dashboard won't work, can disable dashboard in i3 workspace config
-sudo apt-get install -y bpytop cmatrix
+sudo apt-get install -y bpytop cmatrix hyfetch
 ###REPLACE neofetch
 # these can be removed if you don't want them
 sudo apt-get install -y htop glances figlet calc
