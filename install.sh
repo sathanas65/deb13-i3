@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # on error continue
-set +e
+set -e
 
 # reset sudo clock every 60 seconds so you only have to enter password once
 while true; do
@@ -93,7 +93,7 @@ sudo apt-get install -y gnome-system-monitor
 # enable non-free repos
 sudo apt-get install -y apt-transport-https curl ca-certificates -y
 sudo bash <<'BASH'
-set -e
+#set -e
 
 F=/etc/apt/sources.list.d/debian.sources
 if [ -f "$F" ]; then
