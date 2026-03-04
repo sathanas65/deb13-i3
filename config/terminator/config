@@ -1,0 +1,32 @@
+[global_config]
+  borderless = True
+[keybindings]
+[profiles]
+  [[default]]
+    icon_bell = False
+    background_type = transparent
+    show_titlebar = False
+    scrollbar_position = hidden
+    title_transmit_bg_color = "#613583"
+    title_receive_bg_color = "#77767b"
+    title_inactive_bg_color = "#3584e4"
+  [[keybinds]]
+    background_color = "#19042f"
+    background_darkness = 0.9
+    background_type = transparent
+    cursor_fg_color = "#000000"
+    cursor_bg_color = "#aaaaaa"
+    foreground_color = "#d992fb"
+    show_titlebar = False
+    scrollbar_position = hidden
+    bold_is_bright = True
+  [[New Profile]]
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]
