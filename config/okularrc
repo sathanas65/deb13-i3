@@ -1,0 +1,19 @@
+[Desktop Entry]
+FullScreen=true
+shouldShowMenuBarComingFromFullScreen=true
+shouldShowToolBarComingFromFullScreen=true
+
+[MainWindow]
+2 screens: Height=1079
+2 screens: Width=1918
+2 screens: XPosition=1920
+2 screens: YPosition=0
+3 screens: Height=1012
+3 screens: Width=630
+3 screens: XPosition=642
+3 screens: YPosition=2193
+DVI-D-0 DisplayPort-1=DVI-D-0
+DVI-D-0 DisplayPort-1 HDMI-A-0=DisplayPort-1
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAB34AAAQ3AAAABAAAAAQAAAAIAAAACPwAAAADAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAABAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAAAIAAAABAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+ToolBarsMovable=Disabled
