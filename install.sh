@@ -411,8 +411,10 @@ xdg-user-dirs-update
 #sudo apt-get -y install bleachbit
 
 # Flatpak containerized apps platform
-#sudo apt-get install -y flatpak
-#sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+sudo apt-get install -y flatpak
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub com.brave.Browser
+
 
 # These are required for the theme and icons to work and i3bar to display correctly
 sudo apt-get install -y libgtk-4-dev
