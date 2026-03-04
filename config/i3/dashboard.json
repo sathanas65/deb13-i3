@@ -1,0 +1,45 @@
+{
+    "type": "splith",
+    "nodes": [
+        {
+            "type": "splitv",
+            "percent": 0.33,
+            "layout": "splitv",
+            "nodes": [
+                {
+                    "type": "con",
+                    "percent": 0.42,
+                    "layout": "splitv",
+                    "swallows": [
+                        {
+                            "class": "^Terminator$",
+                            "title": "^dashboard-hyfetch$"
+                        }
+                    ]
+                },
+                {
+                    "type": "con",
+                    "percent": 0.58,
+                    "layout": "splitv",
+                    "swallows": [
+                        {
+                            "class": "^Terminator$",
+                            "title": "^dashboard-cmatrix$"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "con",
+            "percent": 0.67,
+            "layout": "splith",
+            "swallows": [
+                {
+                    "class": "^Terminator$",
+                    "title": "^dashboard-bpytop$"
+                }
+            ]
+        }
+    ]
+}
