@@ -4,9 +4,11 @@
 
 cp -r config/libreoffice/ ~/.config/
 
-sudo cp -r candy-icons /usr/share/icons
 cd
 cd deb13-i3
+
+7z x candy-icons.7z candy-icons
+sudo cp -r candy-icons /usr/share/icons/
 
 # import scripts
 cp -r scripts/ ~/
