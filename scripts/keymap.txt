@@ -1,0 +1,308 @@
+###KEYMAP###
+
+Super + Shift + h - displays this keybind map
+
+Super + Shift + q - exit i3
+
+Super + l - lock the screen
+
+Super + Shift + b - toggle the i3 status bar, repeat to hide it again
+
+Control + Shift + Escape - launch Gnome System Monitor
+
+Super + Shift + f - toggles the firewall on and off
+
+###Shutdown Restart Hibernate Suspend
+Super + Ctrl + s - then 
+		x to shutdown (requires password)
+		r to reboot (requires password)
+OR
+Super + Shift + q -then
+		Alt + F4 - then
+				Enter to shutdown
+
+		After exiting i3 with Super + Shift + q you can suspend, hibernate, restart or shutdown by 
+		clicking the power icon in the top right corner of the lightdm login screen
+
+###WINDOW MANAGEMENT IN i3wm
+
+	Move tiling windows via drag & drop by left-clicking into the title bar
+        or left-clicking anywhere into the window while holding the floating modifier
+                
+	# Change the focus (which window is active)
+	Super + left arrow - move the focus to the window to the left of the active window
+	Super + right arrow - move the focus to the window to the right of the active window
+	Super + up arrow - move the focus to the window above the active window
+	Super + down arrow - move the focus to the window below the active window
+	
+	# Move the active window
+	Super + Shift + left arrow - move the active window left
+	Super + Shift + right arrow - move the active window right
+	Super + Shift + up arrow - move the active window up
+	Super + Shift + down arrow - move the active window down
+
+	# Workspaces
+	Super + w - Enter Workspace Mode, then:
+			0 - go to workspace "Dashboard" - if not in use it will open on the active display
+			1 - go to workspace "Communications" - if not in use it will open on the active display
+			a - go to workspace "Accounts" - if not in use it will open on the active display
+			b - go to workspace "Browser" - if not in use it will open on the active display
+			c - go to workspace "Config" - if not in use it will open on the active display
+			d - go to workspace "Development" - if not in use it will open on the active display
+			f - go to workspace "Finance" - if not in use it will open on the active display
+			m - go to workspace "Media" - if not in use it will open on the active display
+			n - go to workspace "Notes" - if not in use it will open on the active display
+			p - go to workspace "Production" - if not in use it will open on the active display
+			r - go to workspace "Research" - if not in use it will open on the active display
+			s - go to workspace "System" - if not in use it will open on the active display
+			t - go to workspace "TV" - if not in use it will open on the active display			
+			v - go to workspace "Virt" - if not in use it will open on the active display
+
+			Right - move active workspace to the right display
+			Left - move active workspace to the left display
+	
+			l - add workspace on the left output, OR
+			r - add workspace on the right output, then:
+				0 - go to workspace "Dashboard"
+				1 - go to workspace "Communications"
+				a - go to workspace "Accounts"
+				b - go to workspace "Browser"
+				c - go to workspace "Config"
+				d - go to workspace "Development"
+				f - go to workspace "Finance"
+				m - go to workspace "Media"
+				n - go to workspace "Notes"
+				p - go to workspace "Production"
+				r - go to workspace "Research"
+				s - go to workspace "System"
+				t - go to workspace "TV"
+				v - go to workspace "Virt"
+	
+			v - Virtual machine workspace mode, then:
+				0 - go to VM 0
+				1 - go to VM 1
+				2 - go to VM 2
+				3 - go to VM 3
+
+	# Enter Move Mode
+	Super + m     -then:
+		0 - move active window to Dashboard workspace
+		1 - move active window to Communications workspace
+		a - move active window to Accounts workspace
+		b - move active window to Browser workspace
+		c - move active window to Config workspace
+		d - move active window to Development workspace
+		f - move active window to Finance workspace
+		m - move active window to Media workspace
+		n - move active window to Notes workspace
+		p - move active window to Production workspace
+		r - move active window to Research workspace
+		s - move active window to System workspace
+		t - move active window to TV workspace
+		v - move active window to Virt workspace
+
+		h - move active window to the Scratchpad
+
+	Super + Shift + s - show the scratchpad
+
+	# Change the new window orientation
+	Super + v - the next window will populate in the lower half of the active window's current position
+	Super + h - the next window will populate in the right half of the active window's current position
+	
+	# Change container layout (stacked, tabbed, toggle split)
+	(Alt + l) then 1 - toggle split
+	(Alt + l) then 2 - layout tabbed
+	(Alt + l) then 3 - layout stacking
+
+	Super + f - toggle fullscreen for the active window
+	Super + q - kills the active window
+	Super + Shift + Space - toggle between tiling and floating windows	 
+	Super + Ctrl + Space - Change focus between tiling / floating windows
+
+	# Resize Windows
+	Super + r - toggles window resize mode
+	Once toggled, these resize functions can be used on the active window:
+		j (or left arrow) - shrink width
+		k (or down arrow)- grow height
+		l (or up arrow) - shrink height
+		semicolon (or right arrow) - grow width
+	Enter or Escape or Super + r to exit resize mode
+	
+###Display Management
+Super + d - toggles display mode
+Once toggled, these display functions can be used:
+	1 - toggle dual monitor mode (if not a virtual machine, edit ~/dual.sh to match your hardware)
+	2 - toggle single monitor mode (if not a virtual machine, edit ~/right.sh to match your hardware)
+	3 - toggle dual monitor + 4k TV mode (if not a virtual machine, edit ~/tv.sh to match your hardware)
+	a - launch arandr to set display settings in a graphical interface
+Enter or Escape or Super + d to exit display mode
+
+###Audio
+Super + p - launch Pulseaudio Volume Control
+Super + Ctrl + p - launch Pulse Effects
+
+###Launching apps
+Super + Space - display Rofi app launcher
+
+	#Terminal emulators
+	Super + Enter - launch Terminator
+	Super + Shift + Enter - launch Tmux
+
+	#GUI Package Manager
+	Super + Ctrl + s - then s - launch Synaptic Package Manager
+
+	#Backup Tools
+	Super + Ctrl + s - then t - launch Timeshift
+	Super + Shift + d - launch Duplicity (work in progress)
+	
+	#File Manager
+	Super + e - launch Thunar File Manager
+
+	#Encrypted Message App
+	Alt + s - launch Signal Message App
+
+	#Libreoffice
+	Super + Shift + l - launch Libreoffice
+
+	#Calculators
+	Calc - launch floating calculator
+	Super + Calc - launch tiled calculator
+
+	#Notes
+	Super + z - launch Zim
+
+	#Media Player
+	Super + Ctrl + v - launch VLC
+
+	#Ebook Reader
+	Alt + f - launch Foliate
+
+	#Personal Finance
+	Super + Ctrl + d - launch Denaro (requires install after first boot)
+
+	#Email Client
+	Super + Shift + e - launch Thunderbird
+
+	#Torrent Client
+	Alt + t - launch Transmission
+
+	#Disk Management
+	Super + g - launch Gnome Disks
+	Super + Ctrl + s - then d - launch Gnome Disks as superuser
+
+	#System Management
+	Super + c - launch Cockpit Web Console (in Chromium)
+
+	#Clipboard Manager Toggle (same command to open and close)
+	Super + Control + c
+	
+	#Image editors
+	Super + Shift + p - launch Pinta (like MS Paint)
+	Super + Shift + g - launch gimp (like MS Photoshop)
+	
+	#Virtual Machine Management
+	Super + Shift + v - launch virt-manager
+
+### Browsers
+Super + b enters browser mode:
+	b - launch Brave
+	c - launch Chromium
+	f - launch Firefox
+	t - launch Tor Browser
+	m - launch Mullvad Browser
+	l - launch Librewolf
+Enter or Escape or Super + b to exit browser mode
+
+### Text Editors
+Super + t enters text mode:
+	e - launch Doom Emacs
+	g - launch Geany
+	s - launch Sublime
+	b - launch Brackets
+Enter or Escape or Super + t to exit text mode
+
+### Authentication
+Super + Shift + a enters authenticate mode:
+	k - launch Kleopatra GPG tool
+	p - launch Keepass2 Password Manager
+	b - launch Bitwarden Password Manager
+	g - launch Gnome Authenticator 2FA tool
+	a - launch AuthPass 2FA tool
+Enter or Escape or Super + Shift + a to exit authenticate mode
+
+### NordVPN
+Super + n enters NordVPN mode:
+        l - nordvpn login
+        p - pause nordvpn (disables killswitch and disconnects)
+        c - resume nordvpn (quick connects and enables killswitch)
+        s - displays nordvpn status
+        f - connects to peer to peer server (more bandwidth)
+        2 - connects to double vpn
+Mode should return to default but if not you can use Escape or Return
+
+### Screenshots
+Printscreen enters screenshot mode.
+	0 - saves a screenshot of the active screen to Pictures after a 3 second delay
+        1 - saves a screenshot of the active screen to Pictures with no delay
+        2 - saves a screenshot of the active window to Pictures
+        3 - generates a crosshair that allows you to select an area to screenshot to Pictures
+        4 - saves a screenshot of the active screen to the clipboard
+        5 - saves a screenshot of the active window to the clipboard
+        6 - generates a crosshair that allows you to select an area to screenshot to clipboard
+Mode should return to default but if not you can use Escape or Return
+
+### Terminal Apps
+Super + Shift + t enters terminal mode
+	n - launch neofetch
+	m - launch midnight commander
+	g - launch glances
+	h - launch htop
+	c - launch calc
+Enter or Escape or Super + Shift + t to exit terminal mode
+
+### Video Tools
+Alt + v enters video mode
+	1 - launch Simple Screen Recorder
+	2 - launch Kazam
+	3 - launch KdenLive
+	4 - launch Shotcut
+	5 - launch Openshot
+	6 - launch Handbrake
+	7 - Download Youtube video using url in clipboard (work in progress)
+Enter or Escape or Alt + v to exit video mode
+
+### Dev Tools
+Alt + d enters dev mode
+	1 - launch Codium
+	2 - launch PyCharm
+	3 - launch Postman
+Enter or Escape or Alt + d to exit dev mode
+
+###Config file edit mode
+Alt + c - opens Config Workspace and sets mode to config. Escape or Enter to cancel.
+###Config files that require sudo to edit will prompt for password. Password is ported directly to sudo, no variable is used.
+	then i - sets mode to i3 config
+		then i - backs up the main i3 config and opens it for editing
+		then w - backs up the i3 workspace config and opens it for editing
+		then c - backs up the i3 container config and opens it for editing
+		then k - backs up the i3 keybinds config and opens it for editing (note- this is only for keybinds that are not part of modes)
+		then e - backs up the i3 execmode config and opens it for editing
+		then s - backs up the i3 start config and opens it for editing
+		then m - backs up the i3 baremetal config and opens it for editing
+		then v - backs up the i3 vmguest config and opens it for editing
+		#then b - backs up the i3blocks config and opens it for editing #not done
+		then a - backs up the i3 autostart script and opens it for editing
+		
+	then l - sets mode to lightdm config
+		then l - backs up the main lightdm config and opens it for editing
+		then g - backs up the lightdm greeter config and opens it for editing
+		then d - backs up the lightdm display script and opens it for editing
+	then x - backs up xorg.conf and opens it for editing
+	then g - backs up the grub bootloader config and opens it for editing
+	then f - backs up the fstab partition mounting config and opens it for editing
+	then c - backs up the crypttab luks mapping config and opens it for editing
+	then d - backs up the dunst notification daemon config and opens it for editing
+
+Super + Shift + c - reloads the i3 config file, used after editing the config
+
+Super + Shift + r - restarts i3 in place, preserving the session

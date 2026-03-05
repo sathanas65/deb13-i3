@@ -1,28 +1,97 @@
 #!/bin/bash
 
-# on error continue
-set -e
+# on error 
+set -euo pipefail
 
 # reset sudo clock every 60 seconds so you only have to enter password once
-while true; do
-    sudo -v
-    sleep 60
-done &
+sudo -v
+( while true; do sudo -n true; sleep 60; done ) 2>/dev/null &
+SUDO_PID=$!
+trap 'kill $SUDO_PID 2>/dev/null' EXIT
 
 # firewall
 sudo apt-get install -y ufw
-sudo ufw enable
+sudo ufw --force enable
 
 #TODO
-#Dangerzone
-#Freemind
-#Kiwix
-#Waydroid
-#Winboat
-#Wazuh
-#GNU PGP (-Kleopatra)
+
+#winboat
+#waydroid
+#wazuh
 
 sudo apt-get update && sudo apt-get upgrade -y
+
+# enable non-free repos
+sudo apt-get install -y apt-transport-https curl ca-certificates
+#set -e
+
+enable_nonfree() {
+  local deb822_primary="/etc/apt/sources.list.d/debian.sources"
+
+  _enable_deb822_file() {
+    # $1 = .sources file
+    # Idempotent: append missing components only; never duplicates.
+    sudo sed -i -E '
+      /^Components:[[:space:]]/{
+        s/[[:space:]]+/ /g
+        /(^|[[:space:]])main([[:space:]]|$)/{
+          /(^|[[:space:]])contrib([[:space:]]|$)/! s/$/ contrib/
+          /(^|[[:space:]])non-free([[:space:]]|$)/! s/$/ non-free/
+          /(^|[[:space:]])non-free-firmware([[:space:]]|$)/! s/$/ non-free-firmware/
+        }
+      }
+    ' "$1"
+  }
+
+  _enable_classic_sources_list() {
+    # /etc/apt/sources.list
+    # Idempotent: append missing components at end of matching deb lines.
+    sudo sed -i -E '
+      /^deb(\s+\[[^]]+\])?\s+/{
+        s/[[:space:]]+/ /g
+        /(^|[[:space:]])main([[:space:]]|$)/{
+          /(^|[[:space:]])contrib([[:space:]]|$)/! s/$/ contrib/
+          /(^|[[:space:]])non-free([[:space:]]|$)/! s/$/ non-free/
+          /(^|[[:space:]])non-free-firmware([[:space:]]|$)/! s/$/ non-free-firmware/
+        }
+      }
+    ' /etc/apt/sources.list
+  }
+
+  if [[ -f "$deb822_primary" ]]; then
+    _enable_deb822_file "$deb822_primary"
+
+  elif compgen -G "/etc/apt/sources.list.d/*.sources" >/dev/null; then
+    # Fallback deb822: only touch Debian-ish .sources files
+    local f
+    for f in /etc/apt/sources.list.d/*.sources; do
+      if sudo grep -Eq '^URIs:[[:space:]]*(https?://)?(deb\.debian\.org|security\.debian\.org|ftp\.[a-z]+\.(debian\.org|debian\.net))/' "$f"; then
+        _enable_deb822_file "$f"
+      fi
+    done
+
+  else
+    _enable_classic_sources_list
+  fi
+}
+
+enable_nonfree
+
+# Hard-fail during testing:
+# - If deb822 primary exists, require non-free-firmware to be present
+# - Else (classic), require non-free-firmware to be present on at least one deb line containing main
+if [[ -f /etc/apt/sources.list.d/debian.sources ]]; then
+  sudo grep -qE '^Components:.*(^|[[:space:]])non-free-firmware([[:space:]]|$)' /etc/apt/sources.list.d/debian.sources
+else
+  sudo grep -qE '^deb(\s+\[[^]]+\])?\s+.*(^|[[:space:]])main([[:space:]]|$).*non-free-firmware' /etc/apt/sources.list
+fi
+
+sudo apt-get update
+
+
+###REPLACE software-properties-common
+#echo | sudo apt-add-repository contrib non-free-firmware
+#sudo apt-get update
 
 # terminal text editor
 # VIM is required for keymap to work out of the box
@@ -33,6 +102,16 @@ sudo apt-get install -y network-manager-gnome
 
 # appearance managers
 sudo apt-get install -y lxappearance picom 
+
+# Flatpak containerized apps platform
+sudo apt-get install -y flatpak
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+# snap store (Supports installation of containerized apps)
+sudo apt-get install -y snapd
+sudo snap install core
+# schedule snap updates daily between 2 and 4 am
+sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
 sudo apt-get install -y nemo
@@ -64,6 +143,8 @@ sudo apt-get install -y terminator
 # Super + Shift + i for backup and edit i3 config and
 # Super + n then s for nordvpn status)
 sudo apt-get install -y konsole
+#sudo apt-get install -y xterm
+#sudo apt-get install -y zutty
 
 # tmux - terminal multiplexer - runs in terminal and shell sessions run in tmux - excellent features
 sudo apt-get install -y tmux
@@ -90,30 +171,6 @@ sudo apt-get install -y gnome-system-monitor
 # apt-get package manager front end
 #sudo apt-get install -y synaptic
 
-# enable non-free repos
-sudo apt-get install -y apt-transport-https curl ca-certificates -y
-#set -e
-
-sudo sed -i -E '
-/^deb(\s+\[[^]]+\])?\s+/{
-  / main /{
-    / contrib /! s/ main / main contrib /
-    / non-free /! s/ main contrib / main contrib non-free /
-    / non-free-firmware /! s/ non-free / non-free non-free-firmware /
-  }
-}
-' /etc/apt/sources.list
-
-sudo apt update
-
-
-###REPLACE software-properties-common
-#echo | sudo apt-add-repository contrib non-free-firmware
-sudo apt-get update && sudo apt-get upgrade -y
-
-# create ~/.local/share/applications/ to support executables and snaps in Rofi
-mkdir -p "$HOME/.local/share/applications"
-
 # printer support
 #sudo apt-get install -y cups
 #sudo systemctl enable cups
@@ -128,6 +185,7 @@ sudo apt-get install -y evince
 
 # ebook reader
 #sudo apt-get install -y foliate
+sudo apt-get install -y calibre
 
 # comic reader
 #sudo apt-get install -y mcomix
@@ -147,6 +205,9 @@ wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-k
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt-get update
 sudo apt-get install -y brave-browser
+
+# brave flatpak (I like to use both apt and flatpak to help isolate google and such)
+flatpak install -y flathub com.brave.Browser
 
 # librewolf browser
 #sudo apt-get update && sudo apt-get install extrepo -y
@@ -202,11 +263,6 @@ sudo apt-get install -y dunst libnotify-bin
 # user dialog
 sudo apt-get install -y yad
 
-# snap store (Supports installation of containerized apps)
-sudo apt-get install -y snapd
-sudo snap install core
-# schedule snap updates weekly on Sunday between 2 and 4 am
-sudo snap set core refresh.schedule=02:00-04:00
 
 # gui text editor
 # geany
@@ -254,18 +310,22 @@ sudo apt-get install -y zim
 #sudo apt-get update
 #sudo apt-get install -y qownnotes
 
+# mind mapping
+sudo apt-get install -y freeplane
+
 # email client
+# GUI
 #sudo apt-get install -y evolution
 #sudo apt-get install -y thunderbird
+# CLI
+#sudo apt-get install -y neomutt
 
 # screenshots
 sudo apt-get install -y maim xclip xdotool jq
 
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
 #sudo apt-get install -y gimp
-
 sudo snap install pinta
-sudo cp /var/lib/snapd/desktop/applications/pinta_pinta.desktop ~/.local/share/applications/
 
 # zip utilities
 sudo apt-get install -y tar gzip p7zip-full
@@ -329,6 +389,9 @@ sudo apt-get install -y keepassxc
 #sudo snap install authpass
 #sudo cp /var/lib/snapd/desktop/applications/authpass_authpass.desktop ~/.local/share/applications/
 
+# Yubikey 
+sudo apt-get install -y yubikey-manager yubikey-manager-qt
+
 # smartphone manager
 #sudo apt-get install -y kdeconnect
 
@@ -342,7 +405,7 @@ sudo apt-get install -y keepassxc
 #  sudo tee /etc/apt/sources.list.d/signal-xenial.list
 #sudo apt-get update && sudo apt-get install -y signal-desktop
 
-# screen recorder
+# screen recorders
 #sudo apt-get install -y simplescreenrecorder
 #sudo apt-get install -y kazam
 
@@ -353,6 +416,14 @@ sudo apt-get install -y keepassxc
 # video converter
 #sudo apt-get install -y ffmpeg
 #sudo apt-get install -y handbrake
+
+# YouTube front end
+flatpak install -y flathub io.freetubeapp.FreeTube
+
+# Gaming
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install -y steam
 
 # simplified man pages
 sudo apt-get install -y tealdeer
@@ -399,32 +470,43 @@ xdg-user-dirs-update
 #sudo mkdir /var/lib/snapd/snap
 #sudo mkdir /var/lib/snapd/snap/bin
 #sudo snap install denaro
-#sudo cp /var/lib/snapd/desktop/applications/denaro_denaro.desktop ~/.local/share/applications/
 
 # postman API platform (NOT FOSS)
 #sudo snap install postman
-#sudo cp /var/lib/snapd/desktop/applications/postman_postman.desktop ~/.local/share/applications/
 # postman CLI
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
 # bleachbit file shredder
 #sudo apt-get -y install bleachbit
 
-# Flatpak containerized apps platform
-sudo apt-get install -y flatpak
-sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub com.brave.Browser
+# metadata removal tool
+#CLI
+sudo apt-get install -y mat2
+#GUI
+#sudo apt-get install -y metadata-cleaner
 
+# android tools
+sudo apt-get install -y android-sdk-platform-tools-common
+
+# GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
+sudo apt-get install -y kiwix
+# CLI tools and server
+sudo apt-get install -y kiwix-tools
 
 # These are required for the theme and icons to work and i3bar to display correctly
 sudo apt-get install -y libgtk-4-dev
 sudo apt-get install -y fonts-noto-color-emoji 
-git clone https://github.com/EliverLara/candy-icons
+#git clone https://github.com/EliverLara/candy-icons
 
 # kvm/qemu guest agent  YOU WANT THIS IF installing as kvm-qemu guest vm
 sudo apt-get install -y spice-vdagent 
 
 ### hypervisor tools
+
+# containerization
+sudo apt-get install -y podman
+#sudo apt-get install -y docker.io
+sudo apt-get install -y distrobox
 
 # kvm/qemu (type 1 HV)
 #sudo apt-get install -y virt-manager cockpit-machines cockpit-podman distrobox
@@ -444,6 +526,16 @@ sudo apt-get install -y spice-vdagent
 #echo y | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.0.10.vbox-extpack
 #sudo usermod -a -G vboxusers $USER
 
+# create ~/.local/share/applications/ to support executables and snaps in Rofi
+if [ -d /var/lib/snapd/desktop/applications ]; then
+	mkdir -p "$HOME/.local/share/applications"
+	for f in /var/lib/snapd/desktop/applications/*.desktop; do
+	  [ -e "$f" ] || continue
+	  ln -sf "$f" "$HOME/.local/share/applications/$(basename "$f")"
+	done
+	update-desktop-database "$HOME/.local/share/applications" >/dev/null 2>&1 || true
+fi
+
 ### graphical user interface
 
 # window manager DO NOT REMOVE
@@ -454,22 +546,22 @@ sudo apt-get install -y lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
 
 # import scripts and configs
-sh ~/deb12-i3/copyconf.sh
+sh ~/deb13-i3/copyconf.sh
 
 # This makes lightdm greeter login screen set display to 1080p on kvm-qemu guest vm and sets the background for the login screen - 
 # Keep these commented if installing on hardware. After first boot, you can modify display.sh value "Virtual-1" to your display output
 # Get display outputs with $  xarandr -q
 # Physical display outputs are HDMI-0, VGA-0, DP-0, DVI-D-0, HDMI-1, etc.
-sudo cp ~/deb12-i3/display.sh /usr/share/display.sh
+sudo cp ~/deb13-i3/display.sh /usr/share/display.sh
 sudo chown root:root /usr/share/display.sh
 sudo chmod 775 /usr/share/display.sh
-sudo cp ~/deb12-i3/background.png /usr/share/background.png
+sudo cp ~/deb13-i3/background.png /usr/share/background.png
 sudo chown root:root /usr/share/background.png
 sudo chmod 644 /usr/share/background.png
-sudo cp ~/deb12-i3/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
+sudo cp ~/deb13-i3/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
 sudo chown root:root /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
 sudo chmod 644 /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
-sudo cp ~/deb12-i3/lightdm.conf /etc/lightdm/lightdm.conf
+sudo cp ~/deb13-i3/lightdm.conf /etc/lightdm/lightdm.conf
 sudo chown root:root /etc/lightdm/lightdm.conf
 sudo chmod 644 /etc/lightdm/lightdm.conf
 
@@ -481,6 +573,6 @@ sudo chmod 0440 /etc/sudoers.d/ufw-status
 
 sudo apt-get update && sudo apt-get upgrade -y
 
-sudo apt-get auto-remove -y
+sudo apt-get autoremove -y
 
 sudo reboot now

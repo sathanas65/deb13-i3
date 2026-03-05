@@ -1,108 +1,96 @@
-#!/bin/bash
-####
-# This script is used to copy my config files over for use on reboot of installation.
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
-cp -r config/libreoffice/ ~/.config/
+# --- helpers ---
+die() { echo "ERROR: $*" >&2; exit 1; }
+have() { command -v "$1" >/dev/null 2>&1; }
 
-cd
-cd deb13-i3
+# --- locate repo safely ---
+REPO="$HOME/deb13-i3"
+[[ -d "$REPO" ]] || die "Repo not found at $REPO"
+cd "$REPO"
 
-7z x candy-icons.7z candy-icons
-sudo cp -r candy-icons /usr/share/icons/
+# --- ensure dirs exist ---
+mkdir -p "$HOME/.config" "$HOME/.local/share" "$HOME/scripts"
 
-# import scripts
-cp -r scripts/ ~/
+# --- copy configs (use -a to preserve perms/times; use source/. to avoid nesting) ---
+cp -a "config/libreoffice/." "$HOME/.config/"
 
-# import backgrounds
-cp -r config/backgrounds/ ~/.config
+# scripts
+cp -a "scripts/." "$HOME/scripts/"
 
-# import window manager and bar configs
-cp -r config/i3/ ~/.config
-cp -r config/i3blocks/ ~/.config
+# backgrounds
+cp -a "config/backgrounds/." "$HOME/.config/backgrounds/"
 
-# import notification daemon config
-cp -r config/dunst/ ~/.config
+# i3 / bars / notifications / launchers
+cp -a "config/i3/."       "$HOME/.config/i3/"
+cp -a "config/i3blocks/." "$HOME/.config/i3blocks/"
+cp -a "config/dunst/."    "$HOME/.config/dunst/"
+cp -a "config/rofi/."     "$HOME/.config/rofi/"
 
-# import app launcher config (optional - ensures dark theme works out of the box)
-cp -r config/rofi/ ~/.config
+# terminals
+cp -a "config/terminator/." "$HOME/.config/terminator/" || true
+cp -a "config/konsole/."    "$HOME/.local/share/konsole/" || true
+cp -a "config/konsolerc"    "$HOME/.config/konsolerc" || true
 
-# import terminal configs (optional - ensures dark theme and transparancy work out of the box)
-cp -r config/terminator/ ~/.config
-cp -r config/konsole/ ~/.local/share
-cp config/konsolerc ~/.config
+# dashboard
+cp -a "config/bpytop/."     "$HOME/.config/bpytop/" || true
+cp -a "config/hyfetch.json" "$HOME/.config/hyfetch.json" || true
 
-# import dashboard configs (optional - ensures dashboard works)
-cp -r config/bpytop/ ~/.config
-cp config/hyfetch.json ~/.config/hyfetch.json
-cp bashrc ~/.bashrc
-source ~/.bashrc
+# bashrc (overwrites)
+cp -a "bashrc" "$HOME/.bashrc"
 
-# Import themes and themed configs
-cp -r config/xfce4 ~/.config
-cp -r config/gtk-3.0 ~/.config
-cp -r config/gtk-4.0 ~/.config
-cp config/QtProject.conf ~/.config
-sudo cp -r config/Sweet-Dark-v40 /usr/share/themes
-cp -r config/copyq ~/.config
-cp -r config/galculator ~/.config
-cp config/kcalcrc ~/.config
-#cp config/krusaderrc ~/.config
+# themes + themed configs
+cp -a "config/xfce4/."     "$HOME/.config/xfce4/" || true
+cp -a "config/gtk-3.0/."   "$HOME/.config/gtk-3.0/" || true
+cp -a "config/gtk-4.0/."   "$HOME/.config/gtk-4.0/" || true
+cp -a "config/QtProject.conf" "$HOME/.config/QtProject.conf" || true
+cp -a "config/copyq/."     "$HOME/.config/copyq/" || true
+cp -a "config/galculator/." "$HOME/.config/galculator/" || true
+cp -a "config/kcalcrc"     "$HOME/.config/kcalcrc" || true
 
-# import browser configs (optional - ensures dark theme and dark reader extension work out of the box)
-#cp -r config/chromium/ ~/.config
-#cp -r .mozilla ~
-#cp -r config/BraveSoftware/ ~/.config
-
-# make scripts executable
-chmod +x ~/.config/i3/autostart.sh
-chmod +x ~/.config/i3blocks/cpu/cpu_info.sh
-chmod +x ~/.config/i3blocks/battery/battery_info.sh
-chmod +x ~/.config/i3blocks/weather/weather.sh
-chmod +x ~/.config/i3blocks/weather/weather.py
-sudo chmod +x ~/scripts/*.sh
-
-# Check if Mirage is installed
-if command -v mirage >/dev/null 2>&1; then
-    echo "Mirage is installed. Setting it as the default image viewer."
-
-    # Define the Mirage desktop entry file name
-    MIRAGE_DESKTOP="mirage.desktop"
-
-    # Set default applications for various image MIME types
-    xdg-mime default "$MIRAGE_DESKTOP" image/jpeg
-    xdg-mime default "$MIRAGE_DESKTOP" image/png
-    xdg-mime default "$MIRAGE_DESKTOP" image/webp
-    xdg-mime default "$MIRAGE_DESKTOP" image/gif
-    xdg-mime default "$MIRAGE_DESKTOP" image/bmp
-    xdg-mime default "$MIRAGE_DESKTOP" image/tiff
-
-    echo "Default image viewer set to Mirage for JPEG, PNG, WebP, GIF, BMP, and TIFF."
+# --- icons/themes system-wide ---
+if have 7z; then
+  [[ -f "candy-icons.7z" ]] || die "candy-icons.7z not found in $REPO"
+  rm -rf candy-icons
+  7z x "candy-icons.7z" -o"$REPO" >/dev/null
+  [[ -d "candy-icons" ]] || die "Expected candy-icons/ after extraction"
+  sudo cp -a "candy-icons" "/usr/share/icons/"
 else
-    echo "Error: Mirage is not installed. Please install Mirage first using 'sudo apt-get install mirage'."
+  die "7z not installed. Install with: sudo apt-get install -y p7zip-full"
 fi
 
-# Check if VLC is installed
-if command -v vlc >/dev/null 2>&1; then
-    echo "VLC is installed. Setting it as the default media player."
+sudo cp -a "config/Sweet-Dark-v40" "/usr/share/themes/"
 
-    # Define the VLC desktop entry file name
-    VLC_DESKTOP="vlc.desktop"
+# --- make scripts executable (robust) ---
+chmod +x "$HOME/.config/i3/autostart.sh" || true
+chmod +x "$HOME/.config/i3blocks/cpu/cpu_info.sh" || true
+chmod +x "$HOME/.config/i3blocks/battery/battery_info.sh" || true
+chmod +x "$HOME/.config/i3blocks/weather/weather.sh" || true
+chmod +x "$HOME/.config/i3blocks/weather/weather.py" || true
+find "$HOME/scripts" -maxdepth 1 -type f -name "*.sh" -exec chmod +x {} +
 
-    # Set default applications for various video MIME types
-    xdg-mime default "$VLC_DESKTOP" video/mp4
-    xdg-mime default "$VLC_DESKTOP" video/x-matroska
-    xdg-mime default "$VLC_DESKTOP" video/x-msvideo
-    xdg-mime default "$VLC_DESKTOP" video/x-flv
-    xdg-mime default "$VLC_DESKTOP" video/webm
+# --- defaults (needs desktop session) ---
+if have xdg-mime; then
+  if [[ -n "${DBUS_SESSION_BUS_ADDRESS-}" ]]; then
+    if have mirage; then
+      MIRAGE_DESKTOP="mirage.desktop"
+      xdg-mime default "$MIRAGE_DESKTOP" image/jpeg image/png image/webp image/gif image/bmp image/tiff
+    else
+      echo "Note: Mirage not installed (sudo apt-get install -y mirage)"
+    fi
 
-    # Set default applications for various audio MIME types
-    xdg-mime default "$VLC_DESKTOP" audio/mpeg
-    xdg-mime default "$VLC_DESKTOP" audio/x-wav
-    xdg-mime default "$VLC_DESKTOP" audio/x-flac
-    xdg-mime default "$VLC_DESKTOP" audio/ogg
-    xdg-mime default "$VLC_DESKTOP" audio/mp4
-
-    echo "Default media player set to VLC for common video and audio file types."
+    if have vlc; then
+      VLC_DESKTOP="vlc.desktop"
+      xdg-mime default "$VLC_DESKTOP" video/mp4 video/x-matroska video/x-msvideo video/x-flv video/webm \
+                                   audio/mpeg audio/x-wav audio/x-flac audio/ogg audio/mp4
+    else
+      echo "Note: VLC not installed (sudo apt-get install -y vlc)"
+    fi
+  else
+    echo "Note: No desktop session DBus detected; skipping xdg-mime defaults."
+  fi
 else
-    echo "Error: VLC is not installed. Please install VLC first using 'sudo apt-get install vlc'."
+  echo "Note: xdg-mime not found; install with: sudo apt-get install -y xdg-utils"
 fi
