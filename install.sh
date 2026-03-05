@@ -311,7 +311,7 @@ sudo apt-get install -y zim
 #sudo apt-get install -y qownnotes
 
 # mind mapping
-sudo apt-get install -y freeplane
+sudo apt-get install -y vym
 
 # email client
 # GUI
