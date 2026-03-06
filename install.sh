@@ -176,20 +176,20 @@ sudo apt-get install -y gnome-system-monitor
 #sudo apt-get install -y synaptic
 
 # printer support
-sudo apt-get install -y cups
-sudo systemctl enable cups
+#sudo apt-get install -y cups
+#sudo systemctl enable cups
 
 # bluetooth support
-sudo apt-get install -y bluez blueman
-sudo systemctl enable bluetooth
+#sudo apt-get install -y bluez blueman
+#sudo systemctl enable bluetooth
 
 # document viewer
-sudo apt-get install -y evince
+#sudo apt-get install -y evince
 #sudo apt-get install -y okular
 
 # ebook reader
 #sudo apt-get install -y foliate
-sudo apt-get install -y calibre
+#sudo apt-get install -y calibre
 
 # comic reader
 #sudo apt-get install -y mcomix
@@ -211,7 +211,7 @@ sudo apt-get update
 sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-flatpak install -y flathub com.brave.Browser
+#flatpak install -y flathub com.brave.Browser
 
 # librewolf browser
 #sudo apt-get update && sudo apt-get install extrepo -y
@@ -253,7 +253,7 @@ flatpak install -y flathub com.brave.Browser
 sudo apt-get install -y feh
 
 # image viewer
-sudo apt-get install -y mirage
+#sudo apt-get install -y mirage
 
 # app launcher ($mod + Space)
 sudo apt-get install -y rofi
@@ -279,19 +279,19 @@ sudo apt-get install -y geany
 
 # system management
 # cockpit (admin web console)
-sudo apt-get install -y cockpit
+#sudo apt-get install -y cockpit
 
 # office apps
-sudo apt-get install -y libreoffice
+#sudo apt-get install -y libreoffice
 
 # display settings
 sudo apt-get install -y arandr
 
 # media player
-sudo apt-get install -y vlc 
+#sudo apt-get install -y vlc 
 
 # non free codecs (NOT FOSS)
-sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
+#sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
 
 # disk utilities
 sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
