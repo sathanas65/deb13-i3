@@ -107,14 +107,14 @@ sudo apt-get install -y network-manager-gnome
 sudo apt-get install -y lxappearance picom 
 
 # Flatpak containerized apps platform
-sudo apt-get install -y flatpak
-sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+#sudo apt-get install -y flatpak
+#sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # snap store (Supports installation of containerized apps)
-sudo apt-get install -y snapd
-sudo snap install core
+#sudo apt-get install -y snapd
+#sudo snap install core
 # schedule snap updates daily between 2 and 4 am
-sudo snap set core refresh.schedule=02:00-04:00
+#sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
 sudo apt-get install -y nemo
@@ -123,10 +123,10 @@ sudo apt-get install -y nemo
 #sudo apt-get install -y nautilus
 
 # terminal file search
-sudo apt-get install -y fzf
+#sudo apt-get install -y fzf
 
 # terminal list directory (on steroids)
-sudo apt-get install -y eza
+#sudo apt-get install -y eza
 
 # settings interface
 sudo apt-get install -y xfce4-settings xfce4-power-manager
@@ -166,7 +166,7 @@ sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulsee
 sudo apt-get install -y bpytop cmatrix hyfetch
 ###REPLACE neofetch
 # these can be removed if you don't want them
-sudo apt-get install -y htop glances figlet calc
+#sudo apt-get install -y htop glances figlet calc
 
 # gui system monitor
 sudo apt-get install -y gnome-system-monitor
@@ -175,20 +175,20 @@ sudo apt-get install -y gnome-system-monitor
 #sudo apt-get install -y synaptic
 
 # printer support
-sudo apt-get install -y cups
-sudo systemctl enable cups
+#sudo apt-get install -y cups
+#sudo systemctl enable cups
 
 # bluetooth support
-sudo apt-get install -y bluez blueman
-sudo systemctl enable bluetooth
+#sudo apt-get install -y bluez blueman
+#sudo systemctl enable bluetooth
 
 # document viewer
-sudo apt-get install -y evince
+#sudo apt-get install -y evince
 #sudo apt-get install -y okular
 
 # ebook reader
 #sudo apt-get install -y foliate
-sudo apt-get install -y calibre
+#sudo apt-get install -y calibre
 
 # comic reader
 #sudo apt-get install -y mcomix
@@ -210,7 +210,7 @@ sudo apt-get update
 sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-flatpak install -y flathub com.brave.Browser
+#flatpak install -y flathub com.brave.Browser
 
 # librewolf browser
 #sudo apt-get update && sudo apt-get install extrepo -y
@@ -252,7 +252,7 @@ flatpak install -y flathub com.brave.Browser
 sudo apt-get install -y feh
 
 # image viewer
-sudo apt-get install -y mirage
+#sudo apt-get install -y mirage
 
 # app launcher ($mod + Space)
 sudo apt-get install -y rofi
@@ -278,29 +278,29 @@ sudo apt-get install -y geany
 
 # system management
 # cockpit (admin web console)
-sudo apt-get install -y cockpit
+#sudo apt-get install -y cockpit
 
 # office apps
-sudo apt-get install -y libreoffice
+#sudo apt-get install -y libreoffice
 
 # display settings
-sudo apt-get install -y arandr
+#sudo apt-get install -y arandr
 
 # media player
-sudo apt-get install -y vlc 
+#sudo apt-get install -y vlc 
 
 # non free codecs (NOT FOSS)
-sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
+#sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
 
 # disk utilities
-sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
+#sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
 
 # clipboard manager
 sudo apt-get install -y copyq
 
 # notes manager
 #zim (easy checkbox lists and much more)
-sudo apt-get install -y zim
+#sudo apt-get install -y zim
 
 # qownnotes (markdown stored as plain text, great features)
 #SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
@@ -314,12 +314,12 @@ sudo apt-get install -y zim
 #sudo apt-get install -y qownnotes
 
 # mind mapping
-sudo apt-get install -y vym
+#sudo apt-get install -y vym
 
 # email client
 # GUI
 #sudo apt-get install -y evolution
-sudo apt-get install -y thunderbird
+#sudo apt-get install -y thunderbird
 # CLI
 #sudo apt-get install -y neomutt
 
@@ -328,14 +328,14 @@ sudo apt-get install -y maim xclip xdotool jq
 
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
 #sudo apt-get install -y gimp
-sudo snap install pinta
+#sudo snap install pinta
 
 # zip utilities
 sudo apt-get install -y tar gzip p7zip-full
 
 # backup manager
 # timeshit gui front end for rsync
-sudo apt-get install -y timeshift
+#sudo apt-get install -y timeshift
 # duplicity - great CLI for cloud backup - supported by backblaze B2
 #sudo apt-get install -y duplicity
 
@@ -350,10 +350,10 @@ sudo apt-get install -y timeshift
 #sudo apt-get install -y anydesk
 
 #teamviewer (NOT FOSS)
-sudo apt-get install -y policykit-1
-wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
-rm teamviewer_amd64.deb
+#sudo apt-get install -y policykit-1
+#wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+#sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
+#rm teamviewer_amd64.deb
 
 # ftp server utility (best installed on server)
 #sudo apt-get install -y vsftpd
@@ -375,11 +375,11 @@ rm teamviewer_amd64.deb
 #sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
 
 # gpg encryption manager
-sudo apt-get install -y kleopatra
+#sudo apt-get install -y kleopatra
 
 # password manager
 # keepassxc - mobile version but no syncing - passwords only stored locally - supports local database file syncing so you can manually sync devices by export/import of database
-sudo apt-get install -y keepassxc
+#sudo apt-get install -y keepassxc
 
 # bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
 #sudo snap install bitwarden
@@ -393,20 +393,20 @@ sudo apt-get install -y keepassxc
 #sudo cp /var/lib/snapd/desktop/applications/authpass_authpass.desktop ~/.local/share/applications/
 
 # Yubikey 
-sudo apt-get install -y yubikey-manager yubikey-manager-qt
+#sudo apt-get install -y yubikey-manager yubikey-manager-qt
 
 # smartphone manager
-sudo apt-get install -y kdeconnect
+#sudo apt-get install -y kdeconnect
 
 # torrent client
-sudo apt-get install -y transmission
+#sudo apt-get install -y transmission
 
 # signal encrypted messaging
-wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
-cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
-echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
-  sudo tee /etc/apt/sources.list.d/signal-xenial.list
-sudo apt-get update && sudo apt-get install -y signal-desktop
+#wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
+#cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+#echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
+#  sudo tee /etc/apt/sources.list.d/signal-xenial.list
+#sudo apt-get update && sudo apt-get install -y signal-desktop
 
 # screen recorders
 #sudo apt-get install -y simplescreenrecorder
@@ -421,15 +421,15 @@ sudo apt-get update && sudo apt-get install -y signal-desktop
 #sudo apt-get install -y handbrake
 
 # YouTube front end
-flatpak install -y flathub io.freetubeapp.FreeTube
+#flatpak install -y flathub io.freetubeapp.FreeTube
 
 # Gaming
-sudo dpkg --add-architecture i386
-sudo apt-get update
-sudo apt-get install -y steam
+#sudo dpkg --add-architecture i386
+#sudo apt-get update
+#sudo apt-get install -y steam
 
 # simplified man pages
-sudo apt-get install -y tealdeer
+#sudo apt-get install -y tealdeer
 
 # dev tools
 # vscode ide (NOT FOSS)
@@ -458,9 +458,9 @@ xdg-user-dirs-update
 
 # nordvpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are included so no setup required. Will likely switch to mullvad soon)
-curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
-sh nordvpn_install.sh
-sudo usermod -aG nordvpn $USER
+#curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
+#sh nordvpn_install.sh
+#sudo usermod -aG nordvpn $USER
 
 # mullvad vpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are not included so requires manual setup)
@@ -470,9 +470,9 @@ sudo usermod -aG nordvpn $USER
 #sudo apt-get install mullvad-vpn
 
 # personal finance
-sudo mkdir /var/lib/snapd/snap
-sudo mkdir /var/lib/snapd/snap/bin
-sudo snap install denaro
+#sudo mkdir /var/lib/snapd/snap
+#sudo mkdir /var/lib/snapd/snap/bin
+#sudo snap install denaro
 
 # postman API platform (NOT FOSS)
 #sudo snap install postman
@@ -480,21 +480,21 @@ sudo snap install denaro
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
 # bleachbit file shredder
-sudo apt-get -y install bleachbit
+#sudo apt-get -y install bleachbit
 
 # metadata removal tool
 #CLI
-sudo apt-get install -y mat2
+#sudo apt-get install -y mat2
 #GUI
 #sudo apt-get install -y metadata-cleaner
 
 # android tools
-sudo apt-get install -y android-sdk-platform-tools-common
+#sudo apt-get install -y android-sdk-platform-tools-common
 
 # GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
-sudo apt-get install -y kiwix
+#sudo apt-get install -y kiwix
 # CLI tools and server
-sudo apt-get install -y kiwix-tools
+#sudo apt-get install -y kiwix-tools
 
 # These are required for the theme and icons to work and i3bar to display correctly
 sudo apt-get install -y libgtk-4-dev
