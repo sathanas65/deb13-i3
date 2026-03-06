@@ -328,7 +328,7 @@ sudo apt-get install -y maim xclip xdotool jq
 
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
 #sudo apt-get install -y gimp
-sudo snap install pinta
+#sudo snap install pinta
 
 # zip utilities
 sudo apt-get install -y tar gzip p7zip-full
