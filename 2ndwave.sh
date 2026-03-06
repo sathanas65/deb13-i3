@@ -118,19 +118,19 @@ sudo snap install core
 sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
-#sudo apt-get install -y nemo
-sudo apt-get install -y thunar
+sudo apt-get install -y nemo
+#sudo apt-get install -y thunar
 #sudo apt-get install -y krusader
 #sudo apt-get install -y nautilus
 
 # terminal file search
-#sudo apt-get install -y fzf
+sudo apt-get install -y fzf
 
 # terminal list directory (on steroids)
-#sudo apt-get install -y eza
+sudo apt-get install -y eza
 
 # settings interface
-#sudo apt-get install -y xfce4-settings xfce4-power-manager
+sudo apt-get install -y xfce4-settings xfce4-power-manager
 
 # Network File Tools/System Events
 sudo apt-get install -y dialog mtools dosfstools avahi-daemon acpi acpid gvfs-backends
@@ -141,14 +141,14 @@ sudo systemctl enable acpid
 # terminator (dot files included)
 sudo apt-get install -y terminator
 # kitty (no dot files yet)
-sudo apt-get install -y kitty 
+#sudo apt-get install -y kitty 
 # konsole (required for out of box use of:
 # Super + Shift + h for keymap and 
 # Super + Shift + i for backup and edit i3 config and
 # Super + n then s for nordvpn status)
 sudo apt-get install -y konsole
-sudo apt-get install -y xterm
-sudo apt-get install -y zutty
+#sudo apt-get install -y xterm
+#sudo apt-get install -y zutty
 
 # tmux - terminal multiplexer - runs in terminal and shell sessions run in tmux - excellent features
 sudo apt-get install -y tmux
@@ -160,20 +160,20 @@ sudo apt-get install -y procinfo hwinfo hdparm lm-sensors psensor
 sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
 
 # audio editor
-sudo apt-get install -y audacity
+#sudo apt-get install -y audacity
 
 # terminal apps  
 # leave these or the dashboard won't work, can disable dashboard in i3 workspace config
 sudo apt-get install -y bpytop cmatrix hyfetch
 ###REPLACE neofetch
 # these can be removed if you don't want them
-#sudo apt-get install -y htop glances figlet calc
+sudo apt-get install -y htop glances figlet calc
 
 # gui system monitor
 sudo apt-get install -y gnome-system-monitor
 
 # apt-get package manager front end
-sudo apt-get install -y synaptic
+#sudo apt-get install -y synaptic
 
 # printer support
 #sudo apt-get install -y cups
@@ -185,41 +185,41 @@ sudo apt-get install -y synaptic
 
 # document viewer
 #sudo apt-get install -y evince
-sudo apt-get install -y okular
+#sudo apt-get install -y okular
 
 # ebook reader
-sudo apt-get install -y foliate
+#sudo apt-get install -y foliate
 #sudo apt-get install -y calibre
 
 # comic reader
-sudo apt-get install -y mcomix
+#sudo apt-get install -y mcomix
 
 # calculator
-sudo apt-get install -y gnome-calculator
+#sudo apt-get install -y gnome-calculator
 #galculator is customized
-#sudo apt-get install -y galculator
+sudo apt-get install -y galculator
 
-sudo apt-get install -y mate-calc
-sudo apt-get install -y kcalc
+#sudo apt-get install -y mate-calc
+#sudo apt-get install -y kcalc
 
 # privacy browsers
 # brave browser ($mod + b) NOT FOSS
 # Note that there is a bug where brave fails to in initialize on the 1st launch. After a reboot it will work fine thereafter.
-#wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
-#echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#sudo apt-get update
-#sudo apt-get install -y brave-browser
+wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt-get update
+sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
 #flatpak install -y flathub com.brave.Browser
 
 # librewolf browser
-sudo apt-get update && sudo apt-get install extrepo -y
-sudo extrepo enable librewolf
-sudo apt-get update && sudo apt-get install librewolf -y
+#sudo apt-get update && sudo apt-get install extrepo -y
+#sudo extrepo enable librewolf
+#sudo apt-get update && sudo apt-get install librewolf -y
 
 # tor browser
-sudo apt-get install -y torbrowser-launcher 
+#sudo apt-get install -y torbrowser-launcher 
 
 # mullvad browser
 #sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
@@ -235,19 +235,19 @@ sudo apt-get install -y torbrowser-launcher
 # dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
 # Dangerzone destroys malware by rendering your document into pixels in a secure sandbox and reconstructing it locally as a PDF.
 # Documents are sanitized in a sandbox with no network access, so if a malicious document can compromise one, it can't let anyone know.
-sudo apt-get update && sudo apt-get install -y gpg ca-certificates
-sudo mkdir -p /etc/apt/keyrings
-sudo gpg --keyserver hkps://keys.openpgp.org \
-    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
-    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
-    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
-sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
-. /etc/os-release
-echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
-    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
-    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
-sudo apt update
-sudo apt-get install -y dangerzone    
+#sudo apt-get update && sudo apt-get install -y gpg ca-certificates
+#sudo mkdir -p /etc/apt/keyrings
+#sudo gpg --keyserver hkps://keys.openpgp.org \
+#    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
+#    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
+#    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
+#sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
+#. /etc/os-release
+#echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
+#    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
+#    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
+#sudo apt update
+#sudo apt-get install -y dangerzone    
 
 # background / image manager
 sudo apt-get install -y feh
@@ -285,7 +285,7 @@ sudo apt-get install -y geany
 #sudo apt-get install -y libreoffice
 
 # display settings
-#sudo apt-get install -y arandr
+sudo apt-get install -y arandr
 
 # media player
 #sudo apt-get install -y vlc 
@@ -294,67 +294,67 @@ sudo apt-get install -y geany
 #sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
 
 # disk utilities
-#sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
+sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
 
 # clipboard manager
 sudo apt-get install -y copyq
 
 # notes manager
 #zim (easy checkbox lists and much more)
-#sudo apt-get install -y zim
+sudo apt-get install -y zim
 
 # qownnotes (markdown stored as plain text, great features)
-SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
-sudo mkdir -p "$(dirname "${SIGNED_BY}")"
-curl --silent --show-error --location http://download.opensuse.org/repositories/home:/pbek:/QOwnNotes/Debian_12/Release.key | gpg --dearmor | sudo tee "${SIGNED_BY}" > /dev/null
-sudo chmod u=rw,go=r "${SIGNED_BY}"
-SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
-ARCHITECTURE="$(dpkg --print-architecture)"
-echo "deb [arch=${ARCHITECTURE} signed-by=${SIGNED_BY}] http://download.opensuse.org/repositories/home:/pbek:/QOwnNotes/Debian_12/ /" | sudo tee /etc/apt/sources.list.d/qownnotes.list > /dev/null
-sudo apt-get update
-sudo apt-get install -y qownnotes
+#SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
+#sudo mkdir -p "$(dirname "${SIGNED_BY}")"
+#curl --silent --show-error --location http://download.opensuse.org/repositories/home:/pbek:/QOwnNotes/Debian_12/Release.key | gpg --dearmor | sudo tee "${SIGNED_BY}" > /dev/null
+#sudo chmod u=rw,go=r "${SIGNED_BY}"
+#SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
+#ARCHITECTURE="$(dpkg --print-architecture)"
+#echo "deb [arch=${ARCHITECTURE} signed-by=${SIGNED_BY}] http://download.opensuse.org/repositories/home:/pbek:/QOwnNotes/Debian_12/ /" | sudo tee /etc/apt/sources.list.d/qownnotes.list > /dev/null
+#sudo apt-get update
+#sudo apt-get install -y qownnotes
 
 # mind mapping
-#sudo apt-get install -y vym
+sudo apt-get install -y vym
 
 # email client
 # GUI
-sudo apt-get install -y evolution
-#sudo apt-get install -y thunderbird
+#sudo apt-get install -y evolution
+sudo apt-get install -y thunderbird
 # CLI
-sudo apt-get install -y neomutt
+#sudo apt-get install -y neomutt
 
 # screenshots
 sudo apt-get install -y maim xclip xdotool jq
 
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
-sudo apt-get install -y gimp
-#sudo snap install pinta
+#sudo apt-get install -y gimp
+sudo snap install pinta
 
 # zip utilities
 sudo apt-get install -y tar gzip p7zip-full
 
 # backup manager
 # timeshit gui front end for rsync
-#sudo apt-get install -y timeshift
+sudo apt-get install -y timeshift
 # duplicity - great CLI for cloud backup - supported by backblaze B2
-sudo apt-get install -y duplicity
+#sudo apt-get install -y duplicity
 
 # remote desktop client 
 #anydesk (NOT FOSS)
-sudo apt-get install software-properties-common apt-transport-https dirmngr ca-certificates curl -y
-curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo gpg --dearmor | sudo tee /usr/share/keyrings/anydesk.gpg > /dev/null
-echo 'deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main' | sudo tee /etc/apt/sources.list.d/anydesk.list
-wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
-echo "deb http://deb.anydesk.com/ all main" sudo tee /etc/apt/sources.list.d/anydesk-stable.list
-sudo apt-get update
-sudo apt-get install -y anydesk
+#sudo apt-get install software-properties-common apt-transport-https dirmngr ca-certificates curl -y
+#curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo gpg --dearmor | sudo tee /usr/share/keyrings/anydesk.gpg > /dev/null
+#echo 'deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main' | sudo tee /etc/apt/sources.list.d/anydesk.list
+#wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
+#echo "deb http://deb.anydesk.com/ all main" sudo tee /etc/apt/sources.list.d/anydesk-stable.list
+#sudo apt-get update
+#sudo apt-get install -y anydesk
 
 #teamviewer (NOT FOSS)
-#sudo apt-get install -y polkitd pkexec lxpolkit
-#wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-#sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
-#rm teamviewer_amd64.deb
+sudo apt-get install -y polkitd pkexec lxpolkit
+wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
+rm teamviewer_amd64.deb
 
 # ftp server utility (best installed on server)
 #sudo apt-get install -y vsftpd
@@ -365,53 +365,53 @@ sudo apt-get install -y anydesk
 #sudo apt-get install -y mc
 
 # file encryption
-cd /tmp
-wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb
-wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb.sig
-wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
-gpg --show-keys VeraCrypt_PGP_public_key.asc
-gpg --import VeraCrypt_PGP_public_key.asc
-gpg --verify veracrypt-console-1.26.24-Debian-12-amd64.deb.sig \
-             veracrypt-console-1.26.24-Debian-12-amd64.deb
-sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
+#cd /tmp
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb.sig
+#wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
+#gpg --show-keys VeraCrypt_PGP_public_key.asc
+#gpg --import VeraCrypt_PGP_public_key.asc
+#gpg --verify veracrypt-console-1.26.24-Debian-12-amd64.deb.sig \
+#             veracrypt-console-1.26.24-Debian-12-amd64.deb
+#sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
 
 # gpg encryption manager
-#sudo apt-get install -y kleopatra
+sudo apt-get install -y kleopatra
 
 # password manager
 # keepassxc - mobile version but no syncing - passwords only stored locally - supports local database file syncing so you can manually sync devices by export/import of database
-#sudo apt-get install -y keepassxc
+sudo apt-get install -y keepassxc
 
 # bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
-sudo snap install bitwarden
-sudo cp /var/lib/snapd/desktop/applications/bitwarden_bitwarden.desktop ~/.local/share/applications/
+#sudo snap install bitwarden
+#sudo cp /var/lib/snapd/desktop/applications/bitwarden_bitwarden.desktop ~/.local/share/applications/
 
 # 2fa app
 # Google Authenticator (NOT FOSS)
-sudo apt-get install -y libpam-google-authenticator 
+#sudo apt-get install -y libpam-google-authenticator 
 # Authpass
-sudo snap install authpass
-sudo cp /var/lib/snapd/desktop/applications/authpass_authpass.desktop ~/.local/share/applications/
+#sudo snap install authpass
+#sudo cp /var/lib/snapd/desktop/applications/authpass_authpass.desktop ~/.local/share/applications/
 
 # Yubikey 
-#sudo apt-get install -y yubikey-manager yubikey-manager-qt
+sudo apt-get install -y yubikey-manager yubikey-manager-qt
 
 # smartphone manager
 sudo apt-get install -y kdeconnect
 
 # torrent client
-#sudo apt-get install -y transmission
+sudo apt-get install -y transmission
 
 # signal encrypted messaging
-#wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
-#cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
-#echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
-#  sudo tee /etc/apt/sources.list.d/signal-xenial.list
-#sudo apt-get update && sudo apt-get install -y signal-desktop
+wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
+cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
+  sudo tee /etc/apt/sources.list.d/signal-xenial.list
+sudo apt-get update && sudo apt-get install -y signal-desktop
 
 # screen recorders
-sudo apt-get install -y simplescreenrecorder
-sudo apt-get install -y kazam
+#sudo apt-get install -y simplescreenrecorder
+#sudo apt-get install -y kazam
 
 # video editor
 #sudo apt-get install -y kdenlive
@@ -422,15 +422,15 @@ sudo apt-get install -y kazam
 #sudo apt-get install -y handbrake
 
 # YouTube front end
-#flatpak install -y flathub io.freetubeapp.FreeTube
+flatpak install -y flathub io.freetubeapp.FreeTube
 
 # Gaming
-#sudo dpkg --add-architecture i386
-#sudo apt-get update
-#sudo apt-get install -y steam
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install -y steam
 
 # simplified man pages
-#sudo apt-get install -y tealdeer
+sudo apt-get install -y tealdeer
 
 # dev tools
 # vscode ide (NOT FOSS)
@@ -459,41 +459,41 @@ xdg-user-dirs-update
 
 # nordvpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are included so no setup required. Will likely switch to mullvad soon)
-#curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
-#sh nordvpn_install.sh
-#sudo usermod -aG nordvpn $USER
+curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
+sh nordvpn_install.sh
+sudo usermod -aG nordvpn $USER
 
 # mullvad vpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are not included so requires manual setup)
-sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-sudo apt-get update
-sudo apt-get install mullvad-vpn
+#sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+#sudo apt-get update
+#sudo apt-get install mullvad-vpn
 
 # personal finance
-#flatpak install -y flathub org.nickvision.money
+flatpak install -y flathub org.nickvision.money
 
 # postman API platform (NOT FOSS)
-sudo snap install postman
+#sudo snap install postman
 # postman CLI
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
 # bleachbit file shredder
-#sudo apt-get -y install bleachbit
+sudo apt-get -y install bleachbit
 
 # metadata removal tool
 #CLI
-#sudo apt-get install -y mat2
+sudo apt-get install -y mat2
 #GUI
-sudo apt-get install -y metadata-cleaner
+#sudo apt-get install -y metadata-cleaner
 
 # android tools
 sudo apt-get install -y android-sdk-platform-tools-common adb fastboot
 
 # GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
-#sudo apt-get install -y kiwix
+sudo apt-get install -y kiwix
 # CLI tools and server
-#sudo apt-get install -y kiwix-tools
+sudo apt-get install -y kiwix-tools
 
 # These are required for the theme and icons to work and i3bar to display correctly
 sudo apt-get install -y libgtk-4-dev
