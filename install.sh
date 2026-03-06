@@ -330,12 +330,16 @@ sudo apt-get install -y tar gzip p7zip-full
 sudo apt-get install -y duplicity
 
 # remote desktop client 
-#anydesk (NOT FOSS)
-sudo apt-get install dirmngr -y
-curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo gpg --dearmor | sudo tee /usr/share/keyrings/anydesk.gpg > /dev/null
-echo 'deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main' | sudo tee /etc/apt/sources.list.d/anydesk.list
-wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
-echo "deb http://deb.anydesk.com/ all main" sudo tee /etc/apt/sources.list.d/anydesk-stable.list
+# anydesk (NOT FOSS)
+sudo apt-get install -y curl gpg
+# install repo key
+curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY \
+ | sudo gpg --dearmor -o /usr/share/keyrings/anydesk.gpg
+# add repo
+echo "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main" \
+ | sudo tee /etc/apt/sources.list.d/anydesk.list
+
+# install
 sudo apt-get update
 sudo apt-get install -y anydesk
 
