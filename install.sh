@@ -351,7 +351,7 @@ sudo apt-get install -y timeshift
 #sudo apt-get install -y anydesk
 
 #teamviewer (NOT FOSS)
-sudo apt-get install -y policykit-1
+sudo apt-get install -y polkitd pkexec
 wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
 sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
 rm teamviewer_amd64.deb
