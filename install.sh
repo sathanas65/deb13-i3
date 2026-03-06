@@ -377,14 +377,12 @@ sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
 
 # bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
 sudo snap install bitwarden
-sudo cp /var/lib/snapd/desktop/applications/bitwarden_bitwarden.desktop ~/.local/share/applications/
 
 # 2fa app
 # Google Authenticator (NOT FOSS)
 sudo apt-get install -y libpam-google-authenticator 
 # Authpass
 sudo snap install authpass
-sudo cp /var/lib/snapd/desktop/applications/authpass_authpass.desktop ~/.local/share/applications/
 
 # Yubikey 
 #sudo apt-get install -y yubikey-manager yubikey-manager-qt
