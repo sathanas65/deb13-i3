@@ -488,7 +488,7 @@ sudo apt-get install -y mat2
 #sudo apt-get install -y metadata-cleaner
 
 # android tools
-sudo apt-get install -y android-sdk-platform-tools-common
+sudo apt-get install -y android-sdk-platform-tools-common adb fastboot
 
 # GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
 sudo apt-get install -y kiwix
