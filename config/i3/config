@@ -90,5 +90,8 @@ bar {
 }
 
 # Transparency with picom compositor
-exec_always --no-startup-id sh -c 'pkill -x picom 2>/dev/null; picom --legacy-backends -b >/dev/null 2>&1'
+#enable this on KVM
+exec_always --no-startup-id sh -c 'pkill -x picom 2>/dev/null; picom --backend xrender --no-use-damage --xrender-sync-fence --detect-rounded-corners -b >/dev/null 2>&1'
+#Try this on metal
+#exec_always --no-startup-id sh -c 'pkill -x picom 2>/dev/null; picom --backend glx --no-use-damage --vsync -b >/dev/null 2>&1'
 

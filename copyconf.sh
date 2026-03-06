@@ -24,7 +24,8 @@ mkdir -p \
 "$HOME/.local/share/konsole"
 
 # --- copy configs (use -a to preserve perms/times; use source/. to avoid nesting) ---
-cp -a "config/libreoffice/." "$HOME/.config/"
+#cp -a "config/libreoffice/." "$HOME/.config/"
+#not working
 
 # scripts
 cp -a "scripts/." "$HOME/scripts/"
