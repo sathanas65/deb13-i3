@@ -112,6 +112,7 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 
 # snap store (Supports installation of containerized apps)
 sudo apt-get install -y snapd
+sleep 10
 sudo snap install core
 # schedule snap updates daily between 2 and 4 am
 sudo snap set core refresh.schedule=02:00-04:00
