@@ -91,10 +91,8 @@ fi
 
 sudo apt-get update
 
-
-###REPLACE software-properties-common
-#echo | sudo apt-add-repository contrib non-free-firmware
-#sudo apt-get update
+# Policy kit (to launch apps that require root)
+sudo apt-get install -y polkitd pkexec lxpolkit
 
 # terminal text editor
 # VIM is required for keymap to work out of the box
@@ -119,9 +117,9 @@ sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
 #sudo apt-get install -y nemo
-sudo apt-get install -y thunar
-#sudo apt-get install -y krusader
-#sudo apt-get install -y nautilus
+#sudo apt-get install -y thunar
+sudo apt-get install -y krusader
+sudo apt-get install -y nautilus
 
 # terminal file search
 #sudo apt-get install -y fzf
@@ -141,14 +139,14 @@ sudo systemctl enable acpid
 # terminator (dot files included)
 sudo apt-get install -y terminator
 # kitty (no dot files yet)
-sudo apt-get install -y kitty 
+#sudo apt-get install -y kitty 
 # konsole (required for out of box use of:
 # Super + Shift + h for keymap and 
 # Super + Shift + i for backup and edit i3 config and
 # Super + n then s for nordvpn status)
 sudo apt-get install -y konsole
-sudo apt-get install -y xterm
-sudo apt-get install -y zutty
+#sudo apt-get install -y xterm
+#sudo apt-get install -y zutty
 
 # tmux - terminal multiplexer - runs in terminal and shell sessions run in tmux - excellent features
 sudo apt-get install -y tmux
@@ -160,7 +158,7 @@ sudo apt-get install -y procinfo hwinfo hdparm lm-sensors psensor
 sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
 
 # audio editor
-sudo apt-get install -y audacity
+#sudo apt-get install -y audacity
 
 # terminal apps  
 # leave these or the dashboard won't work, can disable dashboard in i3 workspace config
@@ -173,7 +171,7 @@ sudo apt-get install -y bpytop cmatrix hyfetch
 sudo apt-get install -y gnome-system-monitor
 
 # apt-get package manager front end
-sudo apt-get install -y synaptic
+#sudo apt-get install -y synaptic
 
 # printer support
 #sudo apt-get install -y cups
@@ -185,22 +183,22 @@ sudo apt-get install -y synaptic
 
 # document viewer
 #sudo apt-get install -y evince
-sudo apt-get install -y okular
+#sudo apt-get install -y okular
 
 # ebook reader
-sudo apt-get install -y foliate
+#sudo apt-get install -y foliate
 #sudo apt-get install -y calibre
 
 # comic reader
-sudo apt-get install -y mcomix
+#sudo apt-get install -y mcomix
 
 # calculator
-sudo apt-get install -y gnome-calculator
+#sudo apt-get install -y gnome-calculator
 #galculator is customized
-#sudo apt-get install -y galculator
+sudo apt-get install -y galculator
 
-sudo apt-get install -y mate-calc
-sudo apt-get install -y kcalc
+#sudo apt-get install -y mate-calc
+#sudo apt-get install -y kcalc
 
 # privacy browsers
 # brave browser ($mod + b) NOT FOSS
@@ -214,40 +212,40 @@ sudo apt-get install -y kcalc
 #flatpak install -y flathub com.brave.Browser
 
 # librewolf browser
-sudo apt-get update && sudo apt-get install extrepo -y
-sudo extrepo enable librewolf
-sudo apt-get update && sudo apt-get install librewolf -y
+#sudo apt-get update && sudo apt-get install extrepo -y
+#sudo extrepo enable librewolf
+#sudo apt-get update && sudo apt-get install librewolf -y
 
 # tor browser
-sudo apt-get install -y torbrowser-launcher 
+#sudo apt-get install -y torbrowser-launcher 
 
 # mullvad browser
-#sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-#sudo apt-get update && sudo apt-get install mullvad-browser
+sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+sudo apt-get update && sudo apt-get install mullvad-browser
 
 # non-privacy browsers
 # Chromium is required for keybind Super + F1 to open nordvpn login page. 
 # Or you can edit ~/scripts/nordlogin.sh to use another browser but nord login script fails in Brave and Librewolf, even with shields down.
-#sudo apt-get install -y chromium
-#sudo apt-get install -y firefox-esr
+sudo apt-get install -y chromium
+sudo apt-get install -y firefox-esr
 
 # dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
 # Dangerzone destroys malware by rendering your document into pixels in a secure sandbox and reconstructing it locally as a PDF.
 # Documents are sanitized in a sandbox with no network access, so if a malicious document can compromise one, it can't let anyone know.
-sudo apt-get update && sudo apt-get install -y gpg ca-certificates
-sudo mkdir -p /etc/apt/keyrings
-sudo gpg --keyserver hkps://keys.openpgp.org \
-    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
-    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
-    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
-sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
-. /etc/os-release
-echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
-    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
-    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
-sudo apt-get update
-sudo apt-get install -y dangerzone    
+#sudo apt-get update && sudo apt-get install -y gpg ca-certificates
+#sudo mkdir -p /etc/apt/keyrings
+#sudo gpg --keyserver hkps://keys.openpgp.org \
+#    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
+#    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
+#    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
+#sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
+#. /etc/os-release
+#echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
+#    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
+#    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
+#sudo apt-get update
+#sudo apt-get install -y dangerzone    
 
 # background / image manager
 sudo apt-get install -y feh
@@ -271,11 +269,6 @@ sudo apt-get install -y yad
 # gui text editor
 # geany
 sudo apt-get install -y geany
-# sublime text (NOT FOSS)
-#wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
-#echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-#sudo apt-get update
-#sudo apt-get install -y sublime-text
 
 # system management
 # cockpit (admin web console)
@@ -308,16 +301,16 @@ sudo apt-get install -y copyq
 
 # email client
 # GUI
-sudo apt-get install -y evolution
+#sudo apt-get install -y evolution
 #sudo apt-get install -y thunderbird
 # CLI
-sudo apt-get install -y neomutt
+#sudo apt-get install -y neomutt
 
 # screenshots
 sudo apt-get install -y maim xclip xdotool jq
 
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
-sudo apt-get install -y gimp
+#sudo apt-get install -y gimp
 #sudo snap install pinta
 
 # zip utilities
@@ -327,24 +320,23 @@ sudo apt-get install -y tar gzip p7zip-full
 # timeshit gui front end for rsync
 #sudo apt-get install -y timeshift
 # duplicity - great CLI for cloud backup - supported by backblaze B2
-sudo apt-get install -y duplicity
+#sudo apt-get install -y duplicity
 
 # remote desktop client 
 # anydesk (NOT FOSS)
-sudo apt-get install -y curl gpg
+#sudo apt-get install -y curl gpg
 # install repo key
-curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY \
- | sudo gpg --dearmor -o /usr/share/keyrings/anydesk.gpg
+#curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY \
+# | sudo gpg --dearmor -o /usr/share/keyrings/anydesk.gpg
 # add repo
-echo "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main" \
- | sudo tee /etc/apt/sources.list.d/anydesk.list
+#echo "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main" \
+# | sudo tee /etc/apt/sources.list.d/anydesk.list
 
 # install
-sudo apt-get update
-sudo apt-get install -y anydesk
+#sudo apt-get update
+#sudo apt-get install -y anydesk
 
 #teamviewer (NOT FOSS)
-#sudo apt-get install -y polkitd pkexec lxpolkit
 #wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
 #sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
 #rm teamviewer_amd64.deb
@@ -358,15 +350,28 @@ sudo apt-get install -y anydesk
 #sudo apt-get install -y mc
 
 # file encryption
+
+# veracrypt CLI
+#cd /tmp
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb.sig
+#wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
+#gpg --show-keys VeraCrypt_PGP_public_key.asc
+#gpg --import VeraCrypt_PGP_public_key.asc
+#gpg --verify veracrypt-console-1.26.24-Debian-12-amd64.deb.sig \
+#             veracrypt-console-1.26.24-Debian-12-amd64.deb
+#sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
+
+# veracrypt GUI
 cd /tmp
-wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb
-wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb.sig
+wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-12-amd64.deb
+wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-12-amd64.deb.sig
 wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
 gpg --show-keys VeraCrypt_PGP_public_key.asc
 gpg --import VeraCrypt_PGP_public_key.asc
-gpg --verify veracrypt-console-1.26.24-Debian-12-amd64.deb.sig \
-             veracrypt-console-1.26.24-Debian-12-amd64.deb
-sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
+gpg --verify veracrypt-1.26.24-Debian-12-amd64.deb.sig \
+             veracrypt-1.26.24-Debian-12-amd64.deb
+sudo apt-get install -y ./veracrypt-1.26.24-Debian-12-amd64.deb
 
 # gpg encryption manager
 #sudo apt-get install -y kleopatra
@@ -376,11 +381,19 @@ sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
 #sudo apt-get install -y keepassxc
 
 # bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
-sudo snap install bitwarden
+#sudo snap install bitwarden
 
 # 2fa app
-# Google Authenticator (NOT FOSS)
-sudo apt-get install -y libpam-google-authenticator 
+# Google Authenticator (NOT FOSS) - Allows 2FA on Linux logins - requires mobile app
+# You enable it in PAM:
+# /etc/pam.d/sshd
+# /etc/pam.d/login
+# /etc/pam.d/sudo
+# Example line:
+# auth required pam_google_authenticator.so
+
+#sudo apt-get install -y libpam-google-authenticator 
+
 # Authpass
 sudo snap install authpass
 
@@ -388,7 +401,7 @@ sudo snap install authpass
 #sudo apt-get install -y yubikey-manager yubikey-manager-qt
 
 # smartphone manager
-sudo apt-get install -y kdeconnect
+#sudo apt-get install -y kdeconnect
 
 # torrent client
 #sudo apt-get install -y transmission
@@ -401,16 +414,16 @@ sudo apt-get install -y kdeconnect
 #sudo apt-get update && sudo apt-get install -y signal-desktop
 
 # screen recorders
-sudo apt-get install -y simplescreenrecorder
-sudo apt-get install -y kazam
+#sudo apt-get install -y simplescreenrecorder
+#sudo apt-get install -y kazam
 
 # video editor
-#sudo apt-get install -y kdenlive
-#sudo apt-get install -y shotcut
+sudo apt-get install -y kdenlive
+sudo apt-get install -y shotcut
 
 # video converter
-#sudo apt-get install -y ffmpeg
-#sudo apt-get install -y handbrake
+sudo apt-get install -y ffmpeg
+sudo apt-get install -y handbrake
 
 # YouTube front end
 #flatpak install -y flathub io.freetubeapp.FreeTube
@@ -425,25 +438,25 @@ sudo apt-get install -y kazam
 
 # dev tools
 # vscode ide (NOT FOSS)
-#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/packages.microsoft.gpg
-#sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-#sudo apt-get update
-#sudo apt-get install -y code
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/packages.microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt-get update
+sudo apt-get install -y code
 
 # vscodium (Free/Libre Open Source Software Binaries of VS Code ide)
-#wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-#    | gpg --dearmor \
-#    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg 
-#echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
-#    | sudo tee /etc/apt/sources.list.d/vscodium.list
-#sudo apt-get update && sudo apt-get install -y codium
+wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+    | gpg --dearmor \
+    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg 
+echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
+    | sudo tee /etc/apt/sources.list.d/vscodium.list
+sudo apt-get update && sudo apt-get install -y codium
 
 # pycharm ide
-#curl -s https://s3.eu-central-1.amazonaws.com/jetbrains-ppa/0xA6E8698A.pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg > /dev/null
-#echo "deb [signed-by=/usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg] http://jetbrains-ppa.s3-website.eu-central-1.amazonaws.com any main" | sudo tee /etc/apt/sources.list.d/jetbrains-ppa.list > /dev/null
-#sudo apt-get update
-#sudo apt-get install -y pycharm-community
+curl -s https://s3.eu-central-1.amazonaws.com/jetbrains-ppa/0xA6E8698A.pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg] http://jetbrains-ppa.s3-website.eu-central-1.amazonaws.com any main" | sudo tee /etc/apt/sources.list.d/jetbrains-ppa.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y pycharm-community
 
 # user directories (disable this if you want many things to not work. There will be weeping and gnashing of teeth)
 xdg-user-dirs-update
@@ -456,30 +469,66 @@ xdg-user-dirs-update
 
 # mullvad vpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are not included so requires manual setup)
-sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-sudo apt-get update
-sudo apt-get install mullvad-vpn
+#sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+#sudo apt-get update
+#sudo apt-get install mullvad-vpn
 
 # personal finance
 #flatpak install -y flathub org.nickvision.money
 
 # postman API platform (NOT FOSS)
-sudo snap install postman
+#sudo snap install postman
 # postman CLI
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
 # bleachbit file shredder
-#sudo apt-get -y install bleachbit
+sudo apt-get -y install bleachbit
+
+
+# Enable bleachbit-root to launch from Rofi using polkit to prompt for password
+# DO NOT COMMENT OUT - USE THE FUNCTION CALL
+install_bleachbit_launcher() {
+  # make sure user-local paths exist
+  mkdir -p "$HOME/.local/bin"
+  mkdir -p "$HOME/.local/share/applications"
+  # wrapper script for reliable root launch from rofi/drun
+  cat > "$HOME/.local/bin/bleachbit-root" <<'EOF'
+#!/bin/bash
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=/run/user/$(id -u)/bus}"
+exec /usr/bin/env sh -lc 'pkexec /usr/bin/bleachbit'
+EOF
+  chmod +x "$HOME/.local/bin/bleachbit-root"
+  # desktop entry so rofi can see it
+  cat > "$HOME/.local/share/applications/bleachbit-root.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=BleachBit (Root)
+Exec=$HOME/.local/bin/bleachbit-root
+Icon=bleachbit
+Terminal=false
+Categories=System;
+NoDisplay=false
+EOF
+  # clear rofi cache so the new launcher appears
+  rm -f "$HOME/.cache/rofi2.druncache" \
+        "$HOME/.cache/rofi3.druncache" \
+        "$HOME"/.cache/rofi-*.cache 2>/dev/null || true
+}
+
+# Function Call - Enable bleachbit-root to launch from Rofi using polkit to prompt for password
+install_bleachbit_launcher
 
 # metadata removal tool
 #CLI
 #sudo apt-get install -y mat2
 #GUI
-sudo apt-get install -y metadata-cleaner
+#sudo apt-get install -y metadata-cleaner
 
-# android tools
-sudo apt-get install -y android-sdk-platform-tools-common adb fastboot
+# android tools (used when flashing roms)
+#sudo apt-get install -y android-sdk-platform-tools-common adb fastboot
 
 # GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
 #sudo apt-get install -y kiwix
