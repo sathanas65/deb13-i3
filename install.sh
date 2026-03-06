@@ -246,7 +246,7 @@ sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
     https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
     | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
-sudo apt update
+sudo apt-get update
 sudo apt-get install -y dangerzone    
 
 # background / image manager
@@ -302,17 +302,6 @@ sudo apt-get install -y copyq
 # notes manager
 #zim (easy checkbox lists and much more)
 #sudo apt-get install -y zim
-
-# qownnotes (markdown stored as plain text, great features)
-SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
-sudo mkdir -p "$(dirname "${SIGNED_BY}")"
-curl --silent --show-error --location http://download.opensuse.org/repositories/home:/pbek:/QOwnNotes/Debian_12/Release.key | gpg --dearmor | sudo tee "${SIGNED_BY}" > /dev/null
-sudo chmod u=rw,go=r "${SIGNED_BY}"
-SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
-ARCHITECTURE="$(dpkg --print-architecture)"
-echo "deb [arch=${ARCHITECTURE} signed-by=${SIGNED_BY}] http://download.opensuse.org/repositories/home:/pbek:/QOwnNotes/Debian_12/ /" | sudo tee /etc/apt/sources.list.d/qownnotes.list > /dev/null
-sudo apt-get update
-sudo apt-get install -y qownnotes
 
 # mind mapping
 #sudo apt-get install -y vym
