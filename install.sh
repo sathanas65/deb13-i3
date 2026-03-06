@@ -116,10 +116,10 @@ sudo snap install core
 sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
-#sudo apt-get install -y nemo
+sudo apt-get install -y nemo
 #sudo apt-get install -y thunar
-sudo apt-get install -y krusader
-sudo apt-get install -y nautilus
+#sudo apt-get install -y krusader
+#sudo apt-get install -y nautilus
 
 # terminal file search
 #sudo apt-get install -y fzf
@@ -195,7 +195,7 @@ sudo apt-get install -y gnome-system-monitor
 # calculator
 #sudo apt-get install -y gnome-calculator
 #galculator is customized
-sudo apt-get install -y galculator
+#sudo apt-get install -y galculator
 
 #sudo apt-get install -y mate-calc
 #sudo apt-get install -y kcalc
@@ -203,21 +203,21 @@ sudo apt-get install -y galculator
 # privacy browsers
 # brave browser ($mod + b) NOT FOSS
 # Note that there is a bug where brave fails to in initialize on the 1st launch. After a reboot it will work fine thereafter.
-#wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
-#echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#sudo apt-get update
-#sudo apt-get install -y brave-browser
+wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt-get update
+sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-#flatpak install -y flathub com.brave.Browser
+flatpak install -y flathub com.brave.Browser
 
 # librewolf browser
-#sudo apt-get update && sudo apt-get install extrepo -y
-#sudo extrepo enable librewolf
-#sudo apt-get update && sudo apt-get install librewolf -y
+sudo apt-get update && sudo apt-get install extrepo -y
+sudo extrepo enable librewolf
+sudo apt-get update && sudo apt-get install librewolf -y
 
 # tor browser
-#sudo apt-get install -y torbrowser-launcher 
+sudo apt-get install -y torbrowser-launcher 
 
 # mullvad browser
 sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
@@ -233,19 +233,19 @@ sudo apt-get install -y firefox-esr
 # dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
 # Dangerzone destroys malware by rendering your document into pixels in a secure sandbox and reconstructing it locally as a PDF.
 # Documents are sanitized in a sandbox with no network access, so if a malicious document can compromise one, it can't let anyone know.
-#sudo apt-get update && sudo apt-get install -y gpg ca-certificates
-#sudo mkdir -p /etc/apt/keyrings
-#sudo gpg --keyserver hkps://keys.openpgp.org \
-#    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
-#    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
-#    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
-#sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
-#. /etc/os-release
-#echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
-#    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
-#    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
-#sudo apt-get update
-#sudo apt-get install -y dangerzone    
+sudo apt-get update && sudo apt-get install -y gpg ca-certificates
+sudo mkdir -p /etc/apt/keyrings
+sudo gpg --keyserver hkps://keys.openpgp.org \
+    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
+    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
+    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
+sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
+. /etc/os-release
+echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
+    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
+    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
+sudo apt-get update
+sudo apt-get install -y dangerzone    
 
 # background / image manager
 sudo apt-get install -y feh
@@ -272,74 +272,74 @@ sudo apt-get install -y geany
 
 # system management
 # cockpit (admin web console)
-#sudo apt-get install -y cockpit
+sudo apt-get install -y cockpit
 
 # office apps
-#sudo apt-get install -y libreoffice
+sudo apt-get install -y libreoffice
 
 # display settings
 #sudo apt-get install -y arandr
 
 # media player
-#sudo apt-get install -y vlc 
+sudo apt-get install -y vlc 
 
 # non free codecs (NOT FOSS)
-#sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
+sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
 
 # disk utilities
-#sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
+sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
 
 # clipboard manager
 sudo apt-get install -y copyq
 
 # notes manager
 #zim (easy checkbox lists and much more)
-#sudo apt-get install -y zim
+sudo apt-get install -y zim
 
 # mind mapping
-#sudo apt-get install -y vym
+sudo apt-get install -y vym
 
 # email client
 # GUI
-#sudo apt-get install -y evolution
-#sudo apt-get install -y thunderbird
+sudo apt-get install -y evolution
+sudo apt-get install -y thunderbird
 # CLI
-#sudo apt-get install -y neomutt
+sudo apt-get install -y neomutt
 
 # screenshots
 sudo apt-get install -y maim xclip xdotool jq
 
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
-#sudo apt-get install -y gimp
-#sudo snap install pinta
+sudo apt-get install -y gimp
+sudo snap install pinta
 
 # zip utilities
 sudo apt-get install -y tar gzip p7zip-full
 
 # backup manager
 # timeshit gui front end for rsync
-#sudo apt-get install -y timeshift
+sudo apt-get install -y timeshift
 # duplicity - great CLI for cloud backup - supported by backblaze B2
-#sudo apt-get install -y duplicity
+sudo apt-get install -y duplicity
 
 # remote desktop client 
 # anydesk (NOT FOSS)
-#sudo apt-get install -y curl gpg
+sudo apt-get install -y curl gpg
 # install repo key
-#curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY \
-# | sudo gpg --dearmor -o /usr/share/keyrings/anydesk.gpg
+curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY \
+ | sudo gpg --dearmor -o /usr/share/keyrings/anydesk.gpg
 # add repo
-#echo "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main" \
-# | sudo tee /etc/apt/sources.list.d/anydesk.list
+echo "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main" \
+ | sudo tee /etc/apt/sources.list.d/anydesk.list
 
 # install
-#sudo apt-get update
-#sudo apt-get install -y anydesk
+sudo apt-get update
+sudo apt-get install -y anydesk
 
 #teamviewer (NOT FOSS)
-#wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-#sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
-#rm teamviewer_amd64.deb
+wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
+rm teamviewer_amd64.deb
 
 # ftp server utility (best installed on server)
 #sudo apt-get install -y vsftpd
@@ -374,14 +374,14 @@ gpg --verify veracrypt-1.26.24-Debian-12-amd64.deb.sig \
 sudo apt-get install -y ./veracrypt-1.26.24-Debian-12-amd64.deb
 
 # gpg encryption manager
-#sudo apt-get install -y kleopatra
+sudo apt-get install -y kleopatra
 
 # password manager
 # keepassxc - mobile version but no syncing - passwords only stored locally - supports local database file syncing so you can manually sync devices by export/import of database
-#sudo apt-get install -y keepassxc
+sudo apt-get install -y keepassxc
 
 # bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
-#sudo snap install bitwarden
+sudo snap install bitwarden
 
 # 2fa app
 # Google Authenticator (NOT FOSS) - Allows 2FA on Linux logins - requires mobile app
@@ -395,68 +395,68 @@ sudo apt-get install -y ./veracrypt-1.26.24-Debian-12-amd64.deb
 #sudo apt-get install -y libpam-google-authenticator 
 
 # Authpass
-sudo snap install authpass
+#sudo snap install authpass
 
 # Yubikey 
-#sudo apt-get install -y yubikey-manager yubikey-manager-qt
+sudo apt-get install -y yubikey-manager yubikey-manager-qt
 
 # smartphone manager
 #sudo apt-get install -y kdeconnect
 
 # torrent client
-#sudo apt-get install -y transmission
+sudo apt-get install -y transmission
 
 # signal encrypted messaging
-#wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
-#cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
-#echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
-#  sudo tee /etc/apt/sources.list.d/signal-xenial.list
-#sudo apt-get update && sudo apt-get install -y signal-desktop
+wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
+cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
+  sudo tee /etc/apt/sources.list.d/signal-xenial.list
+sudo apt-get update && sudo apt-get install -y signal-desktop
 
 # screen recorders
 #sudo apt-get install -y simplescreenrecorder
 #sudo apt-get install -y kazam
 
 # video editor
-sudo apt-get install -y kdenlive
-sudo apt-get install -y shotcut
+#sudo apt-get install -y kdenlive
+#sudo apt-get install -y shotcut
 
 # video converter
-sudo apt-get install -y ffmpeg
-sudo apt-get install -y handbrake
+#sudo apt-get install -y ffmpeg
+#sudo apt-get install -y handbrake
 
 # YouTube front end
-#flatpak install -y flathub io.freetubeapp.FreeTube
+flatpak install -y flathub io.freetubeapp.FreeTube
 
 # Gaming
-#sudo dpkg --add-architecture i386
-#sudo apt-get update
-#sudo apt-get install -y steam
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install -y steam
 
 # simplified man pages
 #sudo apt-get install -y tealdeer
 
 # dev tools
 # vscode ide (NOT FOSS)
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -D -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/packages.microsoft.gpg
-sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt-get update
-sudo apt-get install -y code
+#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/packages.microsoft.gpg
+#sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+#sudo apt-get update
+#sudo apt-get install -y code
 
 # vscodium (Free/Libre Open Source Software Binaries of VS Code ide)
-wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-    | gpg --dearmor \
-    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg 
-echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
-    | sudo tee /etc/apt/sources.list.d/vscodium.list
-sudo apt-get update && sudo apt-get install -y codium
+#wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+#    | gpg --dearmor \
+#    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg 
+#echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
+#    | sudo tee /etc/apt/sources.list.d/vscodium.list
+#sudo apt-get update && sudo apt-get install -y codium
 
 # pycharm ide
-curl -s https://s3.eu-central-1.amazonaws.com/jetbrains-ppa/0xA6E8698A.pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg > /dev/null
-echo "deb [signed-by=/usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg] http://jetbrains-ppa.s3-website.eu-central-1.amazonaws.com any main" | sudo tee /etc/apt/sources.list.d/jetbrains-ppa.list > /dev/null
-sudo apt-get update
-sudo apt-get install -y pycharm-community
+#curl -s https://s3.eu-central-1.amazonaws.com/jetbrains-ppa/0xA6E8698A.pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg > /dev/null
+#echo "deb [signed-by=/usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg] http://jetbrains-ppa.s3-website.eu-central-1.amazonaws.com any main" | sudo tee /etc/apt/sources.list.d/jetbrains-ppa.list > /dev/null
+#sudo apt-get update
+#sudo apt-get install -y pycharm-community
 
 # user directories (disable this if you want many things to not work. There will be weeping and gnashing of teeth)
 xdg-user-dirs-update
@@ -475,10 +475,10 @@ xdg-user-dirs-update
 #sudo apt-get install mullvad-vpn
 
 # personal finance
-#flatpak install -y flathub org.nickvision.money
+flatpak install -y flathub org.nickvision.money
 
 # postman API platform (NOT FOSS)
-#sudo snap install postman
+sudo snap install postman
 # postman CLI
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
@@ -525,7 +525,7 @@ install_bleachbit_launcher
 #CLI
 #sudo apt-get install -y mat2
 #GUI
-#sudo apt-get install -y metadata-cleaner
+sudo apt-get install -y metadata-cleaner
 
 # android tools (used when flashing roms)
 #sudo apt-get install -y android-sdk-platform-tools-common adb fastboot
@@ -546,9 +546,9 @@ sudo apt-get install -y spice-vdagent
 ### hypervisor tools
 
 # containerization
-#sudo apt-get install -y podman
-#sudo apt-get install -y docker.io
-#sudo apt-get install -y distrobox
+sudo apt-get install -y podman
+sudo apt-get install -y docker.io
+sudo apt-get install -y distrobox
 
 # kvm/qemu (type 1 HV)
 #sudo apt-get install -y virt-manager cockpit-machines cockpit-podman distrobox
@@ -559,14 +559,14 @@ sudo apt-get install -y spice-vdagent
 #sudo usermod -aG kvm $(whoami)
 
 # virtualbox (type 2 HV)
-#wget -O- -q https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmour -o /usr/share/keyrings/oracle_vbox_2016.gpg
-#echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle_vbox_2016.gpg] http://download.virtualbox.org/virtualbox/debian bookworm contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
-#sudo apt update
-#sudo apt-get install -y virtualbox-7.0
+wget -O- -q https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmour -o /usr/share/keyrings/oracle_vbox_2016.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle_vbox_2016.gpg] http://download.virtualbox.org/virtualbox/debian bookworm contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
+sudo apt update
+sudo apt-get install -y virtualbox-7.0
 # virtualbox extension pack
-#wget https://download.virtualbox.org/virtualbox/7.0.10/Oracle_VM_VirtualBox_Extension_Pack-7.0.10.vbox-extpack
-#echo y | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.0.10.vbox-extpack
-#sudo usermod -a -G vboxusers $USER
+wget https://download.virtualbox.org/virtualbox/7.0.10/Oracle_VM_VirtualBox_Extension_Pack-7.0.10.vbox-extpack
+echo y | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.0.10.vbox-extpack
+sudo usermod -a -G vboxusers $USER
 
 # create ~/.local/share/applications/ to support executables and snaps in Rofi
 if [ -d /var/lib/snapd/desktop/applications ]; then
