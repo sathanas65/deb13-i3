@@ -11,8 +11,17 @@ REPO="$HOME/deb13-i3"
 [[ -d "$REPO" ]] || die "Repo not found at $REPO"
 cd "$REPO"
 
-# --- ensure dirs exist ---
-mkdir -p "$HOME/.config" "$HOME/.local/share" "$HOME/scripts"
+mkdir -p \
+"$HOME/.config" \
+"$HOME/.local/share" \
+"$HOME/scripts" \
+"$HOME/.config/backgrounds" \
+"$HOME/.config/i3" \
+"$HOME/.config/i3blocks" \
+"$HOME/.config/dunst" \
+"$HOME/.config/rofi" \
+"$HOME/.config/libreoffice" \
+"$HOME/.local/share/konsole"
 
 # --- copy configs (use -a to preserve perms/times; use source/. to avoid nesting) ---
 cp -a "config/libreoffice/." "$HOME/.config/"

@@ -3,6 +3,9 @@
 # on error 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$SCRIPT_DIR"
+
 # reset sudo clock every 60 seconds so you only have to enter password once
 sudo -v
 ( while true; do sudo -n true; sleep 60; done ) 2>/dev/null &
@@ -104,14 +107,14 @@ sudo apt-get install -y network-manager-gnome
 sudo apt-get install -y lxappearance picom 
 
 # Flatpak containerized apps platform
-sudo apt-get install -y flatpak
-sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+#sudo apt-get install -y flatpak
+#sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # snap store (Supports installation of containerized apps)
-sudo apt-get install -y snapd
-sudo snap install core
+#sudo apt-get install -y snapd
+#sudo snap install core
 # schedule snap updates daily between 2 and 4 am
-sudo snap set core refresh.schedule=02:00-04:00
+#sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
 sudo apt-get install -y nemo
@@ -120,10 +123,10 @@ sudo apt-get install -y nemo
 #sudo apt-get install -y nautilus
 
 # terminal file search
-sudo apt-get install -y fzf
+#sudo apt-get install -y fzf
 
 # terminal list directory (on steroids)
-sudo apt-get install -y eza
+#sudo apt-get install -y eza
 
 # settings interface
 sudo apt-get install -y xfce4-settings xfce4-power-manager
@@ -163,7 +166,7 @@ sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulsee
 sudo apt-get install -y bpytop cmatrix hyfetch
 ###REPLACE neofetch
 # these can be removed if you don't want them
-sudo apt-get install -y htop glances figlet calc
+#sudo apt-get install -y htop glances figlet calc
 
 # gui system monitor
 sudo apt-get install -y gnome-system-monitor
@@ -180,12 +183,12 @@ sudo apt-get install -y gnome-system-monitor
 #sudo systemctl enable bluetooth
 
 # document viewer
-sudo apt-get install -y evince
+#sudo apt-get install -y evince
 #sudo apt-get install -y okular
 
 # ebook reader
 #sudo apt-get install -y foliate
-sudo apt-get install -y calibre
+#sudo apt-get install -y calibre
 
 # comic reader
 #sudo apt-get install -y mcomix
@@ -207,7 +210,7 @@ sudo apt-get update
 sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-flatpak install -y flathub com.brave.Browser
+#flatpak install -y flathub com.brave.Browser
 
 # librewolf browser
 #sudo apt-get update && sudo apt-get install extrepo -y
@@ -249,7 +252,7 @@ flatpak install -y flathub com.brave.Browser
 sudo apt-get install -y feh
 
 # image viewer
-sudo apt-get install -y mirage
+#sudo apt-get install -y mirage
 
 # app launcher ($mod + Space)
 sudo apt-get install -y rofi
@@ -275,29 +278,29 @@ sudo apt-get install -y geany
 
 # system management
 # cockpit (admin web console)
-sudo apt-get install -y cockpit
+#sudo apt-get install -y cockpit
 
 # office apps
-sudo apt-get install -y libreoffice
+#sudo apt-get install -y libreoffice
 
 # display settings
-sudo apt-get install -y arandr
+#sudo apt-get install -y arandr
 
 # media player
-sudo apt-get install -y vlc 
+#sudo apt-get install -y vlc 
 
 # non free codecs (NOT FOSS)
-sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
+#sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
 
 # disk utilities
-sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
+#sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
 
 # clipboard manager
 sudo apt-get install -y copyq
 
 # notes manager
 #zim (easy checkbox lists and much more)
-sudo apt-get install -y zim
+#sudo apt-get install -y zim
 
 # qownnotes (markdown stored as plain text, great features)
 #SIGNED_BY='/etc/apt/keyrings/qownnotes.gpg'
@@ -311,7 +314,7 @@ sudo apt-get install -y zim
 #sudo apt-get install -y qownnotes
 
 # mind mapping
-sudo apt-get install -y vym
+#sudo apt-get install -y vym
 
 # email client
 # GUI
@@ -376,7 +379,7 @@ sudo apt-get install -y tar gzip p7zip-full
 
 # password manager
 # keepassxc - mobile version but no syncing - passwords only stored locally - supports local database file syncing so you can manually sync devices by export/import of database
-sudo apt-get install -y keepassxc
+#sudo apt-get install -y keepassxc
 
 # bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
 #sudo snap install bitwarden
@@ -390,7 +393,7 @@ sudo apt-get install -y keepassxc
 #sudo cp /var/lib/snapd/desktop/applications/authpass_authpass.desktop ~/.local/share/applications/
 
 # Yubikey 
-sudo apt-get install -y yubikey-manager yubikey-manager-qt
+#sudo apt-get install -y yubikey-manager yubikey-manager-qt
 
 # smartphone manager
 #sudo apt-get install -y kdeconnect
@@ -418,15 +421,15 @@ sudo apt-get install -y yubikey-manager yubikey-manager-qt
 #sudo apt-get install -y handbrake
 
 # YouTube front end
-flatpak install -y flathub io.freetubeapp.FreeTube
+#flatpak install -y flathub io.freetubeapp.FreeTube
 
 # Gaming
-sudo dpkg --add-architecture i386
-sudo apt-get update
-sudo apt-get install -y steam
+#sudo dpkg --add-architecture i386
+#sudo apt-get update
+#sudo apt-get install -y steam
 
 # simplified man pages
-sudo apt-get install -y tealdeer
+#sudo apt-get install -y tealdeer
 
 # dev tools
 # vscode ide (NOT FOSS)
@@ -481,17 +484,17 @@ xdg-user-dirs-update
 
 # metadata removal tool
 #CLI
-sudo apt-get install -y mat2
+#sudo apt-get install -y mat2
 #GUI
 #sudo apt-get install -y metadata-cleaner
 
 # android tools
-sudo apt-get install -y android-sdk-platform-tools-common
+#sudo apt-get install -y android-sdk-platform-tools-common
 
 # GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
-sudo apt-get install -y kiwix
+#sudo apt-get install -y kiwix
 # CLI tools and server
-sudo apt-get install -y kiwix-tools
+#sudo apt-get install -y kiwix-tools
 
 # These are required for the theme and icons to work and i3bar to display correctly
 sudo apt-get install -y libgtk-4-dev
@@ -504,9 +507,9 @@ sudo apt-get install -y spice-vdagent
 ### hypervisor tools
 
 # containerization
-sudo apt-get install -y podman
+#sudo apt-get install -y podman
 #sudo apt-get install -y docker.io
-sudo apt-get install -y distrobox
+#sudo apt-get install -y distrobox
 
 # kvm/qemu (type 1 HV)
 #sudo apt-get install -y virt-manager cockpit-machines cockpit-podman distrobox
@@ -546,22 +549,22 @@ sudo apt-get install -y lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
 
 # import scripts and configs
-sh ~/deb13-i3/copyconf.sh
+bash "$REPO_DIR/copyconf.sh"
 
 # This makes lightdm greeter login screen set display to 1080p on kvm-qemu guest vm and sets the background for the login screen - 
 # Keep these commented if installing on hardware. After first boot, you can modify display.sh value "Virtual-1" to your display output
 # Get display outputs with $  xarandr -q
 # Physical display outputs are HDMI-0, VGA-0, DP-0, DVI-D-0, HDMI-1, etc.
-sudo cp ~/deb13-i3/display.sh /usr/share/display.sh
+sudo cp "$REPO_DIR/display.sh" /usr/share/display.sh
 sudo chown root:root /usr/share/display.sh
 sudo chmod 775 /usr/share/display.sh
-sudo cp ~/deb13-i3/background.png /usr/share/background.png
+sudo cp "$REPO_DIR/background.png" /usr/share/background.png
 sudo chown root:root /usr/share/background.png
 sudo chmod 644 /usr/share/background.png
-sudo cp ~/deb13-i3/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
+sudo cp "$REPO_DIR/01_debian.conf" /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
 sudo chown root:root /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
 sudo chmod 644 /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
-sudo cp ~/deb13-i3/lightdm.conf /etc/lightdm/lightdm.conf
+sudo cp "$REPO_DIR/lightdm.conf" /etc/lightdm/lightdm.conf
 sudo chown root:root /etc/lightdm/lightdm.conf
 sudo chmod 644 /etc/lightdm/lightdm.conf
 
