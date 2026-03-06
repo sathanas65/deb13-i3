@@ -471,7 +471,7 @@ sudo usermod -aG nordvpn $USER
 #sudo apt-get install mullvad-vpn
 
 # personal finance
-flatpak install flathub org.gnome.Denaro
+flatpak install -y flathub org.nickvision.money
 
 # postman API platform (NOT FOSS)
 #sudo snap install postman
