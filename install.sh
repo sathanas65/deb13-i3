@@ -163,7 +163,10 @@ sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulsee
 # terminal apps  
 # leave these or the dashboard won't work, can disable dashboard in i3 workspace config
 sudo apt-get install -y bpytop cmatrix hyfetch
-###REPLACE neofetch
+sleep 5
+neowofetch --generate_config 2>/dev/null || true
+sed -i 's/^color_blocks="on"/color_blocks="off"/' ~/.config/neowofetch/config.conf
+
 # these can be removed if you don't want them
 #sudo apt-get install -y htop glances figlet calc
 
@@ -335,6 +338,8 @@ echo "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ al
 # install
 sudo apt-get update
 sudo apt-get install -y anydesk
+# disable anydesk tray
+sudo rm -f /etc/xdg/autostart/anydesk_global_tray.desktop
 
 #teamviewer (NOT FOSS)
 wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
