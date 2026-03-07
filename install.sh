@@ -558,15 +558,6 @@ sudo apt-get install -y distrobox
 #sudo usermod -aG libvirt $(whoami)
 #sudo usermod -aG kvm $(whoami)
 
-# virtualbox (type 2 HV)
-wget -O- -q https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmour -o /usr/share/keyrings/oracle_vbox_2016.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle_vbox_2016.gpg] http://download.virtualbox.org/virtualbox/debian bookworm contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
-sudo apt update
-sudo apt-get install -y virtualbox-7.0
-# virtualbox extension pack
-wget https://download.virtualbox.org/virtualbox/7.0.10/Oracle_VM_VirtualBox_Extension_Pack-7.0.10.vbox-extpack
-echo y | sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.0.10.vbox-extpack
-sudo usermod -a -G vboxusers $USER
 
 # create ~/.local/share/applications/ to support executables and snaps in Rofi
 if [ -d /var/lib/snapd/desktop/applications ]; then
