@@ -59,6 +59,7 @@ cp -a "config/QtProject.conf" "$HOME/.config/QtProject.conf" || true
 cp -a "config/copyq/."     "$HOME/.config/copyq/" || true
 cp -a "config/galculator/." "$HOME/.config/galculator/" || true
 cp -a "config/kcalcrc"     "$HOME/.config/kcalcrc" || true
+cp -a "config/qt6ct/" "$HOME/.config/qt6ct/" || true
 
 # --- icons/themes system-wide ---
 if have 7z; then
