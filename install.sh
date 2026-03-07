@@ -405,6 +405,8 @@ sudo apt-get install -y tar gzip p7zip-full
 
 # smartphone manager
 sudo apt-get install -y kdeconnect
+# enable dark theme for KDE applets
+bash "$HOME/deb13-i3/kdeTheme.sh"
 
 # torrent client
 #sudo apt-get install -y transmission
