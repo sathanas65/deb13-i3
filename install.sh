@@ -116,10 +116,10 @@ sudo snap install core
 sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
-#sudo apt-get install -y nemo
-sudo apt-get install -y thunar
-sudo apt-get install -y krusader
-sudo apt-get install -y nautilus
+sudo apt-get install -y nemo
+#sudo apt-get install -y thunar
+#sudo apt-get install -y krusader
+#sudo apt-get install -y nautilus
 
 # terminal file search
 #sudo apt-get install -y fzf
@@ -158,7 +158,7 @@ sudo apt-get install -y tmux
 #sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
 
 # audio editor
-sudo apt-get install -y audacity
+#sudo apt-get install -y audacity
 
 # terminal apps  
 # leave these or the dashboard won't work, can disable dashboard in i3 workspace config
