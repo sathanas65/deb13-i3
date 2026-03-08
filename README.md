@@ -10,7 +10,7 @@ Some non-FOSS packages are included. My goal is to use FOSS wherever practical. 
 
 Still in progress: Scrcpy 2.0, mullvad vpn scripts, PeaZip, Cryptomator, Pipewire
 
-Next up: Debian 13 - sway. This will take some time since I have to rewrite dozens of scripts and start over from scratch with most things. By the time it's done it might be Deb14-sway instead.
+Next up: Debian 13 - sway. This will take some time since I have to rewrite dozens of scripts and start over from scratch with most things. By the time it's done it might be deb14-sway instead.
 
 Documentation
 -------------
