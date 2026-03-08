@@ -155,7 +155,7 @@ sudo apt-get install -y tmux
 #sudo apt-get install -y procinfo hwinfo hdparm lm-sensors psensor
 
 # audio
-#sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
+sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
 
 # audio editor
 #sudo apt-get install -y audacity
@@ -204,10 +204,10 @@ sudo apt-get install -y synaptic
 # privacy browsers
 # brave browser ($mod + b) NOT FOSS
 # Note that there is a bug where brave fails to in initialize on the 1st launch. After a reboot it will work fine thereafter.
-#wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
-#echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#sudo apt-get update
-#sudo apt-get install -y brave-browser
+wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt-get update
+sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
 #flatpak install -y flathub com.brave.Browser
@@ -407,6 +407,12 @@ sudo apt-get install -y tar gzip p7zip-full
 sudo apt-get install -y kdeconnect
 # enable dark theme for KDE applets
 bash "$HOME/deb13-i3/kdeTheme.sh"
+# disable kwallet (Brave is annoying when it is active)
+sudo mv /usr/share/dbus-1/services/org.kde.kwalletd6.service \
+        /usr/share/dbus-1/services/org.kde.kwalletd6.service.disabled
+
+sudo mv /usr/share/dbus-1/services/org.kde.kwalletd5.service \
+        /usr/share/dbus-1/services/org.kde.kwalletd5.service.disabled
 
 # torrent client
 #sudo apt-get install -y transmission

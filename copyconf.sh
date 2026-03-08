@@ -48,6 +48,10 @@ cp -a "config/konsolerc"    "$HOME/.config/konsolerc" || true
 cp -a "config/bpytop/."     "$HOME/.config/bpytop/" || true
 cp -a "config/hyfetch.json" "$HOME/.config/hyfetch.json" || true
 
+# browsers
+#apt Brave
+cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
+
 # bashrc (overwrites)
 cp -a "bashrc" "$HOME/.bashrc"
 
