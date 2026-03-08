@@ -61,11 +61,13 @@ mullvad-browser --headless &
 sleep 5
 pkill mullvad-browser
 PROFILE_DIR=$(find "$HOME/.mullvad-browser/.mullvad/mullvadbrowser" -maxdepth 1 -type d -name '*.default-release' | head -n1)
+echo "PROFILE_DIR=$PROFILE_DIR"
 if [ -z "$PROFILE_DIR" ] || [ ! -d "$PROFILE_DIR" ]; then
     echo "Mullvad profile not found"
     exit 1
 fi
 cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
+echo "Success!!!"
 
 # bashrc (overwrites)
 cp -a "bashrc" "$HOME/.bashrc"
