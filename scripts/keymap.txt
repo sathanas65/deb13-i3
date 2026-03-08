@@ -6,7 +6,7 @@ Super + Shift + q - exit i3
 
 Super + l - lock the screen
 
-Super + Shift + b - toggle the i3 status bar, repeat to hide it again
+Super + Shift + b - hide/show the i3 status bar
 
 Control + Shift + Escape - launch Gnome System Monitor
 
@@ -64,7 +64,8 @@ Super + Shift + q -then
 			h - go to workspace "Dashboard" on left display and workspace "Notes" on right display
 
 			Right - move active workspace to the right display
-			Left - move active workspace to the left display
+			Left - move active workspaceto the left display
+			Space - swap positions of left and right workspaces
 	
 			
 	
@@ -129,13 +130,13 @@ Super + Shift + q -then
 ###Display Management
 Super + d - toggles display mode
 Once toggled, these display functions can be used:
-	1 - toggle dual monitor mode (if not a vm, edit ~/scripts/dual.sh)
-	2 - toggle single monitor mode (if not a vm, edit ~/scripts/right.sh)
-	3 - toggle dual monitor + 4k TV mode (if not a vm, edit ~/scripts/tv.sh)
-	4 - toggle dual monitor with left display in portrait mode (edit ~/scripts/port.sh)
-	5 - toggle dual monitor + 4K TV with left display in portrait mode (edit ~/scripts/portv.sh)
-	t - toggle TV only mode (edit ~/scripts/tvonly.sh)
-	w - toggle watch mode - disables display timeout
+	1 - activate dual monitor mode (if not a vm, edit ~/scripts/dual.sh)
+	2 - activate single monitor mode (if not a vm, edit ~/scripts/right.sh)
+	3 - activate dual monitor + 4k TV mode (if not a vm, edit ~/scripts/tv.sh)
+	4 - activate dual monitor with left display in portrait mode (edit ~/scripts/port.sh)
+	5 - activate dual monitor + 4K TV with left display in portrait mode (edit ~/scripts/portv.sh)
+	t - activate TV only mode (edit ~/scripts/tvonly.sh)
+	w - activate watch mode - disables display timeout
 	a - launch arandr to set display settings in a graphical interface
 Enter or Escape or Super + d to exit display mode
 
@@ -155,7 +156,6 @@ Super + Ctrl + s - then s - launch Synaptic Package Manager
 
 #Backup Tools
 Super + Ctrl + s - then t - launch Timeshift
-Super + Shift + d - launch Duplicity (work in progress)
 
 #File Manager
 Super + y - launch Nemo File Manager
@@ -168,7 +168,6 @@ Super + Shift + l - launch Libreoffice
 
 #Calculators
 Calc - launch floating calculator
-Super + Calc - launch tiled calculator
 
 #Notes
 Super + z - launch Zim
