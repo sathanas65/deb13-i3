@@ -136,58 +136,26 @@ case "$session_name" in
         fi
         ;;
     screenclip)
-        geometry=$(get_focused_output_geometry) || {
-            notify-send "Screenshot failed" "Could not determine focused monitor"
-            exit 1
-        }
-
-        maim --geometry="$geometry" --format=png 2>>"$LOG" | xclip -selection clipboard -t image/png
-        rc=$?
-        echo "clip_exit=$rc" >> "$LOG"
-
-        if [ $rc -eq 0 ]; then
-            notify-send "Screen clipped"
-        else
-            notify-send "Screenshot failed" "Clipboard copy failed"
-            exit 1
-        fi
+        # Get the output name of the currently focused workspace
+		output=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).output')
+		# Get the geometry of the focused monitor
+		geometry=$(xrandr | grep "$output" | grep -oP '\d+x\d+\+\d+\+\d+')
+		# Capture the screen of the focused monitor
+		maim --geometry="$geometry" | xclip -selection clipboard -t image/png
+		sleep 2
+		notify-send "Screen clipped"
         ;;
     windowclip)
-        winid=$(xdotool getactivewindow 2>>"$LOG")
-        echo "winid=$winid" >> "$LOG"
-
-        if [ -z "$winid" ]; then
-            notify-send "Screenshot failed" "Could not determine active window"
-            exit 1
-        fi
-
-        maim --format=png --window "$winid" 2>>"$LOG" | xclip -selection clipboard -t image/png
-        rc=$?
-        echo "clip_exit=$rc" >> "$LOG"
-
-        if [ $rc -eq 0 ]; then
-            notify-send "Window clipped"
-        else
-            notify-send "Screenshot failed" "Clipboard copy failed"
-            exit 1
-        fi
+        maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+		#echo "Running case windowclip" >> ~/scripts/screenshot.log
+		sleep 2
+		notify-send "Window clipped"
         ;;
     selectclip)
-        maim --format=png --select 2>>"$LOG" | xclip -selection clipboard -t image/png
-        rc=$?
-        echo "clip_exit=$rc" >> "$LOG"
-
-        if [ $rc -eq 0 ]; then
-            notify-send "Selection clipped"
-        else
-            notify-send "Screenshot failed" "Clipboard copy failed"
-            exit 1
-        fi
-        ;;
-    *)
-        echo "Invalid session: $session_name" >> "$LOG"
-        notify-send "Screenshot failed" "Invalid tmux session: $session_name"
-        exit 1
+        maim --format=png --select | xclip -selection clipboard -t image/png 
+		#echo "Running case selectclip" >> ~/scripts/screenshot.log
+		sleep 2
+		notify-send "Selection clipped"
         ;;
 esac
 
