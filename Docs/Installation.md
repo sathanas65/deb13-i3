@@ -1,9 +1,9 @@
-Debian 12 - i3 Window Manager
+Debian 13 - i3 Window Manager
 ===================
 This guide is detailed to enable Linux newcomers to get up and running quickly, with a minimum of headaches. How to use these scripts:
 
-1. Install Debian 12 but do not install any desktop environment. Only 'Standard Utilities' and optionally 'SSH Server' should be selected during installation. 
-2. Once your Debian 12 install is complete, login with your username and password.
+1. Install Debian 13 but do not install any desktop environment. Only 'Standard Utilities' and optionally 'SSH Server' should be selected during installation. 
+2. Once your Debian 13 install is complete, login with your username and password.
 3. Enter:
 
          sudo apt install -y git
@@ -11,11 +11,11 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
    Enter your password when prompted. 
 4. Then enter:
 
-         git clone https://github.com/sathanas65/deb12-i3
+         git clone https://github.com/sathanas65/deb13-i3
    
 5. Then enter:
 
-         cd deb12-i3
+         cd deb13-i3
    
 6. If you will be installing on a kvm/qemu guest vm then you will need to:
 
@@ -23,13 +23,13 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
 
    Uncomment line - 'sudo apt install -y spice-vdagent'. This will allow clipboard sharing between the guest and host, as well as other qemu features.
    
-   Uncomment all lines from 'sudo cp deb12-i3/display.sh /usr/share/display.sh' to 'sudo chmod 644 /etc/lightdm/lightdm.conf'. This will set the
+   Uncomment all lines from 'sudo cp deb13-i3/display.sh /usr/share/display.sh' to 'sudo chmod 644 /etc/lightdm/lightdm.conf'. This will set the
       dislay settings for a single 1080p virtual display. Edit as needed.
    
    Ctrl + s to save & Ctrl + x to exit.
 
    If you are using a different hypervisor like VMWare or VirtualBox, and you wish to set the display up now,
-      find out the default name for their virtual display outputs and edit ~/deb12-i3/display.sh with them. Otherwise just install as you would on hardware.
+      find out the default name for their virtual display outputs and edit ~/deb13-i3/display.sh with them. Otherwise just install as you would on hardware.
 
    Then,
 
