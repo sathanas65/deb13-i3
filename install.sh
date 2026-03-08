@@ -155,7 +155,7 @@ sudo apt-get install -y tmux
 #sudo apt-get install -y procinfo hwinfo hdparm lm-sensors psensor
 
 # audio
-sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
+#sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
 
 # audio editor
 #sudo apt-get install -y audacity
@@ -171,7 +171,7 @@ sed -i 's/^color_blocks="on"/color_blocks="off"/' ~/.config/neowofetch/config.co
 #sudo apt-get install -y htop glances figlet calc
 
 # gui system monitor
-sudo apt-get install -y gnome-system-monitor
+#sudo apt-get install -y gnome-system-monitor
 
 # apt-get package manager front end
 sudo apt-get install -y synaptic
@@ -204,26 +204,26 @@ sudo apt-get install -y synaptic
 # privacy browsers
 # brave browser ($mod + b) NOT FOSS
 # Note that there is a bug where brave fails to in initialize on the 1st launch. After a reboot it will work fine thereafter.
-wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt-get update
-sudo apt-get install -y brave-browser
+#wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+#echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+#sudo apt-get update
+#sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-flatpak install -y flathub com.brave.Browser
-mkdir -p ~/.var/app/com.brave.Browser/config/
-flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
-flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
-flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
+#flatpak install -y flathub com.brave.Browser
+#mkdir -p ~/.var/app/com.brave.Browser/config/
+#flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
+#flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
+#flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
 
 
 # librewolf browser
-#sudo apt-get update && sudo apt-get install extrepo -y
-#sudo extrepo enable librewolf
-#sudo apt-get update && sudo apt-get install librewolf -y
+sudo apt-get update && sudo apt-get install extrepo -y
+sudo extrepo enable librewolf
+sudo apt-get update && sudo apt-get install librewolf -y
 
 # tor browser
-#sudo apt-get install -y torbrowser-launcher 
+sudo apt-get install -y torbrowser-launcher 
 
 # mullvad browser
 sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
@@ -234,7 +234,7 @@ sudo apt-get update && sudo apt-get install mullvad-browser
 # Chromium is required for keybind Super + F1 to open nordvpn login page. 
 # Or you can edit ~/scripts/nordlogin.sh to use another browser but nord login script fails in Brave and Librewolf, even with shields down.
 sudo apt-get install -y chromium
-#sudo apt-get install -y firefox-esr
+sudo apt-get install -y firefox-esr
 
 # dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
 # Dangerzone destroys malware by rendering your document into pixels in a secure sandbox and reconstructing it locally as a PDF.
@@ -274,7 +274,10 @@ sudo apt-get install -y yad
 
 # gui text editor
 # geany
-sudo apt-get install -y geany
+sudo apt-get install -y geany geany-plugins
+mkdir -p "$HOME/.config/geany/colorschemes"
+git clone https://github.com/geany/geany-themes.git /tmp/geany-themes
+cp /tmp/geany-themes/colorschemes/* "$HOME/.config/geany/colorschemes/"
 
 # system management
 # cockpit (admin web console)
@@ -409,15 +412,15 @@ sudo apt-get install -y tar gzip p7zip-full
 #sudo apt-get install -y yubikey-manager yubikey-manager-qt
 
 # smartphone manager
-sudo apt-get install -y kdeconnect
+#sudo apt-get install -y kdeconnect
 # enable dark theme for KDE applets
-bash "$HOME/deb13-i3/kdeTheme.sh"
+#bash "$HOME/deb13-i3/kdeTheme.sh"
 # disable kwallet (Brave is annoying when it is active)
-sudo mv /usr/share/dbus-1/services/org.kde.kwalletd6.service \
-        /usr/share/dbus-1/services/org.kde.kwalletd6.service.disabled
+#sudo mv /usr/share/dbus-1/services/org.kde.kwalletd6.service \
+#        /usr/share/dbus-1/services/org.kde.kwalletd6.service.disabled
 
-sudo mv /usr/share/dbus-1/services/org.kde.kwalletd5.service \
-        /usr/share/dbus-1/services/org.kde.kwalletd5.service.disabled
+#sudo mv /usr/share/dbus-1/services/org.kde.kwalletd5.service \
+#        /usr/share/dbus-1/services/org.kde.kwalletd5.service.disabled
 
 # torrent client
 #sudo apt-get install -y transmission
