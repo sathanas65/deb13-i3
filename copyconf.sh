@@ -60,12 +60,12 @@ cp -a "config/chromium/."     "$HOME/.config/chromium/" || true
 mullvad-browser --headless &
 sleep 5
 pkill mullvad-browser
-PROFILE_DIR="$HOME/.mullvad-browser/.mullvad/mullvadbrowser/"*.default-release
-if [ ! -d "$PROFILE_DIR" ]; then
+PROFILE_DIR=$(find "$HOME/.mullvad-browser/.mullvad/mullvadbrowser" -maxdepth 1 -type d -name '*.default-release' | head -n1)
+if [ -z "$PROFILE_DIR" ] || [ ! -d "$PROFILE_DIR" ]; then
     echo "Mullvad profile not found"
     exit 1
 fi
-cp -a "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
+cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
 
 # bashrc (overwrites)
 cp -a "bashrc" "$HOME/.bashrc"
