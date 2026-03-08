@@ -57,17 +57,29 @@ cp -a "config/BraveSoftware/."     "$HOME/.var/app/com.brave.Browser/config/Brav
 #chromium
 cp -a "config/chromium/."     "$HOME/.config/chromium/" || true
 #mullvad
-mullvad-browser --headless &
-sleep 5
-pkill mullvad-browser
-PROFILE_DIR=$(find "$HOME/.mullvad-browser/.mullvad/mullvadbrowser" -maxdepth 1 -type d -name '*.default-release' | head -n1)
-echo "PROFILE_DIR=$PROFILE_DIR"
-if [ -z "$PROFILE_DIR" ] || [ ! -d "$PROFILE_DIR" ]; then
+mullvad-browser --headless >/dev/null 2>&1 &
+MB_PID=$!
+# wait up to 20 seconds for the profile directory to appear
+for i in {1..20}; do
+    PROFILE_DIR=$(find "$PROFILE_ROOT" -maxdepth 1 -type d -name '*.default-release' | head -n1 || true)
+    if [ -n "${PROFILE_DIR:-}" ] && [ -d "$PROFILE_DIR" ]; then
+        break
+    fi
+    sleep 1
+done
+
+if [ -z "${PROFILE_DIR:-}" ] || [ ! -d "$PROFILE_DIR" ]; then
     echo "Mullvad profile not found"
+    pkill -f mullvad || true
     exit 1
 fi
+
+# stop Mullvad cleanly enough for scripting purposes
+pkill -f mullvad || true
+sleep 2
+
 cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
-echo "Success!!!"
+
 
 # bashrc (overwrites)
 cp -a "bashrc" "$HOME/.bashrc"
