@@ -57,6 +57,8 @@ cp -a "config/BraveSoftware/."     "$HOME/.var/app/com.brave.Browser/config/Brav
 #chromium
 cp -a "config/chromium/."     "$HOME/.config/chromium/" || true
 #mullvad
+PROFILE_ROOT="$HOME/.mullvad-browser/.mullvad/mullvadbrowser"
+PROFILE_DIR=""
 mullvad-browser --headless >/dev/null 2>&1 &
 MB_PID=$!
 # wait up to 20 seconds for the profile directory to appear
