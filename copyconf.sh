@@ -51,6 +51,9 @@ cp -a "config/hyfetch.json" "$HOME/.config/hyfetch.json" || true
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
+#flatpak Brave
+mkdir -p "$HOME/.var/app/com.brave.Browser/config/"
+cp -a "config/BraveSoftware/."     "$HOME/.var/app/com.brave.Browser/config/BraveSoftware/" || true
 
 # bashrc (overwrites)
 cp -a "bashrc" "$HOME/.bashrc"

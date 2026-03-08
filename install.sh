@@ -210,7 +210,12 @@ sudo apt-get update
 sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-#flatpak install -y flathub com.brave.Browser
+flatpak install -y flathub com.brave.Browser
+mkdir -p ~/.var/app/com.brave.Browser/config/
+flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
+flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
+flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
+
 
 # librewolf browser
 #sudo apt-get update && sudo apt-get install extrepo -y
@@ -221,14 +226,14 @@ sudo apt-get install -y brave-browser
 #sudo apt-get install -y torbrowser-launcher 
 
 # mullvad browser
-#sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-#sudo apt-get update && sudo apt-get install mullvad-browser
+sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+sudo apt-get update && sudo apt-get install mullvad-browser
 
 # non-privacy browsers
 # Chromium is required for keybind Super + F1 to open nordvpn login page. 
 # Or you can edit ~/scripts/nordlogin.sh to use another browser but nord login script fails in Brave and Librewolf, even with shields down.
-#sudo apt-get install -y chromium
+sudo apt-get install -y chromium
 #sudo apt-get install -y firefox-esr
 
 # dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
