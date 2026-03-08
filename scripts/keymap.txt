@@ -49,40 +49,33 @@ Super + Shift + q -then
 			b - go to workspace "Browser" - if not in use it will open on the active display
 			c - go to workspace "Config" - if not in use it will open on the active display
 			d - go to workspace "Development" - if not in use it will open on the active display
-			f - go to workspace "Finance" - if not in use it will open on the active display
-			m - go to workspace "Media" - if not in use it will open on the active display
+			f - go to workspace "Files" - if not in use it will open on the active display
+			m - go to workspace "Money" - if not in use it will open on the active display
 			n - go to workspace "Notes" - if not in use it will open on the active display
 			p - go to workspace "Production" - if not in use it will open on the active display
-			r - go to workspace "Research" - if not in use it will open on the active display
+			r - go to workspace "Remote" - if not in use it will open on the active display
 			s - go to workspace "System" - if not in use it will open on the active display
 			t - go to workspace "TV" - if not in use it will open on the active display			
-			v - go to workspace "Virt" - if not in use it will open on the active display
+			2 - go to workspace "Brave" - if not in use it will open on the active display	
+			3 - go to workspace "Google" - if not in use it will open on the active display	
+			g - go to workspace "Games" - if not in use it will open on the active display	
+			o - go to workspace "Office" - if not in use it will open on the active display	
+			l - go to workspace "Library" - if not in use it will open on the active display	
+			h - go to workspace "Dashboard" on left display and workspace "Notes" on right display
 
 			Right - move active workspace to the right display
 			Left - move active workspace to the left display
 	
-			l - add workspace on the left output, OR
-			r - add workspace on the right output, then:
-				0 - go to workspace "Dashboard"
-				1 - go to workspace "Communications"
-				a - go to workspace "Accounts"
-				b - go to workspace "Browser"
-				c - go to workspace "Config"
-				d - go to workspace "Development"
-				f - go to workspace "Finance"
-				m - go to workspace "Media"
-				n - go to workspace "Notes"
-				p - go to workspace "Production"
-				r - go to workspace "Research"
-				s - go to workspace "System"
-				t - go to workspace "TV"
-				v - go to workspace "Virt"
+			
 	
 			v - Virtual machine workspace mode, then:
-				0 - go to VM 0
-				1 - go to VM 1
-				2 - go to VM 2
-				3 - go to VM 3
+				0 - go to VM 0 - dual screen
+				1 - go to VM 1 - dual screen
+				2 - go to VM 2 - dual screen
+				3 - go to VM 3 - dual screen
+				4 - go to VM 4 - dual screen
+				5 - go to VM 5 - dual screen
+				v - go to workspace "Virt"
 
 	# Enter Move Mode
 	Super + m     -then:
@@ -92,14 +85,19 @@ Super + Shift + q -then
 		b - move active window to Browser workspace
 		c - move active window to Config workspace
 		d - move active window to Development workspace
-		f - move active window to Finance workspace
-		m - move active window to Media workspace
+		f - move active window to Files workspace
+		m - move active window to Money workspace
 		n - move active window to Notes workspace
 		p - move active window to Production workspace
-		r - move active window to Research workspace
+		r - move active window to Remote workspace
 		s - move active window to System workspace
 		t - move active window to TV workspace
 		v - move active window to Virt workspace
+		2 - move active window to Brave workspace
+		3 - move active window to Google workspace
+		g - move active window to Games workspace
+		o - move active window to Office workspace
+		l - move active window to Library workspace
 
 		h - move active window to the Scratchpad
 
@@ -131,9 +129,13 @@ Super + Shift + q -then
 ###Display Management
 Super + d - toggles display mode
 Once toggled, these display functions can be used:
-	1 - toggle dual monitor mode (if not a virtual machine, edit ~/dual.sh to match your hardware)
-	2 - toggle single monitor mode (if not a virtual machine, edit ~/right.sh to match your hardware)
-	3 - toggle dual monitor + 4k TV mode (if not a virtual machine, edit ~/tv.sh to match your hardware)
+	1 - toggle dual monitor mode (if not a vm, edit ~/scripts/dual.sh)
+	2 - toggle single monitor mode (if not a vm, edit ~/scripts/right.sh)
+	3 - toggle dual monitor + 4k TV mode (if not a vm, edit ~/scripts/tv.sh)
+	4 - toggle dual monitor with left display in portrait mode (edit ~/scripts/port.sh)
+	5 - toggle dual monitor + 4K TV with left display in portrait mode (edit ~/scripts/portv.sh)
+	t - toggle TV only mode (edit ~/scripts/tvonly.sh)
+	w - toggle watch mode - disables display timeout
 	a - launch arandr to set display settings in a graphical interface
 Enter or Escape or Super + d to exit display mode
 
@@ -144,82 +146,79 @@ Super + Ctrl + p - launch Pulse Effects
 ###Launching apps
 Super + Space - display Rofi app launcher
 
-	#Terminal emulators
-	Super + Enter - launch Terminator
-	Super + Shift + Enter - launch Tmux
+#Terminal emulators
+Super + Enter - launch Terminator
+Super + Shift + Enter - launch Tmux
 
-	#GUI Package Manager
-	Super + Ctrl + s - then s - launch Synaptic Package Manager
+#GUI Package Manager
+Super + Ctrl + s - then s - launch Synaptic Package Manager
 
-	#Backup Tools
-	Super + Ctrl + s - then t - launch Timeshift
-	Super + Shift + d - launch Duplicity (work in progress)
-	
-	#File Manager
-	Super + e - launch Thunar File Manager
+#Backup Tools
+Super + Ctrl + s - then t - launch Timeshift
+Super + Shift + d - launch Duplicity (work in progress)
 
-	#Encrypted Message App
-	Alt + s - launch Signal Message App
+#File Manager
+Super + y - launch Nemo File Manager
 
-	#Libreoffice
-	Super + Shift + l - launch Libreoffice
+#Encrypted Message App
+Alt + s - launch Signal Message App
 
-	#Calculators
-	Calc - launch floating calculator
-	Super + Calc - launch tiled calculator
+#Libreoffice
+Super + Shift + l - launch Libreoffice
 
-	#Notes
-	Super + z - launch Zim
+#Calculators
+Calc - launch floating calculator
+Super + Calc - launch tiled calculator
 
-	#Media Player
-	Super + Ctrl + v - launch VLC
+#Notes
+Super + z - launch Zim
 
-	#Ebook Reader
-	Alt + f - launch Foliate
+#Media Player
+Super + Ctrl + v - launch VLC
 
-	#Personal Finance
-	Super + Ctrl + d - launch Denaro (requires install after first boot)
+#Ebook Reader
+Alt + f - launch Foliate
 
-	#Email Client
-	Super + Shift + e - launch Thunderbird
+#Personal Finance
+Super + Ctrl + d - launch Denaro (requires install after first boot)
 
-	#Torrent Client
-	Alt + t - launch Transmission
+#Email Client
+Super + Shift + e - launch Thunderbird
 
-	#Disk Management
-	Super + g - launch Gnome Disks
-	Super + Ctrl + s - then d - launch Gnome Disks as superuser
+#Torrent Client
+Alt + t - launch Transmission
 
-	#System Management
-	Super + c - launch Cockpit Web Console (in Chromium)
+#Disk Management
+Super + g - launch Gnome Disks
+Super + Ctrl + s - then d - launch Gnome Disks as superuser
 
-	#Clipboard Manager Toggle (same command to open and close)
-	Super + Control + c
-	
-	#Image editors
-	Super + Shift + p - launch Pinta (like MS Paint)
-	Super + Shift + g - launch gimp (like MS Photoshop)
-	
-	#Virtual Machine Management
-	Super + Shift + v - launch virt-manager
+
+#Clipboard Manager Toggle (same command to open and close)
+Super + Control + c
+
+#Text Editor 
+Super + t
+
+#Image editors
+Super + Shift + p - launch Pinta (like MS Paint)
+Super + Shift + g - launch gimp (like MS Photoshop)
+
+#Virtual Machine Management
+Super + Shift + v - launch virt-manager
 
 ### Browsers
-Super + b enters browser mode:
-	b - launch Brave
-	c - launch Chromium
+Super + b enters browser and web app mode:
+	b - launch apt Brave in "Brave" and flatpak Brave in "Google"
+		Keeps Google isolated for privacy
+	0 - launch Chromium
 	f - launch Firefox
 	t - launch Tor Browser
 	m - launch Mullvad Browser
 	l - launch Librewolf
+	g - launch ChatGPT
+	c - launch Cockpit
 Enter or Escape or Super + b to exit browser mode
 
-### Text Editors
-Super + t enters text mode:
-	e - launch Doom Emacs
-	g - launch Geany
-	s - launch Sublime
-	b - launch Brackets
-Enter or Escape or Super + t to exit text mode
 
 ### Authentication
 Super + Shift + a enters authenticate mode:
