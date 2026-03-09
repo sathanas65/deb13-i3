@@ -204,17 +204,17 @@ sudo apt-get install -y synaptic
 # privacy browsers
 # brave browser ($mod + b) NOT FOSS
 # Note that there is a bug where brave fails to in initialize on the 1st launch. After a reboot it will work fine thereafter.
-#wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
-#echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-#sudo apt-get update
-#sudo apt-get install -y brave-browser
+wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt-get update
+sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
 #flatpak install -y flathub com.brave.Browser
-#mkdir -p ~/.var/app/com.brave.Browser/config/
-#flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
-#flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
-#flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
+mkdir -p ~/.var/app/com.brave.Browser/config/
+flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
+flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
+flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
 
 
 # librewolf browser
@@ -281,13 +281,13 @@ cp /tmp/geany-themes/colorschemes/* "$HOME/.config/geany/colorschemes/"
 
 # system management
 # cockpit (admin web console)
-#sudo apt-get install -y cockpit
+sudo apt-get install -y cockpit
 
 # office apps
-#sudo apt-get install -y libreoffice
+sudo apt-get install -y libreoffice
 
 # display settings
-#sudo apt-get install -y arandr
+sudo apt-get install -y arandr
 
 # media player
 #sudo apt-get install -y vlc 
@@ -591,7 +591,7 @@ fi
 ### graphical user interface
 
 # window manager DO NOT REMOVE
-sudo apt-get install -y i3 i3blocks acpi-support
+sudo apt-get install -y i3 i3blocks acpi-support python3-i3ipc
 
 # display manager DO NOT Remove
 sudo apt-get install -y lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings

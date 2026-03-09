@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the text you want to paste
-text="https://github.com/sathanas65/deb12-i3/"
+text="https://github.com/sathanas65/deb13-i3/"
 
 # Copy the text to the clipboard (using the PRIMARY selection in case the CLIPBOARD is misbehaving)
 echo "$text" | xclip -selection clipboard
