@@ -19,9 +19,75 @@ case "$session_name" in
         ;;
     cockpit)
         flatpak run com.brave.Browser \
-            --profile-directory="Profile 5" \
+            --profile-directory="Profile 6" \
             --new-window \
             --app="http://127.0.0.1:9090/"
+        ;;
+    voice)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://voice.google.com/"
+        ;;
+     nas)
+        flatpak run com.brave.Browser \
+            --profile-directory="Profile 6" \
+            --new-window \
+            --app="https://192.168.1.24:443"
+        ;;
+     proxmox)
+        flatpak run com.brave.Browser \
+            --profile-directory="Profile 6" \
+            --new-window \
+            --app="https://192.168.1.220:8006"
+        ;;
+     gmail)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://mail.google.com/"
+        ;;
+     amazon)
+        flatpak run com.brave.Browser \
+            --profile-directory="Profile 1" \
+            --new-window \
+            --app="https://www.amazon.com/"
+        ;;
+     ytmusic)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://music.youtube.com/"
+        ;;
+     gmaps)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://www.google.com/maps/"
+        ;;
+     gdrive)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://drive.google.com/drive/home"
+        ;;
+     gcalendar)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://calendar.google.com/calendar/"
+        ;;
+     gkeep)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://keep.google.com/"
+        ;;
+     gemini)
+        flatpak run com.brave.Browser \
+            --profile-directory="Default" \
+            --new-window \
+            --app="https://gemini.google.com/app"
         ;;
     *)
         notify-send "Session: $session_name" "Unknown session action: $session_name" -u critical
