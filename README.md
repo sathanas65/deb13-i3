@@ -18,4 +18,4 @@ Documentation
 
 ![GitHub Image](/screenshots/screenshot-20260308-030032Z.png)      ![GitHub Image](/screenshots/screenshot-20260308-025921Z.png)
 
-![GitHub Image](/screenshots/screenshot-20260308-025759Z.png)     ![GitHub Image](/screenshots/screenshot-20260308-025502Z.png) 
+![GitHub Image](/screenshots/screenshot-20260308-025502Z.png) 
