@@ -30,16 +30,16 @@ font pango:monospace 12
 # bare metal, or virtual machine (any hypervisor). Keep the two '#for ...' lines
 # exactly as they are - the installer uses them to find the blocks.
 #for bare metal install, uncomment below and set to your outputs
-#set $display_output_left DisplayPort-1
-#set $display_output_right DVI-D-0
-#set $display_output_top HDMI-A-0
-#include ~/.config/i3/config.d/baremetal.conf
+set $display_output_left DisplayPort-1
+set $display_output_right DVI-D-0
+set $display_output_top HDMI-A-0
+include ~/.config/i3/config.d/baremetal.conf
 
 #for kvm-qemu guest install, uncomment below
-set $display_output_left Virtual-1
-set $display_output_right Virtual-2
-set $display_output_top Virtual-3
-include ~/.config/i3/config.d/vmguest.conf
+#set $display_output_left Virtual-1
+#set $display_output_right Virtual-2
+#set $display_output_top Virtual-3
+#include ~/.config/i3/config.d/vmguest.conf
 
 include ~/.config/i3/config.d/workspaces.conf
 
