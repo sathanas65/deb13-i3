@@ -219,6 +219,8 @@ install_mcomix() {
     apt_install mcomix
 }
 
+category_note  "Browsers"  "Chromium is always installed (needed for the NordVPN login keybind). Anything you tick here is installed IN ADDITION to Chromium."
+
 # ---------------------------------------------------------------------
 # Brave (apt) - NOT FOSS. $mod + b opens it.
 # Known bug: Brave may fail to start on the very first launch. Works after a reboot.
@@ -261,13 +263,6 @@ app  mullvad_browser  off  "Browsers"  "Mullvad Browser"
 install_mullvad_browser() {
     add_mullvad_repo
     apt_install mullvad-browser
-}
-
-# Chromium is used by Super + F1 to open the NordVPN login page.
-# (Or edit ~/scripts/nordvpn.sh to use another browser.)
-app  chromium  off  "Browsers"  "Chromium (used by the NordVPN login keybind)"
-install_chromium() {
-    apt_install chromium
 }
 
 app  firefox  off  "Browsers"  "Firefox ESR"
