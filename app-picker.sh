@@ -9,7 +9,17 @@
 APP_IDS=()              # every app, in install order
 CATEGORIES=()           # menu pages, in the order they first appear
 FAILED_APPS=()          # apps whose install failed
-declare -A APP_DEFAULT APP_CATEGORY APP_DESC SELECTED
+declare -A APP_DEFAULT APP_CATEGORY APP_DESC SELECTED CATEGORY_NOTE
+
+# Called by a "category_note" line in optional-apps.sh:
+# shows extra text at the top of that category's page
+category_note() {
+    if [ "$#" -ne 2 ]; then
+        echo "optional-apps.sh: a 'category_note' line needs 2 parts, got $#: category_note $*" >&2
+        exit 1
+    fi
+    CATEGORY_NOTE[$1]="$2"
+}
 
 # Called by each "app" line in optional-apps.sh
 app() {
@@ -131,19 +141,30 @@ pick_in_category() {
     done
 
     screen_size
+    local text="\nSPACE ticks / unticks an app.   ENTER when done.\n"
+    local list_h="$LIST_H"
+    if [ -n "${CATEGORY_NOTE[$cat]:-}" ]; then
+        text="\n${CATEGORY_NOTE[$cat]}\n$text"
+        list_h=$(( LIST_H - 3 ))
+    fi
     rc=0
     out="$(wt --title " $cat " --notags --separate-output \
               --ok-button "Done" --cancel-button "Back" \
-              --checklist "\nSPACE ticks / unticks an app.   ENTER when done.\n" \
-              "$BOX_H" "$BOX_W" "$LIST_H" "${items[@]}")" || rc=$?
+              --checklist "$text" \
+              "$BOX_H" "$BOX_W" "$list_h" "${items[@]}")" || rc=$?
     [ "$rc" -eq 0 ] || return 0      # Back / Esc: keep previous choices
 
     for id in "${APP_IDS[@]}"; do
-        [ "${APP_CATEGORY[$id]}" = "$cat" ] && SELECTED[$id]=0
+        if [ "${APP_CATEGORY[$id]}" = "$cat" ]; then
+            SELECTED[$id]=0
+        fi
     done
     while IFS= read -r id; do
-        [ -n "$id" ] && SELECTED[$id]=1
+        if [ -n "$id" ]; then
+            SELECTED[$id]=1
+        fi
     done <<< "$out"
+    return 0
 }
 
 selection_summary() {
@@ -208,7 +229,7 @@ choose_apps() {
                     echo "Nothing was installed."
                     exit 0
                 fi ;;
-            *)         pick_in_category "${CATEGORIES[$((choice - 1))]}" ;;
+            *)         pick_in_category "${CATEGORIES[$((choice - 1))]}" || true ;;
         esac
     done
 }

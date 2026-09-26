@@ -34,6 +34,9 @@
 #  Handy shortcuts you can use inside the { }:
 #      apt_install  <packages...>       install from Debian
 #      flatpak_install  <app id...>     install from Flathub
+#
+#  To show a note at the top of a category's page, add a line like:
+#      category_note  "File managers"  "Your text here."
 # =====================================================================
 
 apt_install()     { sudo apt-get install -y "$@"; }
@@ -68,6 +71,8 @@ install_fzf() {
 }
 
 # ---------------------------------------------------------------------
+category_note  "File managers"  "Nemo is always installed and themed to match the desktop. Anything you tick here is installed IN ADDITION to Nemo."
+
 app  thunar  off  "File managers"  "Thunar"
 install_thunar() {
     apt_install thunar
@@ -90,6 +95,8 @@ install_eza() {
 }
 
 # ---------------------------------------------------------------------
+category_note  "Terminals"  "Terminator is always installed and themed to match the desktop. Anything you tick here is installed IN ADDITION to Terminator."
+
 app  kitty  off  "Terminals"  "Kitty (no dot files yet)"
 install_kitty() {
     apt_install kitty
@@ -123,9 +130,19 @@ install_audacity() {
 }
 
 # ---------------------------------------------------------------------
-app  dashboard  on  "Terminal tools"  "bpytop, cmatrix, hyfetch (needed for i3 dashboard)"
-install_dashboard() {
-    apt_install bpytop cmatrix hyfetch
+app  bpytop  off  "Terminal tools"  "bpytop - system monitor"
+install_bpytop() {
+    apt_install bpytop
+}
+
+app  cmatrix  off  "Terminal tools"  "cmatrix - Matrix-style screen effect"
+install_cmatrix() {
+    apt_install cmatrix
+}
+
+app  hyfetch  off  "Terminal tools"  "hyfetch - system info with pride flag colors"
+install_hyfetch() {
+    apt_install hyfetch
     sleep 5
     # hyfetch needs a neowofetch config; turn off the color blocks
     neowofetch --generate_config 2>/dev/null || true
