@@ -136,16 +136,15 @@ sudo systemctl enable avahi-daemon
 sudo systemctl enable acpid
 
 # terminal emulators
-# terminator (dot files included)
+# terminator (dot files included, used for keychord config edits)
 sudo apt-get install -y terminator
 # kitty (no dot files yet)
 #sudo apt-get install -y kitty 
-sudo apt-get install -y konsole
-# konsole (required for out of box use of:
-# Super + Shift + h for keymap and 
-# Super + Shift + i for backup and edit i3 config)
-#sudo apt-get install -y konsole     #(REMOVE?)
+# konsole
+#sudo apt-get install -y konsole
+# xterm
 #sudo apt-get install -y xterm
+# zutty
 #sudo apt-get install -y zutty
 
 # tmux - terminal multiplexer - runs in terminal and shell sessions run in tmux - excellent features
