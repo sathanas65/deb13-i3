@@ -17,23 +17,18 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
 
          cd deb13-i3
    
-6. If you will be installing on a kvm/qemu guest vm then you will need to:
+6. If you will be installing on a kvm/qemu guest vm:
 
-         nano install.sh
-
-   Uncomment line - 'sudo apt install -y spice-vdagent'. This will allow clipboard sharing between the guest and host, as well as other qemu features.
-   
-   Uncomment all lines from 'sudo cp deb13-i3/display.sh /usr/share/display.sh' to 'sudo chmod 644 /etc/lightdm/lightdm.conf'. This will set the
-      dislay settings for a single 1080p virtual display. Edit as needed.
-   
-   Ctrl + s to save & Ctrl + x to exit.
+   You don't need to edit install.sh. The installer detects a KVM/QEMU VM and ticks the 'SPICE guest agent' for you
+   (clipboard sharing between guest and host, and other qemu features). The login screen display settings in install.sh
+   are set for a single 1080p virtual display.
 
    If you are using a different hypervisor like VMWare or VirtualBox, and you wish to set the display up now,
       find out the default name for their virtual display outputs and edit ~/deb13-i3/display.sh with them. Otherwise just install as you would on hardware.
 
    Then,
 
-         nano /config/i3/config
+         nano config/i3/config
 
    Comment all lines in "for bare metal install" section.
    
@@ -46,19 +41,27 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
    If using a different hypervisor, edit /scripts/vm-dual-display.sh and /scripts/vm-single-display.sh, replacing "Virtual-1", etc with the default
       display outputs of your hypervisor. This will enable use of display mode hotkeys to switch between single and dual displays. 
 
-7. Now you can review and edit the main install script.
+7. Run the install script, saving everything it prints to install.log:
 
-         nano install.sh
+         bash install.sh 2>&1 | tee install.log
 
-    You can comment out lines by putting a hash(#) before them, and then they will not run. Or uncomment any you want to run.
-    
-8. Once you are done selecting or deselecting packages to you liking, or adding some of your own, Ctrl + s to save & Ctrl + x to exit.    
-9. Finally, to run the install script, outputting to a txt file for logging, enter:
+    Enter your password when prompted.
 
-         bash install.sh >> output.txt
+8. A menu opens so you can pick your optional apps. The base i3 desktop is always installed; the menu is only for extras.
 
-    Enter your password if prompted.
-10. Now just let the script run and it will reboot when finished. You should end up at the gui login screen. Now you can login to i3.
+    - Use the arrow keys to choose a category and press Enter.
+    - In a category, press Space to tick or untick an app, then Enter to go back.
+    - The recommended apps are already ticked. 'Reset to the recommended picks' and 'Untick everything' are at the bottom.
+    - When you're happy, choose 'Install now' at the top and confirm.
+
+    After that the script runs on its own. If you just want the recommended apps with no menu, run 'bash install.sh --defaults' instead.
+
+9. To add or remove apps from the menu itself, or change which ones are ticked by default, edit optional-apps.sh.
+    Each app is one short block and the instructions are at the top of that file. You don't need to touch install.sh.
+
+10. Now just let the script run and it will reboot when finished. If any optional app failed to install, it will show you which ones
+    before rebooting. You can add apps (or retry failed ones) any time later with 'bash ~/deb13-i3/install-apps.sh'.
+    You should end up at the gui login screen. Now you can login to i3.
 11. To allow Gnome network manager to manage your network connections, you must  edit /etc/network/interfaces after install or the network manager applet will show your
     interface as unmanaged and you won't be able to connect to other networks, though the network you connected to during install will still work. These steps could be added to the install script
     if desired.
