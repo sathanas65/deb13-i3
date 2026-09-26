@@ -156,7 +156,7 @@ sudo apt-get install -y tmux
 
 # audio
 #sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
-sudo apt-get install pipewire pipewire-pulse wireplumber pipewire-alsa alsa-utils
+sudo apt-get install -y pipewire pipewire-pulse wireplumber pipewire-alsa alsa-utils
 
 # audio editor
 #sudo apt-get install -y audacity
