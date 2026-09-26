@@ -140,10 +140,10 @@ sudo systemctl enable acpid
 sudo apt-get install -y terminator
 # kitty (no dot files yet)
 #sudo apt-get install -y kitty 
+sudo apt-get install -y konsole
 # konsole (required for out of box use of:
 # Super + Shift + h for keymap and 
-# Super + Shift + i for backup and edit i3 config and
-# Super + n then s for nordvpn status)
+# Super + Shift + i for backup and edit i3 config)
 #sudo apt-get install -y konsole     #(REMOVE?)
 #sudo apt-get install -y xterm
 #sudo apt-get install -y zutty
