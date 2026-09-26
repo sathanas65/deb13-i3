@@ -90,5 +90,5 @@ bar {
 }
 
 # Transparency with picom compositor
-exec_always --no-startup-id picom -b --backend glx -f
+exec_always --no-startup-id picom -b --backend xrender --xrender-sync-fence --no-use-damage -f
 
