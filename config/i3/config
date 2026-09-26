@@ -27,16 +27,16 @@ font pango:monospace 12
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 
 #for bare metal install, uncomment below and set to your outputs
-#set $display_output_left DisplayPort-1
-#set $display_output_right DVI-D-0
-#set $display_output_top HDMI-A-0
-#include ~/.config/i3/config.d/baremetal.conf
+set $display_output_left DisplayPort-1
+set $display_output_right DVI-D-0
+set $display_output_top HDMI-A-0
+include ~/.config/i3/config.d/baremetal.conf
 
 #for kvm-qemu guest install, uncomment below
-set $display_output_left Virtual-1
-set $display_output_right Virtual-2
-set $display_output_top Virtual-3
-include ~/.config/i3/config.d/vmguest.conf
+#set $display_output_left Virtual-1
+#set $display_output_right Virtual-2
+#set $display_output_top Virtual-3
+#include ~/.config/i3/config.d/vmguest.conf
 
 include ~/.config/i3/config.d/workspaces.conf
 
@@ -90,8 +90,5 @@ bar {
 }
 
 # Transparency with picom compositor
-#enable this on KVM
-exec_always --no-startup-id sh -c 'pkill -x picom 2>/dev/null; picom --backend xrender --no-use-damage --xrender-sync-fence --detect-rounded-corners -b >/dev/null 2>&1'
-#Try this on metal
-#exec_always --no-startup-id sh -c 'pkill -x picom 2>/dev/null; picom --backend glx --no-use-damage --vsync -b >/dev/null 2>&1'
+exec_always --no-startup-id picom -b -f
 
