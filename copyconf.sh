@@ -110,7 +110,6 @@ fi
 sudo cp -a "config/Sweet-Dark-v40" "/usr/share/themes/"
 
 # --- make scripts executable (robust) ---
-chmod +x "$HOME/.config/i3/autostart.sh" || true
 chmod +x "$HOME/.config/i3blocks/cpu/cpu_info.sh" || true
 chmod +x "$HOME/.config/i3blocks/battery/battery_info.sh" || true
 chmod +x "$HOME/.config/i3blocks/weather/weather.sh" || true
