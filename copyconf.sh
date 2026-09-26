@@ -103,6 +103,17 @@ cp -a "config/konsolerc"    "$HOME/.config/konsolerc" || true
 cp -a "config/bpytop/."     "$HOME/.config/bpytop/" || true
 cp -a "config/hyfetch.json" "$HOME/.config/hyfetch.json" || true
 
+# geany
+# geany.conf is the piece that was missing: it's what actually sets
+# color_scheme=delt-dark.conf, so without it Geany just falls back to its
+# default (light) theme. install.sh clones the full upstream geany-themes
+# repo into ~/.config/geany/colorschemes/ for a wide choice of schemes;
+# this layers delt-dark.conf (our custom one, not part of that upstream
+# repo) on top without disturbing the others.
+mkdir -p "$HOME/.config/geany/colorschemes"
+cp -a "config/geany/geany.conf"          "$HOME/.config/geany/geany.conf" || true
+cp -a "config/geany/colorschemes/."      "$HOME/.config/geany/colorschemes/" || true
+
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
