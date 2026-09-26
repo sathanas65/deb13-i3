@@ -1,13 +1,10 @@
 #!/bin/bash
 
-# Get the default sink name
-DEFAULT_SINK=$(pactl info | grep 'Default Sink' | cut -d' ' -f3)
+SINK="@DEFAULT_AUDIO_SINK@"
 
-# Get the mute status of the default sink
-MUTE_STATUS=$(pactl list sinks | grep -A 15 "Name: $DEFAULT_SINK" | grep 'Mute:' | awk '{print $2}')
-
-if [ "$MUTE_STATUS" = "yes" ]; then
-    pactl set-sink-mute @DEFAULT_SINK@ toggle &&  dunstify "Mute Off"
+# Check mute status before toggling (wpctl reports it inline with volume)
+if wpctl get-volume "$SINK" | grep -q "MUTED"; then
+    wpctl set-mute "$SINK" toggle && dunstify "Mute Off"
 else
-    pactl set-sink-mute @DEFAULT_SINK@ toggle &&  dunstify "Mute On"
+    wpctl set-mute "$SINK" toggle && dunstify "Mute On"
 fi
