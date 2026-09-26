@@ -126,7 +126,7 @@ sed -i "s#/home/user#$HOME#g" "$HOME/.var/app/fr.free.Homebank/config/homebank/p
 
 # keepassxc
 mkdir -p "$HOME/.config/keepassxc"
-cp -a "config/keepassxc/keepassxc.ini" "$HOME/.config/keepassxc/keepassxc.ini" || true
+cp -a "config/keepassxc/keepass.ini" "$HOME/.config/keepassxc/keepass.ini" || true
 
 # browsers
 #apt Brave
