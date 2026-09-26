@@ -230,6 +230,18 @@ xdg-user-dirs-update
 sudo apt-get install -y libgtk-4-dev
 sudo apt-get install -y fonts-noto-color-emoji
 
+# Qt app theming: this desktop is GTK-themed, but a few optional apps
+# (Kleopatra, KDE Connect's settings, etc.) are Qt/KDE apps that don't read
+# GTK themes at all. qt6ct lets them pick up a dark style instead - its
+# color scheme is set in config/qt6ct/qt6ct.conf (copied below by
+# copyconf.sh). QT_QPA_PLATFORMTHEME=qt6ct is what tells Qt apps to actually
+# use it; it goes in /etc/environment so every app in the graphical session
+# picks it up, not just ones launched from a terminal that reads ~/.bashrc.
+sudo apt-get install -y qt6ct
+if ! sudo grep -qxF 'QT_QPA_PLATFORMTHEME=qt6ct' /etc/environment; then
+    echo 'QT_QPA_PLATFORMTHEME=qt6ct' | sudo tee -a /etc/environment > /dev/null
+fi
+
 # ---------------------------------------------------------------------
 #  Optional apps - the ones you ticked in the menu
 #  (the list and install steps are in optional-apps.sh)
