@@ -1,25 +1,20 @@
 #!/bin/bash
 
-# Get action from first argument (increase or decrease)
+# Get action from first argument (up or down)
 ACTION=$1
 STEP=5
-MAX_VOLUME=120
+MAX_VOLUME=1.2   # wpctl uses a 0.0–1.5 fraction, so 120% = 1.2
 
-# Adjust volume
-if [ "$ACTION" == "up" ]; then
-    pactl set-sink-volume @DEFAULT_SINK@ +${STEP}%
-elif [ "$ACTION" == "down" ]; then
-    pactl set-sink-volume @DEFAULT_SINK@ -${STEP}%
-fi
+SINK="@DEFAULT_AUDIO_SINK@"
 
-# Get the actual volume level (first percentage found)
-VOLUME=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -1 | tr -d '%')
+# Adjust volume (wpctl's --limit caps the boost so it can't overshoot)
+case "$ACTION" in
+    up)   wpctl set-volume --limit "$MAX_VOLUME" "$SINK" "${STEP}%+" ;;
+    down) wpctl set-volume --limit "$MAX_VOLUME" "$SINK" "${STEP}%-" ;;
+esac
 
-# Cap at MAX_VOLUME to prevent overshooting
-if [ "$VOLUME" -gt "$MAX_VOLUME" ]; then
-    pactl set-sink-volume @DEFAULT_SINK@ ${MAX_VOLUME}%
-    VOLUME=$MAX_VOLUME
-fi
+# Get the actual volume level as a whole-number percentage
+VOLUME=$(wpctl get-volume "$SINK" | grep -oP '(?<=Volume: )[0-9.]+' | awk '{printf "%d", $1 * 100 + 0.5}')
 
 # Send notification
 dunstify -r 9993 "Volume" "${VOLUME}%"
