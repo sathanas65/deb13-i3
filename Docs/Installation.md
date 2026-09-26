@@ -38,10 +38,12 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
 
     - Use the arrow keys to choose a category and press Enter.
     - In a category, press Space to tick or untick an app, then Enter to go back.
-    - The recommended apps are already ticked. 'Reset to the recommended picks' and 'Untick everything' are at the bottom.
+    - Nothing is ticked to start with, except the guest tools when installing in a VM. 'Reset to defaults' and
+      'Untick everything' are at the bottom.
     - When you're happy, choose 'Install now' at the top and confirm.
 
-    After that the script runs on its own. If you just want the recommended apps with no menu, run 'bash install.sh --defaults' instead.
+    After that the script runs on its own. To skip the menu and install just the base system (plus VM guest tools in a VM),
+    run 'bash install.sh --defaults' instead.
 
 9. To add or remove apps from the menu itself, or change which ones are ticked by default, edit optional-apps.sh.
     Each app is one short block and the instructions are at the top of that file. You don't need to touch install.sh.
