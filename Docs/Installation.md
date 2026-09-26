@@ -17,29 +17,16 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
 
          cd deb13-i3
    
-6. If you will be installing on a kvm/qemu guest vm:
+6. Installing in a virtual machine? There's nothing to edit - the installer detects it:
 
-   You don't need to edit install.sh. The installer detects a KVM/QEMU VM and ticks the 'SPICE guest agent' for you
-   (clipboard sharing between guest and host, and other qemu features). The login screen display settings in install.sh
-   are set for a single 1080p virtual display.
+   - Any VM (KVM/QEMU, VirtualBox, Xen, VMware, Hyper-V, ...): the i3 config is switched to the VM display setup
+     (outputs Virtual-1, Virtual-2, Virtual-3). On real hardware it's switched to the bare-metal setup instead.
+   - KVM/QEMU: the 'SPICE guest agent' is ticked in the app menu (clipboard sharing and other qemu features).
+   - VirtualBox: 'VirtualBox Guest Additions' is ticked in the app menu (clipboard, shared folders, display resizing).
+   - Xen: there's no guest-tools package to add from Debian, so only the i3 config is switched.
 
-   If you are using a different hypervisor like VMWare or VirtualBox, and you wish to set the display up now,
-      find out the default name for their virtual display outputs and edit ~/deb13-i3/display.sh with them. Otherwise just install as you would on hardware.
-
-   Then,
-
-         nano config/i3/config
-
-   Comment all lines in "for bare metal install" section.
-   
-   Uncomment all lines in "#for kvm-qemu guest install" section.
-   
-   If using a different hypervisor, replace "Virtual-1", etc with the default display outputs of your hypervisor.
-   
-   Ctrl + s to save & Ctrl + x to exit.
-   
-   If using a different hypervisor, edit /scripts/vm-dual-display.sh and /scripts/vm-single-display.sh, replacing "Virtual-1", etc with the default
-      display outputs of your hypervisor. This will enable use of display mode hotkeys to switch between single and dual displays. 
+   If your hypervisor names its displays something other than Virtual-1/2/3, check with 'xrandr -q' after logging in and
+   correct them in ~/.config/i3/config, ~/scripts/vm-single-display.sh and ~/scripts/vm-dual-display.sh.
 
 7. Run the install script, saving everything it prints to install.log:
 
