@@ -192,6 +192,12 @@ sudo apt-get install -y feh
 # app launcher ($mod + Space)
 sudo apt-get install -y rofi
 
+# Chromium is required: Super + F1 opens the NordVPN login page with it, and
+# it's the fallback browser for anything opened before you've picked one in
+# the app menu. (Edit ~/scripts/nordvpn.sh if you'd rather use another browser
+# for the NordVPN login.)
+sudo apt-get install -y chromium
+
 # auto numlock
 sudo apt-get install -y numlockx
 
