@@ -323,6 +323,7 @@ sudo apt-get install -y maim xclip xdotool jq
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
 #sudo apt-get install -y gimp
 #sudo snap install pinta
+#sudo flatpak install -y flathub com.github.PintaProject.Pinta
 
 # zip utilities
 sudo apt-get install -y tar gzip p7zip-full
@@ -409,6 +410,7 @@ sudo apt-get install -y tar gzip p7zip-full
 
 # Authpass
 #sudo snap install authpass
+sudo flatpak install -y flathub codes.rene.authpass
 
 # Yubikey 
 #sudo apt-get install -y yubikey-manager yubikey-manager-qt
@@ -500,6 +502,7 @@ xdg-user-dirs-update
 
 # postman API platform (NOT FOSS)
 #sudo snap install postman
+sudo flatpak install -y flathub com.getpostman.Postman
 # postman CLI
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
