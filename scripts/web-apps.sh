@@ -89,6 +89,24 @@ case "$session_name" in
             --new-window \
             --app="https://gemini.google.com/app"
         ;;
+	 firewall)
+        flatpak run com.brave.Browser \
+            --profile-directory="Profile 6" \
+            --new-window \
+            --app="https://192.168.1.1/ui/core/dashboard"
+        ;;
+     pihole)
+        flatpak run com.brave.Browser \
+            --profile-directory="Profile 6" \
+            --new-window \
+            --app="http://192.168.1.5/admin/"
+        ;;
+     unify)
+        flatpak run com.brave.Browser \
+            --profile-directory="Profile 6" \
+            --new-window \
+            --app="https://192.168.1.49:11443/network/default/devices"
+        ;;
     *)
         notify-send "Session: $session_name" "Unknown session action: $session_name" -u critical
         echo "Unknown session action: $session_name"
