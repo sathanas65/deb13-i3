@@ -26,6 +26,9 @@ font pango:monospace 12
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 
+# The installer (copyconf.sh) turns on ONE of the two blocks below automatically:
+# bare metal, or virtual machine (any hypervisor). Keep the two '#for ...' lines
+# exactly as they are - the installer uses them to find the blocks.
 #for bare metal install, uncomment below and set to your outputs
 #set $display_output_left DisplayPort-1
 #set $display_output_right DVI-D-0
