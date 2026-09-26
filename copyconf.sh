@@ -126,7 +126,7 @@ sed -i "s#/home/user#$HOME#g" "$HOME/.var/app/fr.free.Homebank/config/homebank/p
 
 # keepassxc
 mkdir -p "$HOME/.config/keepassxc"
-cp -a "config/keepassxc/keepass.ini" "$HOME/.config/keepassxc/keepass.ini" || true
+cp -a "config/keepassxc/keepassxc.ini" "$HOME/.config/keepassxc/keepassxc.ini" || true
 
 # browsers
 #apt Brave
@@ -156,6 +156,14 @@ if have mullvad-browser; then
         fi
         sleep 1
     done
+
+    # The directory shows up almost immediately, but Mullvad Browser keeps
+    # doing first-run setup in it for a few seconds after that - kill it too
+    # soon and it overwrites user.js right back with its own defaults, so
+    # our theme pref never sticks. Give it a full 10 seconds before stopping.
+    if [ -n "$PROFILE_DIR" ] && [ -d "$PROFILE_DIR" ]; then
+        sleep 10
+    fi
 
     # stop the headless instance cleanly enough for scripting purposes.
     # "mullvad-browser" (not just "mullvad") so this can't also kill the
