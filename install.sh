@@ -9,7 +9,7 @@
 #  you pick them from a menu when this script starts.
 #
 #  Options:
-#     --defaults   skip the menu and install the recommended apps
+#     --defaults   skip the menu (installs only the VM guest tools, when in a VM)
 #     --help       show this help
 # =====================================================================
 
@@ -45,7 +45,7 @@ if [ "$USE_MENU" -eq 1 ] && have_tty; then
     choose_apps defaults
     clear >/dev/tty 2>/dev/null || true
 else
-    echo "No menu - using the recommended apps."
+    echo "No menu - no optional apps except VM guest tools (if this is a VM)."
     select_defaults
 fi
 print_selection
