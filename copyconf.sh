@@ -124,6 +124,10 @@ cp -a "config/homebank/preferences" "$HOME/.var/app/fr.free.Homebank/config/home
 # folders - point those at whoever is actually running this instead
 sed -i "s#/home/user#$HOME#g" "$HOME/.var/app/fr.free.Homebank/config/homebank/preferences" || true
 
+# keepassxc
+mkdir -p "$HOME/.config/keepassxc"
+cp -a "config/keepassxc/keepassxc.ini" "$HOME/.config/keepassxc/keepassxc.ini" || true
+
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
