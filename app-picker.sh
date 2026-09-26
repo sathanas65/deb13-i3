@@ -191,7 +191,7 @@ selection_summary() {
     printf '%b' "$text"
 }
 
-# The main menu.   choose_apps defaults   -> start with recommended picks
+# The main menu.   choose_apps defaults   -> start with the defaults ticked
 #                  choose_apps none       -> start with nothing ticked
 # $PICKER_INTRO and $PICKER_GO_LABEL can change the wording.
 choose_apps() {
@@ -215,7 +215,7 @@ choose_apps() {
             i=$((i + 1))
             items+=("$i" "$(printf '%-22s %3s of %-3s ticked' "$cat" "$(count_selected "$cat")" "$(count_in_category "$cat")")")
         done
-        items+=("DEFAULTS" "Reset to the recommended picks" "NONE" "Untick everything" "QUIT" "Quit without installing")
+        items+=("DEFAULTS" "Reset to defaults (only VM guest tools)" "NONE" "Untick everything" "QUIT" "Quit without installing")
 
         rc=0
         choice="$(wt --title " Choose your apps " --notags --default-item "$last" \

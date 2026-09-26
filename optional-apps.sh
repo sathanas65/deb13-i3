@@ -174,7 +174,7 @@ install_calc() {
 }
 
 # ---------------------------------------------------------------------
-app  system_monitor  on  "System"  "GNOME System Monitor"
+app  system_monitor  off  "System"  "GNOME System Monitor"
 install_system_monitor() {
     apt_install gnome-system-monitor
 }
@@ -199,22 +199,22 @@ install_bluetooth() {
 }
 
 # ---------------------------------------------------------------------
-app  evince  on  "Documents & office"  "Evince - PDF / document viewer"
+app  evince  off  "Documents & office"  "Evince - PDF / document viewer"
 install_evince() {
     apt_install evince
 }
 
-app  foliate  on  "Documents & office"  "Foliate - ebook reader"
+app  foliate  off  "Documents & office"  "Foliate - ebook reader"
 install_foliate() {
     apt_install foliate
 }
 
-app  calibre  on  "Documents & office"  "Calibre - ebook library (flatpak)"
+app  calibre  off  "Documents & office"  "Calibre - ebook library (flatpak)"
 install_calibre() {
     flatpak_install com.calibre_ebook.calibre
 }
 
-app  mcomix  on  "Documents & office"  "MComix - comic reader"
+app  mcomix  off  "Documents & office"  "MComix - comic reader"
 install_mcomix() {
     apt_install mcomix
 }
@@ -222,7 +222,7 @@ install_mcomix() {
 # ---------------------------------------------------------------------
 # Brave (apt) - NOT FOSS. $mod + b opens it.
 # Known bug: Brave may fail to start on the very first launch. Works after a reboot.
-app  brave_apt  on  "Browsers"  "Brave (apt) - NOT FOSS"
+app  brave_apt  off  "Browsers"  "Brave (apt) - NOT FOSS"
 install_brave_apt() {
     sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg \
         https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -235,7 +235,7 @@ install_brave_apt() {
 }
 
 # Using both apt and flatpak Brave helps keep google and such separate
-app  brave_flatpak  on  "Browsers"  "Brave (flatpak) - NOT FOSS"
+app  brave_flatpak  off  "Browsers"  "Brave (flatpak) - NOT FOSS"
 install_brave_flatpak() {
     flatpak_install com.brave.Browser
     mkdir -p "$HOME/.var/app/com.brave.Browser/config/"
@@ -265,7 +265,7 @@ install_mullvad_browser() {
 
 # Chromium is used by Super + F1 to open the NordVPN login page.
 # (Or edit ~/scripts/nordvpn.sh to use another browser.)
-app  chromium  on  "Browsers"  "Chromium (used by the NordVPN login keybind)"
+app  chromium  off  "Browsers"  "Chromium (used by the NordVPN login keybind)"
 install_chromium() {
     apt_install chromium
 }
@@ -294,7 +294,7 @@ install_dangerzone() {
 }
 
 # ---------------------------------------------------------------------
-app  imv  on  "Media"  "imv - image viewer"
+app  imv  off  "Media"  "imv - image viewer"
 install_imv() {
     apt_install imv
 }
@@ -501,7 +501,7 @@ install_yubikey_manager() {
     apt_install yubikey-manager yubikey-manager-qt
 }
 
-app  yubico_authenticator  on  "Security & privacy"  "Yubico Authenticator + smart card service"
+app  yubico_authenticator  off  "Security & privacy"  "Yubico Authenticator + smart card service"
 install_yubico_authenticator() {
     flatpak_install com.yubico.yubioath
     apt_install pcscd libpcsclite1
@@ -647,12 +647,12 @@ add_mullvad_repo() {
 }
 
 # ---------------------------------------------------------------------
-app  gnucash  on  "Other"  "GnuCash - double-entry accounting"
+app  gnucash  off  "Other"  "GnuCash - double-entry accounting"
 install_gnucash() {
     flatpak_install org.gnucash.GnuCash
 }
 
-app  homebank  on  "Other"  "HomeBank - simple budget tracker"
+app  homebank  off  "Other"  "HomeBank - simple budget tracker"
 install_homebank() {
     flatpak_install fr.free.Homebank
 }
