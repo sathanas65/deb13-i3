@@ -213,8 +213,8 @@ sudo apt-get install -y brave-browser
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
 #flatpak install -y flathub com.brave.Browser
 mkdir -p ~/.var/app/com.brave.Browser/config/
-flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
-flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
+sudo flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
+sudo flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
 flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
 
 
