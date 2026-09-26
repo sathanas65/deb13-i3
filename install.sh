@@ -13,8 +13,8 @@ SUDO_PID=$!
 trap 'kill $SUDO_PID 2>/dev/null' EXIT
 
 # firewall
-sudo apt-get install -y ufw
-sudo ufw --force enable
+#sudo apt-get install -y ufw
+#sudo ufw --force enable
 
 #TODO
 
@@ -109,11 +109,11 @@ sudo apt-get install -y flatpak
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # snap store (Supports installation of containerized apps)
-sudo apt-get install -y snapd
-sleep 10
-sudo snap install core
+#sudo apt-get install -y snapd
+#sleep 10
+#sudo snap install core
 # schedule snap updates daily between 2 and 4 am
-sudo snap set core refresh.schedule=02:00-04:00
+#sudo snap set core refresh.schedule=02:00-04:00
 
 # file managers
 sudo apt-get install -y nemo
@@ -144,7 +144,7 @@ sudo apt-get install -y terminator
 # Super + Shift + h for keymap and 
 # Super + Shift + i for backup and edit i3 config and
 # Super + n then s for nordvpn status)
-sudo apt-get install -y konsole     #(REMOVE?)
+#sudo apt-get install -y konsole     #(REMOVE?)
 #sudo apt-get install -y xterm
 #sudo apt-get install -y zutty
 
@@ -172,10 +172,10 @@ sed -i 's/^color_blocks="on"/color_blocks="off"/' ~/.config/neowofetch/config.co
 #sudo apt-get install -y htop glances figlet calc
 
 # gui system monitor
-#sudo apt-get install -y gnome-system-monitor
+sudo apt-get install -y gnome-system-monitor
 
 # apt-get package manager front end
-sudo apt-get install -y synaptic
+#sudo apt-get install -y synaptic
 
 # printer support
 #sudo apt-get install -y cups
@@ -186,18 +186,18 @@ sudo apt-get install -y synaptic
 #sudo systemctl enable bluetooth
 
 # document viewer
-#sudo apt-get install -y evince
+sudo apt-get install -y evince
 
 # ebook reader
-#sudo apt-get install -y foliate
+sudo apt-get install -y foliate
 
 # comic reader
-#sudo apt-get install -y mcomix
+sudo apt-get install -y mcomix
 
 # calculator
 #sudo apt-get install -y gnome-calculator
 #galculator is customized
-#sudo apt-get install -y galculator
+sudo apt-get install -y galculator
 
 #sudo apt-get install -y mate-calc
 #sudo apt-get install -y kcalc
@@ -219,23 +219,23 @@ flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
 
 
 # librewolf browser
-sudo apt-get update && sudo apt-get install extrepo -y
-sudo extrepo enable librewolf
-sudo apt-get update && sudo apt-get install librewolf -y
+#sudo apt-get update && sudo apt-get install extrepo -y
+#sudo extrepo enable librewolf
+#sudo apt-get update && sudo apt-get install librewolf -y
 
 # tor browser
-sudo apt-get install -y torbrowser-launcher 
+#sudo apt-get install -y torbrowser-launcher 
 
 # mullvad browser
-sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-sudo apt-get update && sudo apt-get install mullvad-browser
+#sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+#sudo apt-get update && sudo apt-get install mullvad-browser
 
 # non-privacy browsers
 # Chromium is required for keybind Super + F1 to open nordvpn login page. 
 # Or you can edit ~/scripts/nordlogin.sh to use another browser but nord login script fails in Brave and Librewolf, even with shields down.
 sudo apt-get install -y chromium
-sudo apt-get install -y firefox-esr
+#sudo apt-get install -y firefox-esr
 
 # dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
 # Dangerzone destroys malware by rendering your document into pixels in a secure sandbox and reconstructing it locally as a PDF.
@@ -283,19 +283,19 @@ cp /tmp/geany-themes/colorschemes/* "$HOME/.config/geany/colorschemes/"
 
 # system management
 # cockpit (admin web console)
-sudo apt-get install -y cockpit
+#sudo apt-get install -y cockpit
 
 # office apps
-sudo apt-get install -y libreoffice
+#sudo apt-get install -y libreoffice
 
 # display settings
-sudo apt-get install -y arandr
+#sudo apt-get install -y arandr
 
 # media player
 #sudo apt-get install -y vlc 
 
 # non free codecs (NOT FOSS)
-sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
+#sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
 
 # disk utilities
 #sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
@@ -322,7 +322,6 @@ sudo apt-get install -y maim xclip xdotool jq
 
 # image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
 #sudo apt-get install -y gimp
-#sudo snap install pinta
 #sudo flatpak install -y flathub com.github.PintaProject.Pinta
 
 # zip utilities
@@ -495,13 +494,13 @@ xdg-user-dirs-update
 
 # personal finance
 # GnuCash — full double-entry accounting
-#sudo flatpak install -y flathub org.gnucash.GnuCash
+sudo flatpak install -y flathub org.gnucash.GnuCash
 # HomeBank — simpler personal budget/expense tracker
-#sudo flatpak install -y flathub fr.free.Homebank
+sudo flatpak install -y flathub fr.free.Homebank
 
 # postman API platform (NOT FOSS)
 #sudo snap install postman
-sudo flatpak install -y flathub com.getpostman.Postman
+#sudo flatpak install -y flathub com.getpostman.Postman
 # postman CLI
 #curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
@@ -511,35 +510,35 @@ sudo flatpak install -y flathub com.getpostman.Postman
 
 # Enable bleachbit-root to launch from Rofi using polkit to prompt for password
 # DO NOT COMMENT OUT - USE THE FUNCTION CALL
-install_bleachbit_launcher() {
+#install_bleachbit_launcher() {
   # make sure user-local paths exist
-  mkdir -p "$HOME/.local/bin"
-  mkdir -p "$HOME/.local/share/applications"
+#  mkdir -p "$HOME/.local/bin"
+#  mkdir -p "$HOME/.local/share/applications"
   # wrapper script for reliable root launch from rofi/drun
-  cat > "$HOME/.local/bin/bleachbit-root" <<'EOF'
-#!/bin/bash
-export DISPLAY="${DISPLAY:-:0}"
-export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
-export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=/run/user/$(id -u)/bus}"
-exec /usr/bin/env sh -lc 'pkexec /usr/bin/bleachbit'
-EOF
-  chmod +x "$HOME/.local/bin/bleachbit-root"
+#  cat > "$HOME/.local/bin/bleachbit-root" <<'EOF'
+##!/bin/bash
+#export DISPLAY="${DISPLAY:-:0}"
+#export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+#export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=/run/user/$(id -u)/bus}"
+#exec /usr/bin/env sh -lc 'pkexec /usr/bin/bleachbit'
+#EOF
+#  chmod +x "$HOME/.local/bin/bleachbit-root"
   # desktop entry so rofi can see it
-  cat > "$HOME/.local/share/applications/bleachbit-root.desktop" <<EOF
-[Desktop Entry]
-Type=Application
-Name=BleachBit (Root)
-Exec=$HOME/.local/bin/bleachbit-root
-Icon=bleachbit
-Terminal=false
-Categories=System;
-NoDisplay=false
-EOF
+#  cat > "$HOME/.local/share/applications/bleachbit-root.desktop" <<EOF
+#[Desktop Entry]
+#Type=Application
+#Name=BleachBit (Root)
+#Exec=$HOME/.local/bin/bleachbit-root
+#Icon=bleachbit
+#Terminal=false
+#Categories=System;
+#NoDisplay=false
+#EOF
   # clear rofi cache so the new launcher appears
-  rm -f "$HOME/.cache/rofi2.druncache" \
-        "$HOME/.cache/rofi3.druncache" \
-        "$HOME"/.cache/rofi-*.cache 2>/dev/null || true
-}
+#  rm -f "$HOME/.cache/rofi2.druncache" \
+#        "$HOME/.cache/rofi3.druncache" \
+#        "$HOME"/.cache/rofi-*.cache 2>/dev/null || true
+#}
 
 # Function Call - Enable bleachbit-root to launch from Rofi using polkit to prompt for password
 #install_bleachbit_launcher
