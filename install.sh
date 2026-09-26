@@ -1,10 +1,36 @@
 #!/bin/bash
+# =====================================================================
+#  deb13-i3 installer
+#
+#  Run with:   bash install.sh 2>&1 | tee install.log
+#
+#  This file installs the BASE system - everything the i3 desktop needs.
+#  Optional apps are NOT listed here. They are in optional-apps.sh and
+#  you pick them from a menu when this script starts.
+#
+#  Options:
+#     --defaults   skip the menu and install the recommended apps
+#     --help       show this help
+# =====================================================================
 
-# on error 
+# stop on errors
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$SCRIPT_DIR"
+USER="${USER:-$(id -un)}"
+
+source "$REPO_DIR/app-picker.sh"
+load_apps "$REPO_DIR/optional-apps.sh"
+
+USE_MENU=1
+for arg in "$@"; do
+    case "$arg" in
+        --defaults) USE_MENU=0 ;;
+        -h|--help)  sed -n '2,14p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+        *)          echo "Unknown option: $arg  (try --help)" >&2; exit 1 ;;
+    esac
+done
 
 # reset sudo clock every 60 seconds so you only have to enter password once
 sudo -v
@@ -12,9 +38,17 @@ sudo -v
 SUDO_PID=$!
 trap 'kill $SUDO_PID 2>/dev/null' EXIT
 
-# firewall
-#sudo apt-get install -y ufw
-#sudo ufw --force enable
+# ---------------------------------------------------------------------
+#  Pick optional apps first, so the rest can run without you
+# ---------------------------------------------------------------------
+if [ "$USE_MENU" -eq 1 ] && have_tty; then
+    choose_apps defaults
+    clear >/dev/tty 2>/dev/null || true
+else
+    echo "No menu - using the recommended apps."
+    select_defaults
+fi
+print_selection
 
 #TODO
 
@@ -24,10 +58,12 @@ trap 'kill $SUDO_PID 2>/dev/null' EXIT
 
 sudo apt-get update && sudo apt-get upgrade -y
 
-# enable non-free repos
-sudo apt-get install -y apt-transport-https curl ca-certificates
-#set -e
+# tools needed to add repos and download installers
+sudo apt-get install -y apt-transport-https curl wget ca-certificates gpg
 
+# ---------------------------------------------------------------------
+#  Enable contrib, non-free and non-free-firmware repos
+# ---------------------------------------------------------------------
 enable_nonfree() {
   local deb822_primary="/etc/apt/sources.list.d/debian.sources"
 
@@ -91,6 +127,10 @@ fi
 
 sudo apt-get update
 
+# ---------------------------------------------------------------------
+#  Base system (required - the desktop depends on these)
+# ---------------------------------------------------------------------
+
 # Policy kit (to launch apps that require root)
 sudo apt-get install -y polkitd pkexec lxpolkit
 
@@ -102,30 +142,14 @@ sudo apt-get install -y vim
 sudo apt-get install -y network-manager-gnome
 
 # appearance managers
-sudo apt-get install -y lxappearance picom 
+sudo apt-get install -y lxappearance picom
 
-# Flatpak containerized apps platform
+# Flatpak containerized apps platform (flatpak apps in the menu need this)
 sudo apt-get install -y flatpak
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# snap store (Supports installation of containerized apps)
-#sudo apt-get install -y snapd
-#sleep 10
-#sudo snap install core
-# schedule snap updates daily between 2 and 4 am
-#sudo snap set core refresh.schedule=02:00-04:00
-
-# file managers
+# file manager
 sudo apt-get install -y nemo
-#sudo apt-get install -y thunar
-#sudo apt-get install -y krusader
-#sudo apt-get install -y nautilus
-
-# terminal file search
-#sudo apt-get install -y fzf
-
-# terminal list directory (on steroids)
-#sudo apt-get install -y eza
 
 # settings interface
 sudo apt-get install -y xfce4-settings xfce4-power-manager
@@ -135,131 +159,21 @@ sudo apt-get install -y dialog mtools dosfstools avahi-daemon acpi acpid gvfs-ba
 sudo systemctl enable avahi-daemon
 sudo systemctl enable acpid
 
-# terminal emulators
+# terminal emulator
 # terminator (dot files included, used for keychord config edits)
 sudo apt-get install -y terminator
-# kitty (no dot files yet)
-#sudo apt-get install -y kitty 
-# konsole
-#sudo apt-get install -y konsole
-# xterm
-#sudo apt-get install -y xterm
-# zutty
-#sudo apt-get install -y zutty
 
 # tmux - terminal multiplexer - runs in terminal and shell sessions run in tmux - excellent features
 sudo apt-get install -y tmux
 
-# hardware info
-#sudo apt-get install -y procinfo hwinfo hdparm lm-sensors psensor
-
 # audio
-#sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
 sudo apt-get install -y pipewire pipewire-pulse wireplumber pipewire-alsa alsa-utils
 
-# audio editor
-#sudo apt-get install -y audacity
-
-# terminal apps  
-# leave these or the dashboard won't work, can disable dashboard in i3 workspace config
-sudo apt-get install -y bpytop cmatrix hyfetch
-sleep 5
-neowofetch --generate_config 2>/dev/null || true
-sed -i 's/^color_blocks="on"/color_blocks="off"/' ~/.config/neowofetch/config.conf
-
-# these can be removed if you don't want them
-#sudo apt-get install -y htop glances figlet calc
-
-# gui system monitor
-sudo apt-get install -y gnome-system-monitor
-
-# apt-get package manager front end
-#sudo apt-get install -y synaptic
-
-# printer support
-#sudo apt-get install -y cups
-#sudo systemctl enable cups
-
-# bluetooth support
-#sudo apt-get install -y bluez blueman
-#sudo systemctl enable bluetooth
-
-# document viewer
-sudo apt-get install -y evince
-
-# ebook reader
-sudo apt-get install -y foliate
-sudo flatpak install -y flathub com.calibre_ebook.calibre
-
-# comic reader
-sudo apt-get install -y mcomix
-
-# calculator
-#sudo apt-get install -y gnome-calculator
-#galculator is customized
+# calculator (galculator is customized)
 sudo apt-get install -y galculator
-
-#sudo apt-get install -y mate-calc
-#sudo apt-get install -y kcalc
-
-# privacy browsers
-# brave browser ($mod + b) NOT FOSS
-# Note that there is a bug where brave fails to in initialize on the 1st launch. After a reboot it will work fine thereafter.
-wget -qO- https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | sudo gpg --dearmor | sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt-get update
-sudo apt-get install -y brave-browser
-
-# brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-sudo flatpak install -y flathub com.brave.Browser
-mkdir -p ~/.var/app/com.brave.Browser/config/
-sudo flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
-sudo flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
-flatpak override --user --env=GTK_THEME=Plata-Noir com.brave.Browser
-
-
-# librewolf browser
-#sudo apt-get update && sudo apt-get install extrepo -y
-#sudo extrepo enable librewolf
-#sudo apt-get update && sudo apt-get install librewolf -y
-
-# tor browser
-#sudo apt-get install -y torbrowser-launcher 
-
-# mullvad browser
-#sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-#sudo apt-get update && sudo apt-get install mullvad-browser
-
-# non-privacy browsers
-# Chromium is required for keybind Super + F1 to open nordvpn login page. 
-# Or you can edit ~/scripts/nordlogin.sh to use another browser but nord login script fails in Brave and Librewolf, even with shields down.
-sudo apt-get install -y chromium
-#sudo apt-get install -y firefox-esr
-
-# dangerzone - Take potentially dangerous PDFs, office documents, or images and convert them to safe PDFs.
-# Dangerzone destroys malware by rendering your document into pixels in a secure sandbox and reconstructing it locally as a PDF.
-# Documents are sanitized in a sandbox with no network access, so if a malicious document can compromise one, it can't let anyone know.
-#sudo apt-get update && sudo apt-get install -y gpg ca-certificates
-#sudo mkdir -p /etc/apt/keyrings
-#sudo gpg --keyserver hkps://keys.openpgp.org \
-#    --no-default-keyring --no-permission-warning --homedir $(mktemp -d) \
-#    --keyring gnupg-ring:/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg \
-#    --recv-keys DE28AB241FA48260FAC9B8BAA7C9B38522604281
-#sudo chmod +r /etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg
-#. /etc/os-release
-#echo "deb [signed-by=/etc/apt/keyrings/fpf-apt-tools-archive-keyring.gpg] \
-#    https://packages.freedom.press/apt-tools-prod ${VERSION_CODENAME?} main" \
-#    | sudo tee /etc/apt/sources.list.d/fpf-apt-tools.list
-#sudo apt-get update
-#sudo apt-get install -y dangerzone    
 
 # background / image manager
 sudo apt-get install -y feh
-
-# image viewer
-#sudo apt-get install -y mirage
-sudo apt-get install -y imv
 
 # app launcher ($mod + Space)
 sudo apt-get install -y rofi
@@ -273,326 +187,34 @@ sudo apt-get install -y dunst libnotify-bin
 # user dialog
 sudo apt-get install -y yad
 
-
-# gui text editor
-# geany
+# gui text editor - geany with color schemes
 sudo apt-get install -y geany geany-plugins
 mkdir -p "$HOME/.config/geany/colorschemes"
+rm -rf /tmp/geany-themes
 git clone https://github.com/geany/geany-themes.git /tmp/geany-themes
 cp /tmp/geany-themes/colorschemes/* "$HOME/.config/geany/colorschemes/"
-
-# system management
-# cockpit (admin web console)
-#sudo apt-get install -y cockpit
-
-# office apps
-#sudo apt-get install -y libreoffice
-
-# display settings
-#sudo apt-get install -y arandr
-
-# media player
-#sudo apt-get install -y vlc 
-
-# non free codecs (NOT FOSS)
-#sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
-
-# disk utilities
-#sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
 
 # clipboard manager
 sudo apt-get install -y copyq
 
-# notes manager
-#zim (easy checkbox lists and much more)
-#sudo apt-get install -y zim
-
-# mind mapping
-#sudo apt-get install -y vym
-
-# email client
-# GUI
-#sudo apt-get install -y evolution
-#sudo apt-get install -y thunderbird
-# CLI
-#sudo apt-get install -y neomutt
-
 # screenshots
 sudo apt-get install -y maim xclip xdotool jq
-
-# image editors (gimp is like Adobe Photoshop and pinta is like MS Paint)
-#sudo apt-get install -y gimp
-#sudo flatpak install -y flathub com.github.PintaProject.Pinta
 
 # zip utilities
 sudo apt-get install -y tar gzip p7zip-full
 
-# backup manager
-# timeshit gui front end for rsync
-#sudo apt-get install -y timeshift
-# duplicity - great CLI for cloud backup - supported by backblaze B2
-#sudo apt-get install -y duplicity
-
-# remote desktop client 
-# anydesk (NOT FOSS)
-#sudo apt-get install -y curl gpg
-# install repo key
-#curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY \
-# | sudo gpg --dearmor -o /usr/share/keyrings/anydesk.gpg
-# add repo
-#echo "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main" \
-# | sudo tee /etc/apt/sources.list.d/anydesk.list
-
-# install
-#sudo apt-get update
-#sudo apt-get install -y anydesk
-# disable anydesk tray
-#sudo rm -f /etc/xdg/autostart/anydesk_global_tray.desktop
-
-#teamviewer (NOT FOSS)
-#wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-#sudo dpkg -i teamviewer_amd64.deb || sudo apt --fix-broken install -y
-#rm teamviewer_amd64.deb
-
-# ftp server utility (best installed on server)
-#sudo apt-get install -y vsftpd
-#sudo ufw allow OpenSSH
-#sudo ufw allow 20:21/tcp
-#sudo ufw allow 20000:25000/tcp
-# ftp client (midnight commander)
-#sudo apt-get install -y mc
-
-# file encryption
-
-# veracrypt CLI
-#cd /tmp
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-13-amd64.deb
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-13-amd64.deb.sig
-#wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
-#gpg --show-keys VeraCrypt_PGP_public_key.asc
-#gpg --import VeraCrypt_PGP_public_key.asc
-#gpg --verify veracrypt-console-1.26.24-Debian-13-amd64.deb.sig \
-#             veracrypt-console-1.26.24-Debian-13-amd64.deb
-#sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-13-amd64.deb
-
-# veracrypt GUI
-#cd /tmp
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-13-amd64.deb
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-13-amd64.deb.sig
-#wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
-#gpg --show-keys VeraCrypt_PGP_public_key.asc
-#gpg --import VeraCrypt_PGP_public_key.asc
-#gpg --verify veracrypt-1.26.24-Debian-13-amd64.deb.sig \
-#             veracrypt-1.26.24-Debian-13-amd64.deb
-#sudo apt-get install -y ./veracrypt-1.26.24-Debian-13-amd64.deb
-
-# gpg encryption manager
-#sudo apt-get install -y kleopatra
-
-# password manager
-# keepassxc - mobile version but no syncing - passwords only stored locally - supports local database file syncing so you can manually sync devices by export/import of database
-#sudo apt-get install -y keepassxc
-
-# bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
-#sudo flatpak install -y flathub com.bitwarden.desktop
-
-# 2fa app
-
-# gnome authenticator
-#sudo flatpak install -y flathub com.belmoussaoui.Authenticator
-
-# Authpass
-#sudo flatpak install -y flathub app.authpass.AuthPass
-
-# pass
-#sudo apt-get install -y pass
-#sudo apt-get install -y pass-extension-otp
-
-# Yubikey 
-#sudo apt-get install -y yubikey-manager yubikey-manager-qt
-sudo flatpak install -y flathub com.yubico.yubioath
-sudo apt-get install -y pcscd libpcsclite1
-sudo systemctl enable --now pcscd
-
-# smartphone manager
-#sudo apt-get install -y kdeconnect
-# enable dark theme for KDE applets
-#bash "$HOME/deb13-i3/kdeTheme.sh"
-# disable kwallet (Brave is annoying when it is active)
-#sudo mv /usr/share/dbus-1/services/org.kde.kwalletd6.service \
-#        /usr/share/dbus-1/services/org.kde.kwalletd6.service.disabled
-
-#sudo mv /usr/share/dbus-1/services/org.kde.kwalletd5.service \
-#        /usr/share/dbus-1/services/org.kde.kwalletd5.service.disabled
-
-# torrent client
-#sudo apt-get install -y transmission
-
-# signal encrypted messaging
-#wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
-#cat signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
-#echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
-#  sudo tee /etc/apt/sources.list.d/signal-xenial.list
-#sudo apt-get update && sudo apt-get install -y signal-desktop
-
-# screen recorders
-#sudo apt-get install -y simplescreenrecorder
-
-# video editor
-#sudo apt-get install -y kdenlive
-#sudo apt-get install -y shotcut
-
-# video converter
-#sudo apt-get install -y ffmpeg
-#sudo apt-get install -y handbrake
-
-# YouTube front end
-#sudo flatpak install -y flathub io.freetubeapp.FreeTube
-
-# Gaming
-#sudo dpkg --add-architecture i386
-#sudo apt-get update
-#sudo apt-get install -y steam-installer
-
-# simplified man pages
-#sudo apt-get install -y tealdeer
-
-# dev tools
-# vscode ide (NOT FOSS)
-#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/packages.microsoft.gpg
-#sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-#sudo apt-get update
-#sudo apt-get install -y code
-
-# vscodium (Free/Libre Open Source Software Binaries of VS Code ide)
-#wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-#    | gpg --dearmor \
-#    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg 
-#echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
-#    | sudo tee /etc/apt/sources.list.d/vscodium.list
-#sudo apt-get update && sudo apt-get install -y codium
-
-# pycharm ide (unofficial community-maintained repo wrapping JetBrains' tarball — not published by JetBrains itself)
-#curl -s https://s3.eu-central-1.amazonaws.com/jetbrains-ppa/0xA6E8698A.pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg > /dev/null
-#echo "deb [signed-by=/usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg] http://jetbrains-ppa.s3-website.eu-central-1.amazonaws.com any main" | sudo tee /etc/apt/sources.list.d/jetbrains-ppa.list > /dev/null
-#sudo apt-get update
-#sudo apt-get install -y pycharm
-
 # user directories (disable this if you want many things to not work. There will be weeping and gnashing of teeth)
 xdg-user-dirs-update
 
-# nordvpn (NOT FOSS)
-# (i3 keybinds, autostart and scripts are included so no setup required. Will likely switch to mullvad soon)
-#curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
-#yes | sh nordvpn_install.sh
-#sudo usermod -aG nordvpn "$USER"
-
-# mullvad vpn (NOT FOSS)
-# (i3 keybinds, autostart and scripts are not included so requires manual setup)
-#sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$(dpkg --print-architecture)] https://repository.mullvad.net/deb/stable stable main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-#sudo apt-get update
-#sudo apt-get install -y mullvad-vpn
-
-# personal finance
-# GnuCash — full double-entry accounting
-sudo flatpak install -y flathub org.gnucash.GnuCash
-# HomeBank — simpler personal budget/expense tracker
-sudo flatpak install -y flathub fr.free.Homebank
-
-# postman API platform (NOT FOSS)
-#sudo snap install postman
-#sudo flatpak install -y flathub com.getpostman.Postman
-# postman CLI
-#curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-
-# bleachbit file shredder
-#sudo apt-get -y install bleachbit
-
-
-# Enable bleachbit-root to launch from Rofi using polkit to prompt for password
-# DO NOT COMMENT OUT - USE THE FUNCTION CALL
-#install_bleachbit_launcher() {
-  # make sure user-local paths exist
-#  mkdir -p "$HOME/.local/bin"
-#  mkdir -p "$HOME/.local/share/applications"
-  # wrapper script for reliable root launch from rofi/drun
-#  cat > "$HOME/.local/bin/bleachbit-root" <<'EOF'
-##!/bin/bash
-#export DISPLAY="${DISPLAY:-:0}"
-#export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
-#export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=/run/user/$(id -u)/bus}"
-#exec /usr/bin/env sh -lc 'pkexec /usr/bin/bleachbit'
-#EOF
-#  chmod +x "$HOME/.local/bin/bleachbit-root"
-  # desktop entry so rofi can see it
-#  cat > "$HOME/.local/share/applications/bleachbit-root.desktop" <<EOF
-#[Desktop Entry]
-#Type=Application
-#Name=BleachBit (Root)
-#Exec=$HOME/.local/bin/bleachbit-root
-#Icon=bleachbit
-#Terminal=false
-#Categories=System;
-#NoDisplay=false
-#EOF
-  # clear rofi cache so the new launcher appears
-#  rm -f "$HOME/.cache/rofi2.druncache" \
-#        "$HOME/.cache/rofi3.druncache" \
-#        "$HOME"/.cache/rofi-*.cache 2>/dev/null || true
-#}
-
-# Function Call - Enable bleachbit-root to launch from Rofi using polkit to prompt for password
-#install_bleachbit_launcher
-
-# metadata removal tool
-#CLI
-#sudo apt-get install -y mat2
-#GUI
-#sudo apt-get install -y metadata-cleaner
-
-# android tools (used when flashing roms)
-#sudo apt-get install -y android-sdk-platform-tools-common adb fastboot
-
-# GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
-#sudo apt-get install -y kiwix-tools
-#kiwix-serve --port 8080 /path/to/your.zim
-# then browse to http://localhost:8080
-
 # These are required for the theme and icons to work and i3bar to display correctly
 sudo apt-get install -y libgtk-4-dev
-sudo apt-get install -y fonts-noto-color-emoji 
-#git clone https://github.com/EliverLara/candy-icons
+sudo apt-get install -y fonts-noto-color-emoji
 
-# kvm/qemu guest agent  YOU WANT THIS IF installing as kvm-qemu guest vm
-sudo apt-get install -y spice-vdagent 
-
-### hypervisor tools
-
-# containerization
-#sudo apt-get install -y podman
-#sudo apt-get install -y docker.io
-#sudo usermod -aG docker $USER
-   ## then log out/in or reboot
-#sudo apt-get install -y distrobox
-
-# kvm/qemu (type 1 HV) OLD _ DELETE
-#sudo apt-get install -y virt-manager cockpit-machines cockpit-podman distrobox
-# You can access cockpit console from browser at https://127.0.0.1:9090/
-#sudo addgroup libvirt
-#sudo addgroup kvm
-#sudo usermod -aG libvirt $(whoami)
-#sudo usermod -aG kvm $(whoami)
-
-# kvm/qemu (type 1 HV)
-#sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager cockpit-machines cockpit-podman distrobox
-#sudo systemctl enable --now libvirtd
-
-#sudo usermod -aG libvirt "$(whoami)"
-#sudo usermod -aG kvm "$(whoami)"
-# log out and back in (or reboot) for group changes to take effect
-
+# ---------------------------------------------------------------------
+#  Optional apps - the ones you ticked in the menu
+#  (the list and install steps are in optional-apps.sh)
+# ---------------------------------------------------------------------
+install_selected_apps
 
 # create ~/.local/share/applications/ to support executables and snaps in Rofi
 if [ -d /var/lib/snapd/desktop/applications ]; then
@@ -604,7 +226,9 @@ if [ -d /var/lib/snapd/desktop/applications ]; then
 	update-desktop-database "$HOME/.local/share/applications" >/dev/null 2>&1 || true
 fi
 
-### graphical user interface
+# ---------------------------------------------------------------------
+#  Graphical user interface
+# ---------------------------------------------------------------------
 
 # window manager DO NOT REMOVE
 sudo apt-get install -y i3 i3blocks acpi-support python3-i3ipc
@@ -612,13 +236,12 @@ sudo apt-get install -y i3 i3blocks acpi-support python3-i3ipc
 # display manager DO NOT Remove
 sudo apt-get install -y lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 
-
 # import scripts and configs
 bash "$REPO_DIR/copyconf.sh"
 
-# This makes lightdm greeter login screen set display to 1080p on kvm-qemu guest vm and sets the background for the login screen - 
-# Keep these commented if installing on hardware. After first boot, you can modify display.sh value "Virtual-1" to your display output
-# Get display outputs with $  xarandr -q
+# This makes lightdm greeter login screen set display to 1080p on kvm-qemu guest vm and sets the background for the login screen -
+# After first boot, you can modify display.sh value "Virtual-1" to your display output
+# Get display outputs with $  xrandr -q
 # Physical display outputs are HDMI-0, VGA-0, DP-0, DVI-D-0, HDMI-1, etc.
 sudo cp "$REPO_DIR/display.sh" /usr/share/display.sh
 sudo chown root:root /usr/share/display.sh
@@ -636,11 +259,14 @@ sudo chmod 644 /etc/lightdm/lightdm.conf
 sudo systemctl enable lightdm
 
 # This allows checking firewall status without password - used in firewall scripts
-echo 'user ALL=(ALL) NOPASSWD: /usr/sbin/ufw status' | sudo tee /etc/sudoers.d/ufw-status
+echo "$USER ALL=(ALL) NOPASSWD: /usr/sbin/ufw status" | sudo tee /etc/sudoers.d/ufw-status
 sudo chmod 0440 /etc/sudoers.d/ufw-status
 
 sudo apt-get update && sudo apt-get upgrade -y
 
 sudo apt-get autoremove -y
+
+# list any optional apps that failed (waits for Enter if there were any)
+report_failures "$REPO_DIR/failed-apps.txt" || true
 
 sudo reboot now
