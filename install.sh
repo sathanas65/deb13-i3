@@ -148,8 +148,26 @@ sudo apt-get install -y lxappearance picom
 sudo apt-get install -y flatpak
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
+# terminal emulator
+# terminator (dot files included, used for keychord config edits)
+# Installed before nemo: nemo's recommended packages want a terminal, and if
+# none is installed yet apt picks one on its own (zutty).
+sudo apt-get install -y terminator
+
 # file manager
-sudo apt-get install -y nemo
+# --no-install-recommends skips ~400 extras nemo would otherwise pull in
+# (help viewer + web engine, video codecs, document search helpers...).
+# The pieces nemo actually needs are listed by hand:
+#   udisks2         - mount drives
+#   gvfs-backends   - network shares, phones, cameras, trash
+#   nemo-fileroller - right-click compress / extract
+# Also listed because the desktop uses them and they used to arrive only as
+# nemo extras:
+#   x11-xserver-utils - xrandr, xset (display scripts, login screen, caps indicator)
+#   psmisc            - killall (keybinds)
+#   xdg-utils         - xdg-open, xdg-mime (opening links/files, default apps)
+sudo apt-get install -y --no-install-recommends nemo udisks2 gvfs-backends nemo-fileroller \
+    x11-xserver-utils psmisc xdg-utils
 
 # settings interface
 sudo apt-get install -y xfce4-settings xfce4-power-manager
@@ -158,10 +176,6 @@ sudo apt-get install -y xfce4-settings xfce4-power-manager
 sudo apt-get install -y dialog mtools dosfstools avahi-daemon acpi acpid gvfs-backends
 sudo systemctl enable avahi-daemon
 sudo systemctl enable acpid
-
-# terminal emulator
-# terminator (dot files included, used for keychord config edits)
-sudo apt-get install -y terminator
 
 # tmux - terminal multiplexer - runs in terminal and shell sessions run in tmux - excellent features
 sudo apt-get install -y tmux
