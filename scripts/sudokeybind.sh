@@ -3,28 +3,6 @@
 export DISPLAY=:0
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
 
-# Extract the tmux session name to decide which command to run
-session_name=$(tmux display-message -p '#S')
-
-# Function to ask for password and run sudo -v
-ask_for_password() {
-    yad --entry --title="Authentication Required" --text="Enter password for $session_name:" \
-    --button=gtk-ok:0 --width=300 --height=100 --center \
-    --undecorated --on-top --skip-taskbar --skip-pager --hide-text | sudo -S -v
-
-    # Check if the sudo credential update was successful
-    if [ $? -ne 0 ]; then
-        yad --text="Authentication failed. Exiting." --button=gtk-ok:0
-        tmux kill-session -t "$(tmux display-message -p '#S')"
-        exit 1
-    fi
-}
-
-#!/bin/bash
-
-export DISPLAY=:0
-export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
-
 # Log debugging info
 LOG_FILE="/tmp/smb_debug.log"
 exec >> "$LOG_FILE" 2>&1
@@ -84,41 +62,37 @@ case "$session_name" in
         sudo gnome-disks
         ;;
     xconfig)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/X11/xorg.conf /etc/X11/xorg.conf.bkp && sudo nano /etc/X11/xorg.conf'
+        terminator -x sh -c 'sudo cp /etc/X11/xorg.conf /etc/X11/xorg.conf.bkp && sudo nano /etc/X11/xorg.conf; exec bash'
         ;;
     grubconfig)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/default/grub /etc/default/grub.bkp && sudo nano /etc/default/grub'
+        terminator -x sh -c 'sudo cp /etc/default/grub /etc/default/grub.bkp && sudo nano /etc/default/grub; exec bash'
         ;;
     fstab)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/fstab /etc/fstab.bkp && sudo nano /etc/fstab'
-
+        terminator -x sh -c 'sudo cp /etc/fstab /etc/fstab.bkp && sudo nano /etc/fstab; exec bash'
         ;;
     crypttab)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/crypttab /etc/crypttab.bkp && sudo nano /etc/crypttab'
+        terminator -x sh -c 'sudo cp /etc/crypttab /etc/crypttab.bkp && sudo nano /etc/crypttab; exec bash'
         ;;
     sudoers)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/sudoers /etc/sudoers.bkp && sudo nano /etc/sudoers'
+        terminator -x sh -c 'sudo cp /etc/sudoers /etc/sudoers.bkp && sudo nano /etc/sudoers; exec bash'
         ;;
     ldmconfig)
-        ask_for_password
-        sudo cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf.bkp && sudo geany -i /etc/lightdm/lightdm.conf
+        terminator -x sh -c 'sudo cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf.bkp && sudo nano /etc/lightdm/lightdm.conf; exec bash'
         ;;
     ldmgreetconfig)
-        ask_for_password
-        sudo cp /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf.bkp && sudo geany -i /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf
+        terminator -x sh -c 'sudo cp /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf.bkp && sudo nano /usr/share/lightdm/lightdm-gtk-greeter.conf.d/01_debian.conf; exec bash'
         ;;
     ldmdisplay)
-        ask_for_password
-        sudo cp /usr/share/display.sh /usr/share/display.sh.bkp && sudo geany -i /usr/share/display.sh
+        terminator -x sh -c 'sudo cp /usr/share/display.sh /usr/share/display.sh.bkp && sudo nano /usr/share/display.sh; exec bash'
         ;;
     interfaces)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/network/interfaces /etc/network/interfaces.bkp && sudo nano /etc/network/interfaces'
+        terminator -x sh -c 'sudo cp /etc/network/interfaces /etc/network/interfaces.bkp && sudo nano /etc/network/interfaces; exec bash'
         ;;
     networks)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/networks /etc/networks.bkp && sudo nano /etc/networks'
+        terminator -x sh -c 'sudo cp /etc/networks /etc/networks.bkp && sudo nano /etc/networks; exec bash'
         ;;
     netmanage)
-        konsole --profile "Profile 1" --noclose -e sh -c 'sudo cp /etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/NetworkManager.conf.bkp && sudo nano /etc/NetworkManager/NetworkManager.conf'
+        terminator -x sh -c 'sudo cp /etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/NetworkManager.conf.bkp && sudo nano /etc/NetworkManager/NetworkManager.conf; exec bash'
         ;;
     *)
         notify-send "Session: $session_name" "Unknown session action: $session_name" -u critical
