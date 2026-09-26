@@ -51,22 +51,18 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
 10. Now just let the script run and it will reboot when finished. If any optional app failed to install, it will show you which ones
     before rebooting. You can add apps (or retry failed ones) any time later with 'bash ~/deb13-i3/install-apps.sh'.
     You should end up at the gui login screen. Now you can login to i3.
-11. To allow Gnome network manager to manage your network connections, you must  edit /etc/network/interfaces after install or the network manager applet will show your
-    interface as unmanaged and you won't be able to connect to other networks, though the network you connected to during install will still work. These steps could be added to the install script
-    if desired.
-      
-    a) Use keychord ALT + c (config), then n (network), then i (interfaces), and enter your password at the prompt. This will backup the network interfaces file and open it for edit.
-      
-    b) Below the row '# The primary network interface' you will see something like 'allow-hotplug w1p3s0'. Comment out this line and all below it by adding '#' before each line.
-      
-    c) Ctrl + s to save and ctrl + x to exit.
-      
-    d) Now enter:
-   
-            sudo systemctl restart networking
-      
-     e) Enter your password when prompted. Now you should be able to manage your network connections from the applet on the i3 taskbar. If not, try rebooting with Super + Shift + q, then
-          click the power options button in the top right corner of the login screen and select 'Restart'.
+11. The install script hands your network interface over to NetworkManager for you, right before it reboots, so the
+    applet on the i3 taskbar can manage your connections. (Debian's installer otherwise leaves your interface listed in
+    /etc/network/interfaces, which makes NetworkManager treat it as "unmanaged" - only the network you set up during
+    install would work, and you couldn't connect to any other.) A backup of the original file is saved as
+    /etc/network/interfaces.bkp.
+
+    If the applet still shows your connection as unmanaged after logging in, this step didn't recognize your setup (it
+    only edits the file when it finds Debian's usual default layout). Use keychord ALT + c (config), then n (network),
+    then i (interfaces) to open it yourself: below the row '# The primary network interface' you'll see something like
+    'allow-hotplug w1p3s0'. Comment out that line and everything below it by adding '#' before each line, save
+    (Ctrl + s) and exit (Ctrl + x), then reboot with Super + Shift + q and the power options button in the top right
+    of the login screen.
       
 12. If you installed on hardware or on a non-kvm/qemu vm and did not previously configure your display settings, you should do so now.
 
