@@ -286,6 +286,39 @@ sudo apt-get update && sudo apt-get upgrade -y
 
 sudo apt-get autoremove -y
 
+# ---------------------------------------------------------------------
+#  Let NetworkManager manage your network connections
+# ---------------------------------------------------------------------
+# Debian's installer lists your network interface in /etc/network/interfaces.
+# NetworkManager (installed above) then treats that interface as "unmanaged":
+# its applet can't connect to any other network - only the one you set up
+# during install keeps working. This hands the interface over to
+# NetworkManager by commenting it out there, leaving the loopback interface
+# (needed for the system to work at all) untouched. It only edits a file -
+# nothing is applied live - so it can't interrupt this script, including over
+# SSH; the change takes effect at the reboot below.
+configure_networkmanager_interfaces() {
+    local f=/etc/network/interfaces anchor='# The primary network interface'
+    [ -f "$f" ] || return 0
+    sudo grep -qxF "$anchor" "$f" || {
+        echo "Note: couldn't find the usual network interface setup in $f - leaving it as-is."
+        echo "See the install guide's networking section if NetworkManager can't connect to other networks."
+        return 0
+    }
+
+    # already done (a previous run, or a manual edit) - nothing to change
+    sudo sed -n "/^${anchor}\$/,\$p" "$f" | sudo grep -Eqv '^#|^[[:space:]]*$' || return 0
+
+    # keep the very first backup - never overwrite it on a later run
+    sudo cp -n "$f" "$f.bkp"
+
+    # comment out every real line from that point on (not the anchor itself,
+    # not lines already commented, not blank lines)
+    sudo sed -i -E "/^${anchor}\$/,\$ { /^${anchor}\$/! { /^#/! { /^[[:space:]]*\$/! s/^/#/ } } }" "$f"
+    echo "Handed your network interface over to NetworkManager in $f (backup saved as $f.bkp)."
+}
+configure_networkmanager_interfaces
+
 # list any optional apps that failed (waits for Enter if there were any)
 report_failures "$REPO_DIR/failed-apps.txt" || true
 
