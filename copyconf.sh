@@ -39,6 +39,61 @@ cp -a "config/i3blocks/." "$HOME/.config/i3blocks/"
 cp -a "config/dunst/."    "$HOME/.config/dunst/"
 cp -a "config/rofi/."     "$HOME/.config/rofi/"
 
+# --- pick bare-metal vs VM display outputs in the i3 config -------------
+# config/i3/config ships with two switchable blocks: one for bare metal
+# (real display outputs, e.g. HDMI-0) and one for a VM (Virtual-1/2/3).
+# This turns on whichever one matches how this machine is actually running,
+# by commenting out the other block, and leaves everything else in the
+# file untouched - including any output names you've already customized.
+I3_CONFIG="$HOME/.config/i3/config"
+
+detect_virt() {
+    local v
+    v="$(systemd-detect-virt --vm 2>/dev/null)" || true
+    echo "${v:-none}"
+}
+
+# set_i3_display_block <range-start-pattern> <range-end-pattern> <1=turn on | 0=turn off>
+set_i3_display_block() {
+    local start="$1" end="$2" on="$3"
+    # '@' (not '/') delimits the address here, since $end contains a '/'
+    # (a plain '/' delimiter would end the address early at that slash)
+    if [[ "$on" == 1 ]]; then
+        # remove the leading # from every line in this block except the
+        # human-readable "uncomment below" comment itself
+        sed -i -E "\\@$start@,\\@$end@{ /^#for (bare metal|kvm-qemu guest) install/! { /^#/ s/^#// } }" "$I3_CONFIG"
+    else
+        # add a leading # to every line in this block except that comment
+        sed -i -E "\\@$start@,\\@$end@{ /^#for (bare metal|kvm-qemu guest) install/! { /^#/! s/^/#/ } }" "$I3_CONFIG"
+    fi
+}
+
+configure_i3_display_mode() {
+    [[ -f "$I3_CONFIG" ]] || return 0
+    local virt on_vm=0 on_bare=0
+    virt="$(detect_virt)"
+    if [[ "$virt" == none ]]; then
+        on_bare=1
+        echo "No virtual machine detected - using the bare-metal display config in ~/.config/i3/config."
+        echo "Run 'xrandr -q' after logging in and edit the three 'set \$display_output_*' lines to match your outputs."
+    else
+        on_vm=1
+        case "$virt" in
+            kvm|qemu)  virt="KVM/QEMU" ;;
+            oracle)    virt="VirtualBox" ;;
+            xen)       virt="Xen" ;;
+            vmware)    virt="VMware" ;;
+            microsoft) virt="Hyper-V" ;;
+        esac
+        echo "Detected a $virt virtual machine - using the VM display config (Virtual-1/2/3) in ~/.config/i3/config."
+        echo "If your hypervisor names its displays differently, check with 'xrandr -q' after logging in."
+    fi
+    set_i3_display_block "^#for bare metal install"    'config\.d/baremetal\.conf$' "$on_bare"
+    set_i3_display_block "^#for kvm-qemu guest install" 'config\.d/vmguest\.conf$'   "$on_vm"
+}
+
+configure_i3_display_mode
+
 # terminals
 cp -a "config/terminator/." "$HOME/.config/terminator/" || true
 cp -a "config/konsole/."    "$HOME/.local/share/konsole/" || true

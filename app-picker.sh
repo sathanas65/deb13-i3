@@ -37,8 +37,8 @@ app() {
         exit 1
     fi
     case "$def" in
-        on|off|vm) ;;
-        *) echo "optional-apps.sh: app '$id' default must be on, off or vm (got '$def')" >&2; exit 1 ;;
+        on|off|kvm|virtualbox) ;;
+        *) echo "optional-apps.sh: app '$id' default must be on, off, kvm or virtualbox (got '$def')" >&2; exit 1 ;;
     esac
 
     APP_IDS+=("$id")
@@ -67,21 +67,30 @@ load_apps() {
     [ "$missing" -eq 0 ] || exit 1
 }
 
-running_in_kvm() {
-    case "$(systemd-detect-virt --vm 2>/dev/null || true)" in
-        kvm|qemu) return 0 ;;
-        *)        return 1 ;;
-    esac
+# What hypervisor (if any) we're running under. Prints one of:
+#   none      - bare metal (or virt-detection isn't available)
+#   kvm/qemu  - a KVM/QEMU virtual machine
+#   oracle    - a VirtualBox virtual machine
+#   xen, microsoft, vmware, ...  - anything else systemd-detect-virt knows
+detect_virt() {
+    local v
+    v="$(systemd-detect-virt --vm 2>/dev/null)" || true
+    echo "${v:-none}"
 }
 
 select_defaults() {
-    local id in_vm=0
-    running_in_kvm && in_vm=1
+    local id virt in_kvm=0 in_vbox=0
+    virt="$(detect_virt)"
+    case "$virt" in
+        kvm|qemu) in_kvm=1 ;;
+        oracle)   in_vbox=1 ;;
+    esac
     for id in "${APP_IDS[@]}"; do
         case "${APP_DEFAULT[$id]}" in
-            on) SELECTED[$id]=1 ;;
-            vm) SELECTED[$id]=$in_vm ;;
-            *)  SELECTED[$id]=0 ;;
+            on)         SELECTED[$id]=1 ;;
+            kvm)        SELECTED[$id]=$in_kvm ;;
+            virtualbox) SELECTED[$id]=$in_vbox ;;
+            *)          SELECTED[$id]=0 ;;
         esac
     done
 }

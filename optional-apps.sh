@@ -18,7 +18,8 @@
 #                      The function under it MUST be called install_<name>
 #      2. default      on  = ticked in the menu to start with
 #                      off = not ticked to start with
-#                      vm  = ticked only when installing inside a KVM/QEMU VM
+#                      kvm = ticked only when installing inside a KVM/QEMU VM
+#                      virtualbox = ticked only when installing inside VirtualBox
 #      3. "category"   which page of the menu the app shows up on
 #                      (a new category name makes a new page)
 #      4. "text"       what the person sees in the menu
@@ -736,10 +737,61 @@ install_kiwix_tools() {
 # ---------------------------------------------------------------------
 # Clipboard sharing and display resizing when running as a KVM/QEMU guest.
 # Ticked automatically when the installer detects a KVM/QEMU VM.
-app  spice_guest  vm  "System"  "SPICE guest agent (for KVM/QEMU virtual machines)"
+app  spice_guest  kvm  "System"  "SPICE guest agent (for KVM/QEMU virtual machines)"
 install_spice_guest() {
     apt_install spice-vdagent
 }
+
+# Ticked automatically when the installer detects a VirtualBox VM.
+# Gives clipboard sharing, shared folders and better display resizing.
+# VirtualBox isn't in Debian's normal stable repos - it comes from Debian's
+# official Fasttrack repo (fasttrack.debian.net), which this adds.
+app  virtualbox_guest  virtualbox  "System"  "VirtualBox Guest Additions (for VirtualBox virtual machines)"
+install_virtualbox_guest() {
+    apt_install fasttrack-archive-keyring
+    . /etc/os-release
+
+    # Fasttrack packages can depend on backports, so make sure backports is on
+    if ! grep -rqs -- "${VERSION_CODENAME}-backports" /etc/apt/sources.list /etc/apt/sources.list.d/; then
+        sudo tee /etc/apt/sources.list.d/backports.sources > /dev/null <<EOF
+Types: deb
+URIs: http://deb.debian.org/debian
+Suites: ${VERSION_CODENAME}-backports
+Components: main contrib
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+EOF
+    fi
+
+    sudo tee /etc/apt/sources.list.d/fasttrack.sources > /dev/null <<EOF
+Types: deb
+URIs: https://fasttrack.debian.net/debian-fasttrack
+Suites: ${VERSION_CODENAME}-fasttrack ${VERSION_CODENAME}-backports-staging
+Components: main contrib
+Signed-By: /usr/share/keyrings/fasttrack-archive-keyring.gpg
+EOF
+
+    # if the repo can't be reached, take it back out so later apt steps still work
+    if ! sudo apt-get update; then
+        sudo rm -f /etc/apt/sources.list.d/fasttrack.sources
+        sudo apt-get update || true
+        return 1
+    fi
+
+    apt_install virtualbox-guest-x11
+
+    # lets you open VirtualBox shared folders (takes effect after a reboot)
+    if getent group vboxsf > /dev/null; then
+        sudo usermod -aG vboxsf "$USER"
+    fi
+}
+
+# Xen has no equivalent guest-tools package in Debian's own repos:
+# - XenServer/Citrix Hypervisor guests want "xe-guest-utilities", which only
+#   comes from the vendor, not apt.
+# - Plain upstream Xen (PV or HVM) already has what it needs in the kernel;
+#   there is nothing extra to install.
+# So there's no Xen entry here to tick - only the i3 display config
+# (see copyconf.sh) adjusts itself automatically for a Xen guest.
 
 # ---------------------------------------------------------------------
 app  podman  off  "Virtualization"  "Podman - containers"
