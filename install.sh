@@ -190,6 +190,7 @@ sudo apt-get install -y evince
 
 # ebook reader
 sudo apt-get install -y foliate
+sudo flatpak install -y flathub com.calibre_ebook.calibre
 
 # comic reader
 sudo apt-get install -y mcomix
@@ -211,7 +212,7 @@ sudo apt-get update
 sudo apt-get install -y brave-browser
 
 # brave flatpak (I like to use both apt and flatpak to help isolate google and such)
-flatpak install -y flathub com.brave.Browser
+sudo flatpak install -y flathub com.brave.Browser
 mkdir -p ~/.var/app/com.brave.Browser/config/
 sudo flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.22
 sudo flatpak install -y flathub runtime/org.gtk.Gtk3theme.Plata-Noir/x86_64/3.24
@@ -410,6 +411,9 @@ sudo apt-get install -y tar gzip p7zip-full
 
 # Yubikey 
 #sudo apt-get install -y yubikey-manager yubikey-manager-qt
+sudo flatpak install -y flathub com.yubico.yubioath
+sudo apt-get install -y pcscd libpcsclite1
+sudo systemctl enable --now pcscd
 
 # smartphone manager
 #sudo apt-get install -y kdeconnect
