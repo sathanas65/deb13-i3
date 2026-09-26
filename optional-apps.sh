@@ -642,11 +642,9 @@ add_mullvad_repo() {
 }
 
 # ---------------------------------------------------------------------
-app  gnucash  off  "Other"  "GnuCash - double-entry accounting"
-install_gnucash() {
-    flatpak_install org.gnucash.GnuCash
-}
-
+# GnuCash isn't offered here: it has no dark/light theming of its own and
+# ignores the system GTK theme, so it always shows up stark white regardless
+# of everything else copyconf.sh sets up. HomeBank (below) does respect it.
 app  homebank  off  "Other"  "HomeBank - simple budget tracker"
 install_homebank() {
     flatpak_install fr.free.Homebank

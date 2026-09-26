@@ -114,6 +114,16 @@ mkdir -p "$HOME/.config/geany/colorschemes"
 cp -a "config/geany/geany.conf"          "$HOME/.config/geany/geany.conf" || true
 cp -a "config/geany/colorschemes/."      "$HOME/.config/geany/colorschemes/" || true
 
+# homebank
+# Installed as a flatpak, so its config lives under the flatpak sandbox path,
+# not ~/.config - and the file itself is called "preferences", not
+# "homebank.conf". This is what has GtkDarkTheme=true.
+mkdir -p "$HOME/.var/app/fr.free.Homebank/config/homebank"
+cp -a "config/homebank/preferences" "$HOME/.var/app/fr.free.Homebank/config/homebank/preferences" || true
+# the template hardcodes /home/user for its wallet/backup/import/export
+# folders - point those at whoever is actually running this instead
+sed -i "s#/home/user#$HOME#g" "$HOME/.var/app/fr.free.Homebank/config/homebank/preferences" || true
+
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
