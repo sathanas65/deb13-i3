@@ -144,7 +144,7 @@ sudo apt-get install -y terminator
 # Super + Shift + h for keymap and 
 # Super + Shift + i for backup and edit i3 config and
 # Super + n then s for nordvpn status)
-sudo apt-get install -y konsole
+sudo apt-get install -y konsole     #(REMOVE?)
 #sudo apt-get install -y xterm
 #sudo apt-get install -y zutty
 
@@ -156,6 +156,7 @@ sudo apt-get install -y tmux
 
 # audio
 #sudo apt-get install -y pulseaudio alsa-utils pavucontrol volumeicon-alsa pulseeffects
+sudo apt-get install pipewire pipewire-pulse wireplumber pipewire-alsa alsa-utils
 
 # audio editor
 #sudo apt-get install -y audacity
