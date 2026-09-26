@@ -259,6 +259,7 @@ sudo apt-get install -y feh
 
 # image viewer
 #sudo apt-get install -y mirage
+sudo apt-get install -y imv
 
 # app launcher ($mod + Space)
 sudo apt-get install -y rofi
@@ -294,7 +295,7 @@ sudo apt-get install -y arandr
 #sudo apt-get install -y vlc 
 
 # non free codecs (NOT FOSS)
-#sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
+sudo apt-get install -y ttf-mscorefonts-installer libavcodec-extra gstreamer1.0-libav gstreamer1.0-plugins-ugly
 
 # disk utilities
 #sudo apt-get install -y gnome-disk-utility gsmartcontrol gparted
@@ -365,25 +366,25 @@ sudo apt-get install -y tar gzip p7zip-full
 
 # veracrypt CLI
 #cd /tmp
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-12-amd64.deb.sig
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-13-amd64.deb
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-console-1.26.24-Debian-13-amd64.deb.sig
 #wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
 #gpg --show-keys VeraCrypt_PGP_public_key.asc
 #gpg --import VeraCrypt_PGP_public_key.asc
-#gpg --verify veracrypt-console-1.26.24-Debian-12-amd64.deb.sig \
-#             veracrypt-console-1.26.24-Debian-12-amd64.deb
-#sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-12-amd64.deb
+#gpg --verify veracrypt-console-1.26.24-Debian-13-amd64.deb.sig \
+#             veracrypt-console-1.26.24-Debian-13-amd64.deb
+#sudo apt-get install -y ./veracrypt-console-1.26.24-Debian-13-amd64.deb
 
 # veracrypt GUI
 #cd /tmp
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-12-amd64.deb
-#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-12-amd64.deb.sig
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-13-amd64.deb
+#wget https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-Debian-13-amd64.deb.sig
 #wget https://www.idrix.fr/VeraCrypt/VeraCrypt_PGP_public_key.asc
 #gpg --show-keys VeraCrypt_PGP_public_key.asc
 #gpg --import VeraCrypt_PGP_public_key.asc
-#gpg --verify veracrypt-1.26.24-Debian-12-amd64.deb.sig \
-#             veracrypt-1.26.24-Debian-12-amd64.deb
-#sudo apt-get install -y ./veracrypt-1.26.24-Debian-12-amd64.deb
+#gpg --verify veracrypt-1.26.24-Debian-13-amd64.deb.sig \
+#             veracrypt-1.26.24-Debian-13-amd64.deb
+#sudo apt-get install -y ./veracrypt-1.26.24-Debian-13-amd64.deb
 
 # gpg encryption manager
 #sudo apt-get install -y kleopatra
@@ -393,7 +394,7 @@ sudo apt-get install -y tar gzip p7zip-full
 #sudo apt-get install -y keepassxc
 
 # bitwarden - (NOT FOSS) - great feautures - syncs across devices - passwords stored in cloud
-#sudo snap install bitwarden
+#sudo flatpak install -y flathub com.bitwarden.desktop
 
 # 2fa app
 # Google Authenticator (NOT FOSS) - Allows 2FA on Linux logins - requires mobile app
