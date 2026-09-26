@@ -398,19 +398,16 @@ sudo apt-get install -y tar gzip p7zip-full
 #sudo flatpak install -y flathub com.bitwarden.desktop
 
 # 2fa app
-# Google Authenticator (NOT FOSS) - Allows 2FA on Linux logins - requires mobile app
-# You enable it in PAM:
-# /etc/pam.d/sshd
-# /etc/pam.d/login
-# /etc/pam.d/sudo
-# Example line:
-# auth required pam_google_authenticator.so
 
-#sudo apt-get install -y libpam-google-authenticator 
+# gnome authenticator
+#sudo flatpak install -y flathub com.belmoussaoui.Authenticator
 
 # Authpass
-#sudo snap install authpass
-sudo flatpak install -y flathub codes.rene.authpass
+#sudo flatpak install -y flathub app.authpass.AuthPass
+
+# pass
+#sudo apt-get install -y pass
+#sudo apt-get install -y pass-extension-otp
 
 # Yubikey 
 #sudo apt-get install -y yubikey-manager yubikey-manager-qt
@@ -438,7 +435,6 @@ sudo flatpak install -y flathub codes.rene.authpass
 
 # screen recorders
 #sudo apt-get install -y simplescreenrecorder
-#sudo apt-get install -y kazam
 
 # video editor
 #sudo apt-get install -y kdenlive
@@ -449,12 +445,12 @@ sudo flatpak install -y flathub codes.rene.authpass
 #sudo apt-get install -y handbrake
 
 # YouTube front end
-#flatpak install -y flathub io.freetubeapp.FreeTube
+#sudo flatpak install -y flathub io.freetubeapp.FreeTube
 
 # Gaming
 #sudo dpkg --add-architecture i386
 #sudo apt-get update
-#sudo apt-get install -y steam
+#sudo apt-get install -y steam-installer
 
 # simplified man pages
 #sudo apt-get install -y tealdeer
@@ -475,11 +471,11 @@ sudo flatpak install -y flathub codes.rene.authpass
 #    | sudo tee /etc/apt/sources.list.d/vscodium.list
 #sudo apt-get update && sudo apt-get install -y codium
 
-# pycharm ide
+# pycharm ide (unofficial community-maintained repo wrapping JetBrains' tarball — not published by JetBrains itself)
 #curl -s https://s3.eu-central-1.amazonaws.com/jetbrains-ppa/0xA6E8698A.pub.asc | gpg --dearmor | sudo tee /usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg > /dev/null
 #echo "deb [signed-by=/usr/share/keyrings/jetbrains-ppa-archive-keyring.gpg] http://jetbrains-ppa.s3-website.eu-central-1.amazonaws.com any main" | sudo tee /etc/apt/sources.list.d/jetbrains-ppa.list > /dev/null
 #sudo apt-get update
-#sudo apt-get install -y pycharm-community
+#sudo apt-get install -y pycharm
 
 # user directories (disable this if you want many things to not work. There will be weeping and gnashing of teeth)
 xdg-user-dirs-update
@@ -487,18 +483,21 @@ xdg-user-dirs-update
 # nordvpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are included so no setup required. Will likely switch to mullvad soon)
 #curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh -o nordvpn_install.sh
-#sh nordvpn_install.sh
-#sudo usermod -aG nordvpn $USER
+#yes | sh nordvpn_install.sh
+#sudo usermod -aG nordvpn "$USER"
 
 # mullvad vpn (NOT FOSS)
 # (i3 keybinds, autostart and scripts are not included so requires manual setup)
 #sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
+#echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$(dpkg --print-architecture)] https://repository.mullvad.net/deb/stable stable main" | sudo tee /etc/apt/sources.list.d/mullvad.list
 #sudo apt-get update
-#sudo apt-get install mullvad-vpn
+#sudo apt-get install -y mullvad-vpn
 
 # personal finance
-#flatpak install -y flathub org.nickvision.money
+# GnuCash — full double-entry accounting
+#sudo flatpak install -y flathub org.gnucash.GnuCash
+# HomeBank — simpler personal budget/expense tracker
+#sudo flatpak install -y flathub fr.free.Homebank
 
 # postman API platform (NOT FOSS)
 #sudo snap install postman
@@ -555,9 +554,9 @@ EOF
 #sudo apt-get install -y android-sdk-platform-tools-common adb fastboot
 
 # GTK desktop reader for .zim offline content- Wikipedia, StackExchange dumps, etc.
-#sudo apt-get install -y kiwix
-# CLI tools and server
 #sudo apt-get install -y kiwix-tools
+#kiwix-serve --port 8080 /path/to/your.zim
+# then browse to http://localhost:8080
 
 # These are required for the theme and icons to work and i3bar to display correctly
 sudo apt-get install -y libgtk-4-dev
@@ -572,15 +571,25 @@ sudo apt-get install -y spice-vdagent
 # containerization
 #sudo apt-get install -y podman
 #sudo apt-get install -y docker.io
+#sudo usermod -aG docker $USER
+   ## then log out/in or reboot
 #sudo apt-get install -y distrobox
 
-# kvm/qemu (type 1 HV)
+# kvm/qemu (type 1 HV) OLD _ DELETE
 #sudo apt-get install -y virt-manager cockpit-machines cockpit-podman distrobox
 # You can access cockpit console from browser at https://127.0.0.1:9090/
 #sudo addgroup libvirt
 #sudo addgroup kvm
 #sudo usermod -aG libvirt $(whoami)
 #sudo usermod -aG kvm $(whoami)
+
+# kvm/qemu (type 1 HV)
+#sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager cockpit-machines cockpit-podman distrobox
+#sudo systemctl enable --now libvirtd
+
+#sudo usermod -aG libvirt "$(whoami)"
+#sudo usermod -aG kvm "$(whoami)"
+# log out and back in (or reboot) for group changes to take effect
 
 
 # create ~/.local/share/applications/ to support executables and snaps in Rofi
