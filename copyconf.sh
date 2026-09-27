@@ -128,6 +128,17 @@ sed -i "s#/home/user#$HOME#g" "$HOME/.var/app/fr.free.Homebank/config/homebank/p
 mkdir -p "$HOME/.config/keepassxc"
 cp -a "config/keepassxc/keepassxc.ini" "$HOME/.config/keepassxc/keepassxc.ini" || true
 
+# vlc
+mkdir -p "$HOME/.config/vlc"
+cp -a "config/vlc/vlcrc"                "$HOME/.config/vlc/vlcrc" || true
+cp -a "config/vlc/vlc-qt-interface.conf" "$HOME/.config/vlc/vlc-qt-interface.conf" || true
+
+# pinta
+# Installed as a flatpak, so its config lives under the flatpak sandbox path,
+# not ~/.config.
+mkdir -p "$HOME/.var/app/com.github.PintaProject.Pinta/config/Pinta"
+cp -a "config/pinta/settings.xml" "$HOME/.var/app/com.github.PintaProject.Pinta/config/Pinta/settings.xml" || true
+
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
