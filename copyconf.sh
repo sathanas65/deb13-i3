@@ -142,6 +142,12 @@ cp -a "config/pinta/settings.xml" "$HOME/.var/app/com.github.PintaProject.Pinta/
 # kleopatra
 cp -a "config/kleopatrarc" "$HOME/.config/kleopatrarc" || true
 
+# calibre
+# Installed as a flatpak, so its config lives under the flatpak sandbox path,
+# not ~/.config.
+mkdir -p "$HOME/.var/app/com.calibre_ebook.calibre/config/calibre"
+cp -a "config/calibre/gui.json" "$HOME/.var/app/com.calibre_ebook.calibre/config/calibre/gui.json" || true
+
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
