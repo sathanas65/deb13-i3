@@ -32,7 +32,7 @@ mkdir -p \
 # rest of the profile itself on first launch. Needs the gtk3 UI plugin,
 # which optional-apps.sh installs alongside LibreOffice.
 mkdir -p "$HOME/.config/libreoffice/4/user"
-cp -a "config/libreoffice/4/user/registrymodifications.xcu" \
+cp -a "config/libreoffice/registrymodifications.xcu" \
       "$HOME/.config/libreoffice/4/user/registrymodifications.xcu" || true
 
 # scripts
