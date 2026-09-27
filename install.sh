@@ -148,6 +148,20 @@ sudo apt-get install -y lxappearance picom
 sudo apt-get install -y flatpak
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
+# Flatpak (and some Qt/Electron apps outside Flatpak too, like KeePassXC's
+# "Auto" theme) ask "is the system dark?" over the xdg-desktop-portal
+# org.freedesktop.appearance interface, not by reading a GTK theme name.
+# Without a portal backend installed, that question just goes unanswered and
+# everything defaults to light - this is why "System"/"Auto" theme options
+# in Flatpak apps (Bitwarden, etc.) don't pick up Sweet-Dark on their own.
+# xdg-desktop-portal-gtk is the backend that answers it; gsettings (backed
+# by dconf) is what actually stores the answer, and works fine without
+# GNOME itself installed - it's just a schema + a value on disk.
+sudo apt-get install -y xdg-desktop-portal xdg-desktop-portal-gtk \
+    gsettings-desktop-schemas dconf-gsettings-backend
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Sweet-Dark-v40'
+
 # terminal emulator
 # terminator (dot files included, used for keychord config edits)
 # Installed before nemo: nemo's recommended packages want a terminal, and if
