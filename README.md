@@ -250,7 +250,7 @@ Documentation
 | Podman | podman | apt |
 | Docker | docker.io | apt |
 | Distrobox | distrobox | apt |
-| KVM/QEMU + virt-manager + Cockpit | qemu-kvm, libvirt-daemon-system, libvirt-clients, bridge-utils, virt-manager, cockpit-machines, cockpit-podman, distrobox | apt |
+| KVM/QEMU + virt-manager + Cockpit | qemu-kvm, libvirt-daemon-system, libvirt-clients, bridge-utils, virt-manager, cockpit-machines, cockpit-podman | apt |
 
 ---
 
