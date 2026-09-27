@@ -158,7 +158,7 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 # by dconf) is what actually stores the answer, and works fine without
 # GNOME itself installed - it's just a schema + a value on disk.
 sudo apt-get install -y xdg-desktop-portal xdg-desktop-portal-gtk \
-    gsettings-desktop-schemas dconf-gsettings-backend
+    gsettings-desktop-schemas dconf-gsettings-backend libglib2.0-bin
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Sweet-Dark-v40'
 
