@@ -165,30 +165,36 @@ cp -a "config/BraveSoftware/."     "$HOME/.var/app/com.brave.Browser/config/Brav
 #chromium
 cp -a "config/chromium/."     "$HOME/.config/chromium/" || true
 #mullvad
-PROFILE_ROOT="$HOME/.mullvad-browser/.mullvad/mullvadbrowser"
-PROFILE_DIR=""
-mullvad-browser --headless >/dev/null 2>&1 &
-MB_PID=$!
-# wait up to 20 seconds for the profile directory to appear
-for i in {1..20}; do
-    PROFILE_DIR=$(find "$PROFILE_ROOT" -maxdepth 1 -type d -name '*.default-release' | head -n1 || true)
-    if [ -n "${PROFILE_DIR:-}" ] && [ -d "$PROFILE_DIR" ]; then
-        break
+# Only if Mullvad Browser is actually installed - otherwise
+# "mullvad-browser: command not found" plus the exit 1 below would stop the
+# rest of copyconf.sh from running at all.
+if have mullvad-browser; then
+    PROFILE_ROOT="$HOME/.mullvad-browser/.mullvad/mullvadbrowser"
+    PROFILE_DIR=""
+    mullvad-browser --headless >/dev/null 2>&1 &
+    MB_PID=$!
+    # wait up to 20 seconds for the profile directory to appear
+    for i in {1..20}; do
+        PROFILE_DIR=$(find "$PROFILE_ROOT" -maxdepth 1 -type d -name '*.default-release' | head -n1 || true)
+        if [ -n "${PROFILE_DIR:-}" ] && [ -d "$PROFILE_DIR" ]; then
+            break
+        fi
+        sleep 1
+    done
+
+    if [ -z "${PROFILE_DIR:-}" ] || [ ! -d "$PROFILE_DIR" ]; then
+        echo "Mullvad profile not found"
+        pkill -f mullvad || true
+    else
+        # stop Mullvad cleanly enough for scripting purposes
+        pkill -f mullvad || true
+        sleep 2
+
+        cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
     fi
-    sleep 1
-done
-
-if [ -z "${PROFILE_DIR:-}" ] || [ ! -d "$PROFILE_DIR" ]; then
-    echo "Mullvad profile not found"
-    pkill -f mullvad || true
-    exit 1
+else
+    echo "Note: Mullvad Browser isn't installed - skipping its preferences."
 fi
-
-# stop Mullvad cleanly enough for scripting purposes
-pkill -f mullvad || true
-sleep 2
-
-cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
 
 
 # bashrc (overwrites)
