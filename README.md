@@ -8,9 +8,9 @@ I want a minimal UI that provides exactly what is required, without installing a
 
 Some non-FOSS packages are included. My goal is to use FOSS wherever practical. I welcome suggestions for FOSS alternatives.
 
-Still in progress: Scrcpy 2.0, mullvad vpn scripts, PeaZip, Cryptomator, Pipewire
+Still in progress: scrcpy 2.0, mullvad vpn scripts, peazip, cryptomator, winboat, waydroid.
 
-Next up: Debian 13 - sway. This will take some time since I have to rewrite dozens of scripts and start over from scratch with most things. By the time it's done it might be deb14-sway instead.
+Next up: Debian 14 - sway. 
 
 Documentation
 -------------
