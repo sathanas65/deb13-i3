@@ -104,20 +104,19 @@ This guide is detailed to enable Linux newcomers to get up and running quickly, 
 
           nano config/i3/config
    
-    If installed on VM, 
+    If installed on VM other than KVM, 
    
-    Uncomment line 'include ~/.config/i3/config.d/vmguest.conf' and correct 'Virtual-1', etc to match your hypervisor outputs, then
-    Comment line '#include ~/.config/i3/config.d/baremetal.conf'
+    Correct 'Virtual-1', etc to match your hypervisor outputs.
 
     If installed on hardware, 
    
     Change these lines to match your outputs:
    
-    #set $display_output_left DP-0
+    set $display_output_left DP-0
    
-    #set $display_output_right DVI-D-0
+    set $display_output_right DVI-D-0
    
-    #set $display_output_top HDMI-0
+    set $display_output_top HDMI-0
          
     If you only have a single display, set all 3 values to the same output.
    
