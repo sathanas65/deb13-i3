@@ -1,0 +1,5 @@
+[Self-Test]
+run-at-startup=true
+
+[UiSettings]
+ColorScheme=Breeze Dark
