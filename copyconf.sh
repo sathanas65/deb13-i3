@@ -164,6 +164,32 @@ mkdir -p "$HOME/.var/app/com.brave.Browser/config/"
 cp -a "config/BraveSoftware/."     "$HOME/.var/app/com.brave.Browser/config/BraveSoftware/" || true
 #chromium
 cp -a "config/chromium/."     "$HOME/.config/chromium/" || true
+#librewolf
+#librewolf
+if have librewolf; then
+    PROFILE_ROOT="$HOME/.librewolf"
+    PROFILE_DIR=""
+    librewolf --headless >/dev/null 2>&1 &
+    LW_PID=$!
+    for i in {1..20}; do
+        PROFILE_DIR=$(find "$PROFILE_ROOT" -maxdepth 1 -type d -name '*.default*' | head -n1 || true)
+        if [ -n "${PROFILE_DIR:-}" ] && [ -d "$PROFILE_DIR" ]; then
+            break
+        fi
+        sleep 1
+    done
+
+    if [ -z "${PROFILE_DIR:-}" ] || [ ! -d "$PROFILE_DIR" ]; then
+        echo "LibreWolf profile not found"
+        pkill -f librewolf || true
+    else
+        pkill -f librewolf || true
+        sleep 2
+        cp "config/librewolf/prefs.js" "$PROFILE_DIR/prefs.js"
+    fi
+else
+    echo "Note: LibreWolf isn't installed - skipping its preferences."
+fi
 #mullvad
 # Only if Mullvad Browser is actually installed - otherwise
 # "mullvad-browser: command not found" plus the exit 1 below would stop the
