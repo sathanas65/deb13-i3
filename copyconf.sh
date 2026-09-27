@@ -174,6 +174,8 @@ if have mullvad-browser; then
 
     if [ -n "$PROFILE_DIR" ] && [ -d "$PROFILE_DIR" ]; then
         cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
+        mkdir -p "$PROFILE_DIR/chrome"
+        cp "config/mullvad-userChrome.css" "$PROFILE_DIR/chrome/userChrome.css"
     else
         echo "Note: couldn't find the Mullvad Browser profile folder - skipping its preferences."
     fi
