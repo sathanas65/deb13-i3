@@ -167,7 +167,7 @@ cp -a "config/chromium/."     "$HOME/.config/chromium/" || true
 #librewolf
 #librewolf
 if have librewolf; then
-    PROFILE_ROOT="$HOME/.librewolf"
+    PROFILE_ROOT="$HOME/.config/librewolf/librewolf/"
     PROFILE_DIR=""
     librewolf --headless >/dev/null 2>&1 &
     LW_PID=$!
