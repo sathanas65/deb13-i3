@@ -819,7 +819,7 @@ install_distrobox() {
 app  kvm  off  "Virtualization"  "KVM/QEMU + virt-manager + Cockpit machines"
 install_kvm() {
     apt_install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils \
-                virt-manager cockpit-machines cockpit-podman distrobox
+                virt-manager cockpit-machines cockpit-podman
     sudo systemctl enable --now libvirtd
     sudo usermod -aG libvirt "$USER"
     sudo usermod -aG kvm "$USER"
