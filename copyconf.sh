@@ -148,6 +148,14 @@ cp -a "config/kleopatrarc" "$HOME/.config/kleopatrarc" || true
 mkdir -p "$HOME/.var/app/com.calibre_ebook.calibre/config/calibre"
 cp -a "config/calibre/gui.json" "$HOME/.var/app/com.calibre_ebook.calibre/config/calibre/gui.json" || true
 
+# freetube
+# Installed as a flatpak, so its config lives under the flatpak sandbox path,
+# not ~/.config. settings.db is a NeDB flat file (one JSON line per setting,
+# keyed by _id) - this seeds just the theme, and FreeTube fills in everything
+# else (window bounds, subscriptions, etc.) with its own defaults as you use it.
+mkdir -p "$HOME/.var/app/io.freetubeapp.FreeTube/config/FreeTube"
+cp -a "config/freetube/settings.db" "$HOME/.var/app/io.freetubeapp.FreeTube/config/FreeTube/settings.db" || true
+
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
