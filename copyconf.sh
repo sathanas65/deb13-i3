@@ -137,51 +137,30 @@ cp -a "config/BraveSoftware/."     "$HOME/.var/app/com.brave.Browser/config/Brav
 #chromium
 cp -a "config/chromium/."     "$HOME/.config/chromium/" || true
 #mullvad
-# Only if Mullvad Browser is actually installed - otherwise there's no
-# profile to configure, and launching a browser that doesn't exist would
-# stop the whole script (set -euo pipefail).
-if have mullvad-browser; then
-    PROFILE_ROOT="$HOME/.mullvad-browser/.mullvad/mullvadbrowser"
-    PROFILE_DIR=""
-
-    # launch once, headless, so it creates its default profile folder
-    mullvad-browser --headless >/dev/null 2>&1 &
-    MB_PID=$!
-
-    # wait up to 20 seconds for the profile directory to appear
-    for _ in {1..20}; do
-        PROFILE_DIR=$(find "$PROFILE_ROOT" -maxdepth 1 -type d -name '*.default-release' 2>/dev/null | head -n1 || true)
-        if [ -n "$PROFILE_DIR" ] && [ -d "$PROFILE_DIR" ]; then
-            break
-        fi
-        sleep 1
-    done
-
-    # The directory shows up almost immediately, but Mullvad Browser keeps
-    # doing first-run setup in it for a few seconds after that - kill it too
-    # soon and it overwrites user.js right back with its own defaults, so
-    # our theme pref never sticks. Give it a full 10 seconds before stopping.
-    if [ -n "$PROFILE_DIR" ] && [ -d "$PROFILE_DIR" ]; then
-        sleep 10
+PROFILE_ROOT="$HOME/.mullvad-browser/.mullvad/mullvadbrowser"
+PROFILE_DIR=""
+mullvad-browser --headless >/dev/null 2>&1 &
+MB_PID=$!
+# wait up to 20 seconds for the profile directory to appear
+for i in {1..20}; do
+    PROFILE_DIR=$(find "$PROFILE_ROOT" -maxdepth 1 -type d -name '*.default-release' | head -n1 || true)
+    if [ -n "${PROFILE_DIR:-}" ] && [ -d "$PROFILE_DIR" ]; then
+        break
     fi
+    sleep 1
+done
 
-    # stop the headless instance cleanly enough for scripting purposes.
-    # "mullvad-browser" (not just "mullvad") so this can't also kill the
-    # separate Mullvad VPN app if that's installed too.
-    kill "$MB_PID" 2>/dev/null || true
-    pkill -f mullvad-browser || true
-    sleep 2
-
-    if [ -n "$PROFILE_DIR" ] && [ -d "$PROFILE_DIR" ]; then
-        cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
-        mkdir -p "$PROFILE_DIR/chrome"
-        cp "config/mullvad-userChrome.css" "$PROFILE_DIR/chrome/userChrome.css"
-    else
-        echo "Note: couldn't find the Mullvad Browser profile folder - skipping its preferences."
-    fi
-else
-    echo "Note: Mullvad Browser isn't installed - skipping its preferences."
+if [ -z "${PROFILE_DIR:-}" ] || [ ! -d "$PROFILE_DIR" ]; then
+    echo "Mullvad profile not found"
+    pkill -f mullvad || true
+    exit 1
 fi
+
+# stop Mullvad cleanly enough for scripting purposes
+pkill -f mullvad || true
+sleep 2
+
+cp "config/mullvad-pref.js" "$PROFILE_DIR/user.js"
 
 
 # bashrc (overwrites)
