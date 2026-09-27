@@ -203,6 +203,16 @@ fi
 
 sudo cp -a "config/Sweet-Dark-v40" "/usr/share/themes/"
 
+# Also theme root's own account. Synaptic's launcher (Exec=synaptic-pkexec)
+# runs it via pkexec, which - unlike sudo - always hard-resets $HOME to the
+# target user's home with no way to preserve it, so it reads root's own GTK
+# settings instead of yours. Same applies to anything else launched via
+# pkexec or plain sudo (Thunar, timeshift-gtk, gnome-disks via the sudo
+# keybinds). The theme/icon files themselves are already installed
+# system-wide above, so root only needs to be told to use them.
+sudo mkdir -p /root/.config/gtk-3.0
+sudo cp -a "config/gtk-3.0/settings.ini" /root/.config/gtk-3.0/settings.ini
+
 # --- make scripts executable (robust) ---
 chmod +x "$HOME/.config/i3blocks/cpu/cpu_info.sh" || true
 chmod +x "$HOME/.config/i3blocks/battery/battery_info.sh" || true
