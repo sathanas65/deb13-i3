@@ -139,6 +139,9 @@ cp -a "config/vlc/vlc-qt-interface.conf" "$HOME/.config/vlc/vlc-qt-interface.con
 mkdir -p "$HOME/.var/app/com.github.PintaProject.Pinta/config/Pinta"
 cp -a "config/pinta/settings.xml" "$HOME/.var/app/com.github.PintaProject.Pinta/config/Pinta/settings.xml" || true
 
+# kleopatra
+cp -a "config/kleopatrarc" "$HOME/.config/kleopatrarc" || true
+
 # browsers
 #apt Brave
 cp -a "config/BraveSoftware/."     "$HOME/.config/BraveSoftware/" || true
