@@ -308,7 +308,17 @@ install_cockpit() {
 
 app  libreoffice  off  "Documents & office"  "LibreOffice"
 install_libreoffice() {
-    apt_install libreoffice
+    # libreoffice-gtk3 is the piece that makes LibreOffice theme-able at all.
+    # On i3 (not a desktop LibreOffice recognizes) it tries the gtk3 UI
+    # plugin first and, if that isn't installed, silently falls back to
+    # "gen" - a bare X11 UI that ignores GTK themes, Qt themes and its own
+    # dark mode setting entirely. With gtk3 it follows Sweet-Dark like any
+    # other GTK app, and its Appearance > Dark setting actually works.
+    apt_install libreoffice libreoffice-gtk3
+    # Pin it to gtk3 so it can never fall back to gen again.
+    if ! sudo grep -qxF 'SAL_USE_VCLPLUGIN=gtk3' /etc/environment; then
+        echo 'SAL_USE_VCLPLUGIN=gtk3' | sudo tee -a /etc/environment > /dev/null
+    fi
 }
 
 app  arandr  off  "System"  "ARandR - display settings"

@@ -25,9 +25,15 @@ mkdir -p \
 
 # --- copy configs (use -a to preserve perms/times; use source/. to avoid nesting) ---
 # libreoffice
-cp -a "config/libreoffice/." "$HOME/.config/libreoffice/" || true
-#cp -a "config/libreoffice/." "$HOME/.config/"
-#not working
+# Only the settings file, not a whole captured profile. The old profile was
+# written by LibreOffice 7.4, and 25.2 (Debian 13) changed how colors are
+# stored, so its dark colors were silently ignored. This file just says
+# Appearance = Dark and uses the dark Colibre icons; LibreOffice builds the
+# rest of the profile itself on first launch. Needs the gtk3 UI plugin,
+# which optional-apps.sh installs alongside LibreOffice.
+mkdir -p "$HOME/.config/libreoffice/4/user"
+cp -a "config/libreoffice/4/user/registrymodifications.xcu" \
+      "$HOME/.config/libreoffice/4/user/registrymodifications.xcu" || true
 
 # scripts
 cp -a "scripts/." "$HOME/scripts/"
